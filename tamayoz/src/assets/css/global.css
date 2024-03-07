@@ -1,0 +1,29 @@
+:root {
+    --body-color: #eef2f6;
+    /* main color plette */
+    --primary-color: #549651;
+    --secondary-color: #0f4b56;
+    --primary-font: "Cairo", sans-serif;
+    --font-bold: 700;
+    --font-light: 500;
+    --text-small: 12px;
+    --text-medium: 18px;
+    --text-large: 24px;
+  
+    /* text color plette */
+    --text-primary-color: #1e461c;
+    --text-secondary-color: #868885;
+    --text-placeholder-color: #626262;
+    /* status color */
+    --text-status-color-complete: #36cd59;
+    --text-status-color-start: #65323a;
+    --text-status-color-close: #626262;
+    --text-status-color-inProgress: #5b5196;
+  
+    /* utilities */
+    --min-width-ever: 300px;
+  
+    /* Layout */
+    --navbar-height: 90px;
+    --sidebar-width: 60px;
+  }

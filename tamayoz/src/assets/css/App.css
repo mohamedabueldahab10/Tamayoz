@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a,
+a:active,
+a:hover {
+  text-decoration: none !important;
+}
+.space-1 {
+  margin-bottom: 0.5rem !important;
+}
+.space-2 {
+  margin-bottom: 1rem !important;
+}
+.App {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: url("../images/tamayoz-background.webp");
+  font-family: Cairo, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}

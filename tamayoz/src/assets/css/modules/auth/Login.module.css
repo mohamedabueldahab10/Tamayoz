@@ -1,0 +1,182 @@
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .inputGroup {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+  .input{
+    width:400px;
+    border: 1px solid var(--text-primary-color);
+    border-radius: 5px;
+    padding: 10px 15px;
+    display: flex;
+    transition: box-shadow .5s;
+    background: #fff;
+  }
+  @media screen and (max-width: 768px) {
+    .inputGroup {
+      flex-wrap: wrap;
+    }
+    .authContainer{
+      padding: 20px 0px;
+    }
+    input::placeholder{
+      font-size: 14px;
+    }
+  }
+.authContainer{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    padding: 20px;
+    z-index: 1;
+    background-image: url(../../../images/login-background.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+.authHeader{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:50px;
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo img{
+    width: 100%;
+  }
+.quickActions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 40px;
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: bold;
+}
+.quickActions div:last-child {
+    color: var(--text-secondary-color);
+    border-bottom: 3px solid var(--text-secondary-color);
+    padding: 2px;
+  }
+.formHeader{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:start;
+    flex-wrap: wrap;
+    margin-bottom:50px;
+    gap: 100px;
+}
+.loginForm{
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 20px;
+  background-color: rgba(0, 0, 0, 0.07);
+  padding: 20px;
+  border-radius: 15px;
+  min-width: 320px;
+  .forgetPass{
+    font-size: 14px;
+    color: var(--text-primary-color);
+  }
+    .or{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      p{
+        font-size: 21px;
+        font-weight: 500;
+        color: var(--primary-color);
+        text-align: center;
+        padding-inline: 10px;
+      }
+    }
+    .or::before, .or::after{
+      content: "";
+      width: 50%;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+    .register{
+      display: grid;
+      place-items: center;
+      width: 100%;
+
+    }
+  }
+.loginWord{
+    text-align: left;
+    border-radius: 15px;
+    width: 45%;
+    min-width: 300px;
+  h2{
+      color: var(--text-primary-color);
+      margin-bottom: 20px;
+  }
+  p{
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+}
+.footer{
+  display: none;
+}
+
+@media (min-width: 768px) and (max-width: 1440px) {
+  .quickActions{
+    column-gap: 15px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .formHeader{
+    margin-bottom:50px;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 551px) and (max-width: 767px) {
+  .quickActions{
+    column-gap: 15px;
+    font-size: 14px;
+  }
+  .formHeader{
+    margin-bottom:35px;
+    gap: 10px;
+}
+} 
+@media screen and (max-width: 550px) {
+  .quickActions{
+    display: none;
+  }
+  .formHeader{
+    margin-bottom:20px;
+    gap: 20px;
+}
+}
+@media screen and (max-width:769px) {
+  .footer{
+    display: block;
+    width: 100%;
+  }
+}

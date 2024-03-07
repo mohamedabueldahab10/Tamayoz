@@ -1,0 +1,31 @@
+.navbarContainer {
+    width: 100%;
+    position: fixed;
+    height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0px 25px; */
+    background: white;
+    z-index: 100;
+    box-shadow: 3px 3px 2px #eee;
+  }
+  .navbarLeft {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo img{
+    width: 100%;
+  }
+  .navbarRight {
+    float: right;
+    display: flex;
+    gap: 50px;
+  }
