@@ -16,7 +16,7 @@ const PasswordInput = (props) => {
            className={styles.input}
            {...props.input}
            {...register(props.name)}
-            placeholder='Password'
+            placeholder={props.placeholder}
             startAdornment={
               <InputAdornment position="start">
                 <LockOpenIcon sx={{color:"var(--primary-color)"}} />

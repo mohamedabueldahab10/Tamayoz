@@ -15,7 +15,7 @@ const LoginInputUser = (props) => {
             className={styles.input}
            {...props.input}
            {...register(props.name)}
-            placeholder='Email address or Phone Number'
+            placeholder={props.placeholder}
             startAdornment={
               <InputAdornment position="start">
                 <PersonOutlineIcon sx={{color:"var(--primary-color)"}} />

@@ -1,0 +1,26 @@
+{
+    "validation": {
+        "user_name_required":"برجاء ادخال اسم المستخدم",
+        "password_required":"برجاء ادخال كلمة السر"
+    },
+    "quick_actions" : {
+        "privacy_policy" : "سياسة الخصوصية",
+        "about_us" : "عن تميز",
+        "contact_us" : "تواصل معنا",
+        "help" : "المساعدة",
+        "language" : "English"
+    },
+    "form": {
+        "user_placeholder": "البريد الالكتروني او رقم الهاتف",
+        "password_placeholder": "كلمة السر",
+        "login_button": "تسجيل الدخول",
+        "forget_password": "نسيت كلمة السر ؟",
+        "or": "أو",
+        "register_button": "التسجيل"
+    },
+    "login_word": {
+        "welcome": "مرحبا بك في تميز",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+    }
+}
+  

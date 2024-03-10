@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { setAuthedUser, logOut } from "./reducers/authReducerToolKit";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoggedIn: false,
@@ -18,7 +17,7 @@ export const handleUserLogin = createAsyncThunk(
         Password,
       }
     );
-    return response;
+    return response.data;
   }
 );
 export const handleLogout = () => {
@@ -28,15 +27,6 @@ export const handleLogout = () => {
     localStorage.removeItem("AuthedUser");
   };
 };
-// export const checkUser = () => {
-//   return (dispatch) => {
-//     const AuthedUser = localStorage.getItem("AuthedUser");
-//     if (AuthedUser) {
-//       dispatch(setAuthedUser(JSON.parse(AuthedUser)));
-//     }
-//   };
-// };
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -47,6 +37,7 @@ const authSlice = createSlice({
       if (AuthedUser) {
         const authedUserData = JSON.parse(AuthedUser);
         state.AuthedUser = authedUserData;
+        state.isLoggedIn = true;
       } else {
         state.isLoggedIn = false;
       }
@@ -61,21 +52,14 @@ const authSlice = createSlice({
       .addCase(
         handleUserLogin.fulfilled,
         (state, action) => {
+          console.log("fulfilled", state, action);
           state.AuthedUser = action.payload;
-          localStorage.setItem("AuthedUser", JSON.stringify(action.payload));
           state.isLoggedIn = true;
+          localStorage.setItem("AuthedUser", JSON.stringify(action.payload));
         }
-      )
-      // [handleUserLogin.fulfilled]: (
-      //   state: { loading: boolean; AuthedUser; isLoggedIn: boolean },
-      //   action: PayloadAction
-      // ) => {
-      //   state.loading = false;
-      //   state.AuthedUser = action.payload;
-      //   localStorage.setItem("AuthedUser", JSON.stringify(action.payload));
-      //   state.isLoggedIn = true;
-      // },
-      .addCase(handleUserLogin.rejected, (state) => {
+        )
+        .addCase(handleUserLogin.rejected, (state) => {
+        console.log("rejected", state);
         state.LoginError = true;
       });
   },

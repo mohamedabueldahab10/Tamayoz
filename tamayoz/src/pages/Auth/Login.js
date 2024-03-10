@@ -12,56 +12,35 @@ import { handleUserLogin } from "../../redux/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from "react-i18next";
+
 import * as yup from "yup";
 const Login = () => {
-  const [userData, setUserData] = useState({ userName: "", password: "" });
+  const { t } = useTranslation("login");  
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { LoginError } = useSelector((state) => ({
     LoginError: state.LoginError,
   }));
-  console.log(LoginError);
-  // const handleLogin = async (e: { preventDefault: () => void }) => {
-  //   setLoading(true);
-  //   e.preventDefault();
-  //   if (userData.userName || userData.password) {
-  //     dispatch(handleUserLogin(userData));
-  //     setLoading(false);
-  //   } else {
-  //     setError(LoginError);
-  //   }
-  // };
   async function handleLogin(data) {
+    setLoading(true);
     const userName = data.userName;
     const Password = data.password;
     const userData = { userName , Password };
-    if (userName || Password) {
-      dispatch(handleUserLogin(userData));
+    if (userName && Password) {
+      console.log(dispatch(handleLogin, userData));
+      dispatch(handleUserLogin(userData, setLoading, setError));
       setLoading(false);
-    } else {
+    }  else {
+      setLoading(false);
       setError(LoginError);
     }
     console.log("Credentials",userData);
-  //   setIsLoading(true);
-  //   setDisable(true);
-  //   await axios
-  //     .put(`https://vsoft.com-eg.net:4041/api/Branches/Update`, data)
-  //     .then((res) => {
-  //       queryClient.invalidateQueries("gridtablebranch");
-  //       props.setUpdateModalOpen(false);
-  //       setIsLoading(false);
-  //       setDisable(false);
-  //     })
-  //     .catch((err) => {
-  //       setSnack(true);
-  //       setIsLoading(false);
-  //       setDisable(false);
-  //     });
   }
   const schema = yup.object().shape({
-    userName: yup.string().required("User Name is Required"),
-    password: yup.string().required("Password is Required"),
+    userName: yup.string().required(t("validation.user_name_required")),
+    password: yup.string().required(t("validation.password_required")),
   });
 
     const methods = useForm({
@@ -78,14 +57,39 @@ const Login = () => {
           <img src={LogoImg} alt='Tamayoz' />
         </div>
         <div className={styles.quickActions}>
-          <div>Privacy Policy</div>
-          <div>About Us</div>
-          <div>Contact Us</div>
-          <div>Help</div>
-          <div>العربية</div>
+          <div>{t("quick_actions.privacy_policy")}</div>
+          <div>{t("quick_actions.about_us")}</div>
+          <div>{t("quick_actions.contact_us")}</div>
+          <div>{t("quick_actions.help")}</div>
+          <div>{t("quick_actions.language")}</div>
         </div>
         </Box>
-        <Box className={styles.formHeader}>
+        <Box className={styles.formHeader}>.{loading ? (
+            <Backdrop
+              sx={{ color: "#fff"}}
+              open={loading}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          ) : error ? (
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  size="small"
+                  onClick={() => {
+                    setError(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" color="red" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              {error}
+            </Alert>
+          ) : (
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className={styles.loginForm}>
@@ -93,32 +97,33 @@ const Login = () => {
                   id="userName"
                   name="userName"
                   type="userName" 
+                  placeholder={t("form.user_placeholder")}
                   error={errors.userName}
-                />
+                  />
                 <PasswordInput 
                   id="password"
                   name="password"
                   type="password" 
+                  placeholder={t("form.password_placeholder")}
                   error={errors.password}
                 />
                 <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"center",width:"100%"}}>
-                <StyledButton type='submit' small="true">Log in</StyledButton>
-                <Link className={styles.forgetPass} to="/auth/forget-password">Forget password ?</Link>
+                <StyledButton type='submit' small="true">{t("form.login_button")}</StyledButton>
+                <Link className={styles.forgetPass} to="/auth/forget-password">{t("form.forget_password")}</Link>
                 </Box>
                 <div className={styles.or}>
-                  <p>OR</p>
+                  <p>{t("form.or")}</p>
                 </div>
                 <div className={styles.register}>
-                  <StyledButton >Register</StyledButton>
+                  <StyledButton >{t("form.register_button")}</StyledButton>
                 </div>
             </div>
           </form>
         </FormProvider>
+          )}
           <div className={styles.loginWord}>
-              <h2>Welcome To Tamayoz</h2>
-              <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-              </p>
+              <h2>{t("login_word.welcome")}</h2>
+              <p>{t("login_word.description")}</p>
               
           </div>
         </Box>

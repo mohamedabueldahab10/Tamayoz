@@ -3,16 +3,15 @@ import '../src/assets/css/global.css';
 import '../src/assets/css/App.css';
 import Loading from './components/Loading';
 import { Routes, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Home from "./pages/Home";
-import Login from './pages/Auth/Login';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Auth from './components/routes/Auth';
+import NotFound from './components/NotFound';
 
 function App() {
-  console.log(
-    getComputedStyle(document.body.querySelector("#root")).getPropertyValue(
-      "--primary-color"
-    ).trim()
-  );
+  const { i18n } = useTranslation();
+  const { language } = i18n;
   const theme = createTheme({
     palette: {
       primary: {
@@ -26,10 +25,13 @@ function App() {
   return (
     <Suspense fallback={<Loading />}>
       <ThemeProvider theme={theme}>
-        <div className="App">
+        <div className="App"
+        data-lang="en"
+        dir={language === "ar" ? "rtl" : "ltr"}
+        >
           <Routes>
-            {/* <Route path="*" element={<NotFound />} /> */}
-            <Route path="auth/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/Auth/*" element={<Auth />} />
             <Route path="/" element={<Home />}>
             </Route>
           </Routes>

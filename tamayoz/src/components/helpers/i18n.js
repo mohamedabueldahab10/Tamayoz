@@ -5,9 +5,9 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { i18nextPlugin } from "translation-check";
 
 i18next
+  .use(initReactI18next)
   .use(HttpApi)
   .use(LanguageDetector)
-  .use(initReactI18next)
   .use(i18nextPlugin)
   .init({
     supportedLngs: ["en", "ar"],
