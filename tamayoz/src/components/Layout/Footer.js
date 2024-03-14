@@ -5,13 +5,19 @@ import Link from "@mui/material/Link";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import styles from "../../assets/css/modules/auth/Login.module.css";
+import { useTranslation } from "react-i18next";
+
 
 export default function Footer() {
+  const { t } = useTranslation("login");  
   return (
     <Box
       component="footer"
       className={styles.footer}
+    >
+      <Container  
       sx={{
+        Width:"100%",
         display: "grid",
         placeItems: "center",
         height: "100px",
@@ -19,9 +25,14 @@ export default function Footer() {
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
             : theme.palette.grey[800],
-      }}
-    >
-      <Container maxWidth="lg">
+      }} maxWidth="lg">
+      <div className={styles.quickFooterActions}>
+          <div>{t("quick_actions.privacy_policy")}</div>
+          <div>{t("quick_actions.about_us")}</div>
+          <div>{t("quick_actions.contact_us")}</div>
+          <div>{t("quick_actions.help")}</div>
+          <div>{t("quick_actions.language")}</div>
+        </div>
         <Box>
           <Box sx={{display: "flex", justifyContent: "center",alignItems: "center"}}>
           <Link href="https://www.facebook.com/" color="inherit">

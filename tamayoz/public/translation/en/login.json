@@ -8,7 +8,7 @@
         "about_us" : "About Us",
         "contact_us" : "Contact Us",
         "help" : "Help",
-        "arabic" : "العربية"
+        "language" : "العربية"
     },
     "form": {
         "user_placeholder": "Email address or Phone Number",

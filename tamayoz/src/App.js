@@ -3,15 +3,16 @@ import '../src/assets/css/global.css';
 import '../src/assets/css/App.css';
 import Loading from './components/Loading';
 import { Routes, Route } from "react-router-dom";
+import "./components/helpers/i18n"
 import { useTranslation } from "react-i18next";
 import Home from "./pages/Home";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Auth from './components/routes/Auth';
 import NotFound from './components/NotFound';
-
 function App() {
   const { i18n } = useTranslation();
   const { language } = i18n;
+  console.log("current Language",language);
   const theme = createTheme({
     palette: {
       primary: {

@@ -13,10 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
-
 import * as yup from "yup";
+import { changeLanguage } from 'i18next';
 const Login = () => {
   const { t } = useTranslation("login");  
+  const { i18n } = useTranslation();
+  const { language } = i18n;
+  console.log("current Language",language);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -29,7 +32,7 @@ const Login = () => {
     const Password = data.password;
     const userData = { userName , Password };
     if (userName && Password) {
-      console.log(dispatch(handleLogin, userData));
+      console.log(dispatch(handleUserLogin, userData));
       dispatch(handleUserLogin(userData, setLoading, setError));
       setLoading(false);
     }  else {
@@ -41,14 +44,19 @@ const Login = () => {
   const schema = yup.object().shape({
     userName: yup.string().required(t("validation.user_name_required")),
     password: yup.string().required(t("validation.password_required")),
-  });
-
+  })
     const methods = useForm({
       mode: "onTouched",
     resolver: yupResolver(schema),
   });
   const { handleSubmit, register, formState: { errors } } = methods;
-
+  const handleLanguage = () => {
+    if (language === "en") {
+      changeLanguage("ar");
+    } else {
+      changeLanguage("en");
+    }
+  }
   return (
     <Box sx={{height:"100vh"}}>
     <div className={styles.authContainer}>
@@ -61,10 +69,10 @@ const Login = () => {
           <div>{t("quick_actions.about_us")}</div>
           <div>{t("quick_actions.contact_us")}</div>
           <div>{t("quick_actions.help")}</div>
-          <div>{t("quick_actions.language")}</div>
+          <div onClick={handleLanguage}>{t("quick_actions.language")}</div>
         </div>
         </Box>
-        <Box className={styles.formHeader}>.{loading ? (
+        <Box className={styles.formHeader}>{loading ? (
             <Backdrop
               sx={{ color: "#fff"}}
               open={loading}
@@ -135,4 +143,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

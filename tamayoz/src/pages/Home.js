@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { checkUser } from "../redux/authReducer";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
+import axios from "axios";
+
 
 const Home = () => {
   const { i18n } = useTranslation();
@@ -21,6 +24,17 @@ const Home = () => {
     };
   });
   console.log("isLoggedIn",isLoggedIn);
+  const accessToken = "eyJpZCI6IjEiLCJuYmYiOjE3MTA0MTQ1ODEsImV4cCI6MTcxMTAxOTM4MSwiaWF0IjoxNzEwNDE0NTgxfQ";
+  const { data } = useQuery("homePage", async () => {
+    const res = await axios.get(
+      `http://10.10.8.223:8080/users`,{
+       headers:{
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return res;
+  });
+  console.log(data);
 
     if (isLoggedIn) {
       return (
@@ -37,7 +51,7 @@ const Home = () => {
               // sx={{ width: `calc(100% - ${currentWidth})` }}
               className="payload"
             >
-              <Outlet />
+              
             </Box>
           </Box>
         </>
