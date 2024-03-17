@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import axios from "axios";
-
+import "../assets/css/App.css"
 
 const Home = () => {
   const { i18n } = useTranslation();
@@ -24,13 +24,21 @@ const Home = () => {
     };
   });
   console.log("isLoggedIn",isLoggedIn);
-  const accessToken = "eyJpZCI6IjEiLCJuYmYiOjE3MTA0MTQ1ODEsImV4cCI6MTcxMTAxOTM4MSwiaWF0IjoxNzEwNDE0NTgxfQ";
+  const AuthedUser = JSON.parse(localStorage.getItem("AuthedUser"));
+  console.log("AuthedUser",AuthedUser);
+  const accessToken = AuthedUser?.token
   const { data } = useQuery("homePage", async () => {
-    const res = await axios.get(
-      `http://10.10.8.223:8080/users`,{
+    const res = await axios.post(
+      `http://10.10.8.223:8080/modulesData/GetAllData`,{
        headers:{
-        Authorization: `Bearer ${accessToken}`,
-      },
+        "Content-Type": 'application/json',
+        "Accept-Encoding": "gzip, deflate, br",
+        "Authorization": `Bearer ${accessToken}`,
+       },
+      body: {
+          pageSize: 1,
+          pageNumber: 10,
+      }
     });
     return res;
   });
@@ -38,7 +46,7 @@ const Home = () => {
 
     if (isLoggedIn) {
       return (
-        <>
+        <div className='main-content'>
           <Navbar />
           <Box
             sx={{
@@ -54,7 +62,7 @@ const Home = () => {
               
             </Box>
           </Box>
-        </>
+        </div>
       );
     } else {
       return <Navigate to="/auth/login" />;

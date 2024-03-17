@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className={styles.navbarLeft}>
         <div className={styles.logo}>
           <img src={LogoImg} alt='Tamayoz' />
-
+          
           </div>
       </div>
       {/* ================ */}

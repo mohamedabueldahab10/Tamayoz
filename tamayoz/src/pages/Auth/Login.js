@@ -23,24 +23,18 @@ const Login = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { LoginError } = useSelector((state) => ({
-    LoginError: state.LoginError,
-  }));
   async function handleLogin(data) {
     setLoading(true);
     const userName = data.userName;
     const Password = data.password;
     const userData = { userName , Password };
     if (userName && Password) {
-      console.log(dispatch(handleUserLogin, userData));
       dispatch(handleUserLogin(userData, setLoading, setError));
       setLoading(false);
-    }  else {
-      setLoading(false);
-      setError(LoginError);
     }
-    console.log("Credentials",userData);
   }
+  console.log("loading",loading);
+  console.log("Error",error);
   const schema = yup.object().shape({
     userName: yup.string().required(t("validation.user_name_required")),
     password: yup.string().required(t("validation.password_required")),
@@ -72,7 +66,8 @@ const Login = () => {
           <div onClick={handleLanguage}>{t("quick_actions.language")}</div>
         </div>
         </Box>
-        <Box className={styles.formHeader}>{loading ? (
+        <Box className={styles.formHeader}>
+          {loading ? (
             <Backdrop
               sx={{ color: "#fff"}}
               open={loading}
@@ -132,7 +127,6 @@ const Login = () => {
           <div className={styles.loginWord}>
               <h2>{t("login_word.welcome")}</h2>
               <p>{t("login_word.description")}</p>
-              
           </div>
         </Box>
 

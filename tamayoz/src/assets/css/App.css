@@ -19,9 +19,11 @@ a:hover {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  /* background: url("../images/tamayoz-background.webp"); */
   font-family: Cairo, sans-serif;
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
+}
+.main-content{
+    background: url("../images/tamayoz-background.webp");
 }
