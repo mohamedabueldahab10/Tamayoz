@@ -1,31 +1,37 @@
 .navbarContainer {
     width: 100%;
     position: fixed;
-    height: 90px;
+    height: var(--navbar-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* padding: 0px 25px; */
+    padding: 0px 65px;
     background: white;
     z-index: 100;
     box-shadow: 3px 3px 2px #eee;
   }
-  .navbarLeft {
+.navbarLeft {
     display: flex;
     gap: 15px;
     justify-content: space-between;
     align-items: center;
   }
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .logo img{
-    width: 100%;
-  }
-  .navbarRight {
+.navbarRight {
     float: right;
     display: flex;
     gap: 50px;
   }
+.iconslist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: var(--primary-color);
+  }
+.iconslist div {
+    cursor: pointer;
+  }
+.iconslist svg {
+    width: 24px;
+  }
+  

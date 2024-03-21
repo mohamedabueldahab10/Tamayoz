@@ -27,3 +27,15 @@
     --navbar-height: 90px;
     --sidebar-width: 60px;
   }
+  .payload {
+    margin-top: var(--navbar-height);
+    position: relative;
+    width: 100%;
+    padding: 30px;
+  }
+  @media (max-width: 810px) {
+    .payload {
+      padding: 15px;
+    }
+  }
+  

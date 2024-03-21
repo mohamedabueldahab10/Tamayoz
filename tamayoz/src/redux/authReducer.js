@@ -7,7 +7,7 @@ export const handleUserLogin = createAsyncThunk(
     const { userName, Password } = userObject;
     console.log(userObject);
     const response = await axios.post(
-      "http://10.10.8.223:8080/users/authenticate",
+      "http://168.119.12.58/users/authenticate",
       {
         userName,
         Password,
@@ -76,10 +76,10 @@ const authSlice = createSlice({
           state.isLoggedIn = true;
           localStorage.setItem("AuthedUser", JSON.stringify(action.payload));
         }
-      )
-      .addCase(handleUserLogin.rejected, (state,action) => {
+        )
+        .addCase(handleUserLogin.rejected, (state,action) => {
+        state.LoginError = action.error;
         console.log("rejected", state);
-        state.LoginError = true;
         console.log("rejected", action)
       });
   },

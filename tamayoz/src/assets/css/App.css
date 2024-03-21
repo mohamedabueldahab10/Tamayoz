@@ -26,4 +26,6 @@ a:hover {
 }
 .main-content{
     background: url("../images/tamayoz-background.webp");
+    /* height: calc(100vh - 90px); */
+
 }

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import LoginInputUser from '../../components/utilities/LoginInputUser'
 import PasswordInput from '../../components/utilities/PasswordInput'
 import styles from "../../assets/css/modules/auth/Login.module.css";
-import {Backdrop, Box, Alert, CircularProgress, IconButton} from "@mui/material";
+import {Box, Alert, Snackbar, IconButton , Stack} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LogoImg from "../../assets/images/tamayoz-logo.png"
 import StyledButton from '../../components/utilities/StyledButton';
@@ -23,18 +23,13 @@ const Login = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  async function handleLogin(data) {
-    setLoading(true);
-    const userName = data.userName;
-    const Password = data.password;
-    const userData = { userName , Password };
-    if (userName && Password) {
-      dispatch(handleUserLogin(userData, setLoading, setError));
-      setLoading(false);
+  const [snack, setSnack] = useState(false);
+  const handleClose = (branch) => {
+    if (branch === "clickaway") {
+      return;
     }
-  }
-  console.log("loading",loading);
-  console.log("Error",error);
+    setSnack(false);
+  };
   const schema = yup.object().shape({
     userName: yup.string().required(t("validation.user_name_required")),
     password: yup.string().required(t("validation.password_required")),
@@ -51,6 +46,34 @@ const Login = () => {
       changeLanguage("en");
     }
   }
+  const { LoginError } = useSelector((state) => {
+    console.log(state);
+    return {
+      LoginError: state.auth.LoginError,
+    };
+  });
+  console.log("LoginError",LoginError.code);
+  // ====================
+  async function handleLogin(data) {
+    setLoading(true);
+    const userName = data.userName;
+    const Password = data.password;
+    const userData = { userName , Password };
+    if (userName && Password) {
+      dispatch(handleUserLogin(userData));
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    if(LoginError.code === "ERR_BAD_REQUEST"){
+      setSnack(true);
+      setError(LoginError.message);
+    }
+  }, [LoginError])
+  
+
+  console.log("loading",loading);
+  console.log("Error",error);
   return (
     <Box sx={{height:"100vh"}}>
     <div className={styles.authContainer}>
@@ -67,32 +90,6 @@ const Login = () => {
         </div>
         </Box>
         <Box className={styles.formHeader}>
-          {loading ? (
-            <Backdrop
-              sx={{ color: "#fff"}}
-              open={loading}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          ) : error ? (
-            <Alert
-              severity="error"
-              action={
-                <IconButton
-                  aria-label="close"
-                  size="small"
-                  onClick={() => {
-                    setError(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" color="red" />
-                </IconButton>
-              }
-              sx={{ mb: 2 }}
-            >
-              {error}
-            </Alert>
-          ) : (
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className={styles.loginForm}>
@@ -123,14 +120,39 @@ const Login = () => {
             </div>
           </form>
         </FormProvider>
-          )}
+        
           <div className={styles.loginWord}>
               <h2>{t("login_word.welcome")}</h2>
               <p>{t("login_word.description")}</p>
           </div>
         </Box>
 
-      
+        {/* {error ? ( */}
+        <Stack spacing={2} sx={{ width: "100%" }}>
+          <Snackbar
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              open={snack}
+              autoHideDuration={4500}
+              onClose={handleClose}
+            >
+
+                <Alert
+                severity="error"
+                action={
+                  <IconButton
+                  aria-label="close"
+                  size="small"
+                  onClick={handleClose}
+                  >
+                      <CloseIcon fontSize="inherit" color="red" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                  >
+                  {error}
+                </Alert>
+              </Snackbar>
+            </Stack>
     </div>
       <Footer />
     </Box>
