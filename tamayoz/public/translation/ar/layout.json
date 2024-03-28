@@ -1,0 +1,21 @@
+{
+    "home_section": {
+        "home": "الصفحة الرئيسية",
+        "dashboard": "لوحة المعلومات",
+        "survey": "الاستفتاءات",
+        "documents": "المجلدات",
+        "archivings": "الأرشفة",
+        "transactions": "المعاملات",
+        "setting": "الاعدادات"
+
+    },
+    "navbar": {
+        "log_out": "تسجيل الخروج",
+        "profile": "الحساب",
+        "all_notifications": "مشاهدة كل الاشعارات",
+        "no_Notification": "لا يوجد اشعارات",
+        "change_password":"تغيير كلمة المرور",
+        "search": "بحث ..."
+      }
+}
+  

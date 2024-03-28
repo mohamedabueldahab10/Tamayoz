@@ -1,6 +1,5 @@
 import React from "react";
 import { Input, Button } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
@@ -18,9 +17,10 @@ const SearchInput = styled(Input)`
   -webkit-padding-end: 67px !important;
   padding-inline-end: 67px !important;
   width: 353px;
-  height: 57px;
+  height: 50px;
   background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 70px !important;
+  border-radius: 12px !important;
+  font-size: 21px;
 `;
 const searchInputIcon = {
   position: "absolute",
@@ -45,11 +45,11 @@ export default function SearchBar(props) {
             disableUnderline
             value={searchBarInput}
             size="md"
-            placeholder="AWB NO."
+            placeholder={t("navbar.search")}
             onChange={(e) => setSearchBarInput(e.target.value)}
-            dir="ltr"
+            dir={language === "ar" ? "rtl" : "ltr"}
           />
-          <SearchButton type="submit" sx={searchInputIcon}>
+          <SearchButton  type="submit" sx={searchInputIcon}>
             <SearchIcon
               sx={{
                 color: "#fff",

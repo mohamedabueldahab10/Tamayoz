@@ -61,15 +61,16 @@ const Home = () => {
             <Sidebar setCurrentWidth={setCurrentWidth} />
             <Box sx={{ width: `calc(100% - ${currentWidth})` }}
             className="payload">
-            {AppsData ? AppsData.map(item => (
-              <div key={item.id} className={styles.homeCard}>
-                <div className={styles.cardLogo}>
-                  <svg class="" title="Like Operations Field SVG File" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8899a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              {AppsData ? AppsData.map(item => (
+                <div key={item.id} className={styles.homeCard}>
+                  <div className={styles.cardLogo}>
+                    <svg class="" title="Like Operations Field SVG File" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#8899a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                  </div>
+                  <div className={styles.cardName}>{item.name}</div>
                 </div>
-                <div className={styles.cardName}>{item.name}</div>
-              </div>
-            )) : <Loading />}
+              )) : <Loading />}
             </Box>
+            <Outlet />
           </Box>
           </div>
         </div>

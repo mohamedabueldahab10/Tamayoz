@@ -9,6 +9,12 @@ import Home from "./pages/Home";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Auth from './components/routes/Auth';
 import NotFound from './components/NotFound';
+import Dashboard from "./pages/Dashboard/Dashboard"
+import Survey from './pages/Survey/Survey';
+import Documents from './pages/Documents/Documents';
+import Archivings from './pages/Archivings/Archivings';
+import Transactions from './pages/Transactions/Transactions';
+import Setting from './pages/Setting/Setting';
 function App() {
   const { i18n } = useTranslation();
   const { language } = i18n;
@@ -34,6 +40,12 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/Auth/*" element={<Auth />} />
             <Route path="/" element={<Home />}>
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/survey' element={<Survey />} />
+              <Route path='/documents' element={<Documents />} />
+              <Route path='/archivings' element={<Archivings />} />
+              <Route path='/transactions' element={<Transactions />} />
+              <Route path='/setting' element={<Setting />} />
             </Route>
           </Routes>
         </div>

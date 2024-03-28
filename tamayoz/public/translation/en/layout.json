@@ -1,0 +1,21 @@
+{
+    "home_section": {
+        "home": "Home",
+        "dashboard": "Dashboard",
+        "survey": "Survey",
+        "documents": "Documents",
+        "archivings": "Archivings",
+        "transactions": "Transactions",
+        "setting": "Setting"
+    },
+    "navbar": {
+        "log_out": "Log out",
+        "profile": "Profile",
+        "all_notifications": "View all notifications",
+        "no_Notification": "No Notifications",
+        "change_password":"Change Password",
+        "search": "Search..."
+      }
+    
+}
+  
