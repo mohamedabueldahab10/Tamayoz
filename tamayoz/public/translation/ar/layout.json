@@ -1,12 +1,26 @@
 {
     "home_section": {
+        "apps": "التطبيقات",
         "home": "الصفحة الرئيسية",
         "dashboard": "لوحة المعلومات",
         "survey": "الاستفتاءات",
         "documents": "المجلدات",
         "archivings": "الأرشفة",
         "transactions": "المعاملات",
-        "setting": "الاعدادات"
+        "setting": "الاعدادات",
+        "discuss": "المناقشة",
+        "meeting_room": "الاجتماعات",
+        "calender": "التقويم",
+        "to_do": "المهام",
+        "contacts": "الاسماء",
+        "project": "المشاريع",
+        "time_sheet": "الجدول الزمني",
+        "knowledge": "المعرفة",
+        "planning": "التخطيط",
+        "appraisals": "تقييمات",
+        "attendances": "الحضور",
+        "time_off": "الاجازات",
+        "employees": "الموظفين"
 
     },
     "navbar": {

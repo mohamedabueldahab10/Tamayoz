@@ -11,14 +11,8 @@ import {
 } from "../../pages/Auth";
 import NotFound from "../NotFound";
 export default function Auth() {
-  const { isLoggedIn } = useSelector((state) => {
-    console.log(state);
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
-    return {
-      isLoggedIn: state.auth.isLoggedIn,
-    };
-  });
-  console.log(isLoggedIn);
   if (isLoggedIn) {
     return <Navigate to="/" />;
   }

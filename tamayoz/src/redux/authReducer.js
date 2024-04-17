@@ -5,7 +5,6 @@ export const handleUserLogin = createAsyncThunk(
   "auth/handleUserLogin",
   async (userObject) => {
     const { userName, Password } = userObject;
-    console.log(userObject);
     const response = await axios.post(
       "http://168.119.12.58/users/authenticate",
       {
@@ -17,7 +16,6 @@ export const handleUserLogin = createAsyncThunk(
         },
       }
     );
-    console.log("login response",response);
     
     return response.data;
   }
@@ -26,7 +24,6 @@ export const handleUserLogin = createAsyncThunk(
 export const handleLogout = () => {
   return (dispatch) => {
     dispatch(logOut());
-    console.log(logOut());
     localStorage.removeItem("AuthedUser");
   };
 };
@@ -40,8 +37,6 @@ const authSlice = createSlice({
   },
   reducers: {
     setAuthedUser: (state, action) => {
-      console.log("action",action);
-      console.log("state",state);
       state.AuthedUser = action.payload;
       state.isLoggedIn = true;
       state.LoginError = false;
@@ -70,8 +65,6 @@ const authSlice = createSlice({
     .addCase(
         handleUserLogin.fulfilled,
         (state, action) => {
-          console.log("isLoggedIn",state.isLoggedIn);
-          console.log("fulfilled", state, action);
           state.AuthedUser = action.payload;
           state.isLoggedIn = true;
           localStorage.setItem("AuthedUser", JSON.stringify(action.payload));
@@ -79,8 +72,6 @@ const authSlice = createSlice({
         )
         .addCase(handleUserLogin.rejected, (state,action) => {
         state.LoginError = action.error;
-        console.log("rejected", state);
-        console.log("rejected", action)
       });
   },
 });

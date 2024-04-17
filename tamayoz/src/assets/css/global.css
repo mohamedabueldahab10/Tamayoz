@@ -2,7 +2,7 @@
     --body-color: #eef2f6;
     /* main color plette */
     --primary-color: #549651;
-    --secondary-color: #0f4b56;
+    --secondary-color: #ccc;
     --primary-font: "Cairo", sans-serif;
     --font-bold: 700;
     --font-light: 500;
@@ -25,17 +25,6 @@
   
     /* Layout */
     --navbar-height: 90px;
+    --home-navbar-height: 55px;
     --sidebar-width: 60px;
   }
-  .payload {
-    margin-top: var(--navbar-height);
-    position: relative;
-    width: 100%;
-    padding: 30px;
-  }
-  @media (max-width: 810px) {
-    .payload {
-      padding: 15px;
-    }
-  }
-  

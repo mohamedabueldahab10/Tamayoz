@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import HomeIcon from '@mui/icons-material/Home';
 import PollIcon from '@mui/icons-material/Poll';
@@ -18,7 +18,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import MuiDrawer from "@mui/material/Drawer";
 import { useTranslation } from "react-i18next";
 import MenuIcon from '@mui/icons-material/Menu';
-const drawerWidth = 200;
+const drawerWidth = 260;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -57,11 +57,13 @@ const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
+
 export default function Sidebar(props) {
   const { t } = useTranslation("layout");
   const [open, setOpen] = useState(false);
   const [disableFunctions, setDisableFunctions] = useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [sidebarItems, setSidebarItems] = useState([]);
   const location = useLocation().pathname;
   const { setCurrentWidth } = props;
   const { i18n } = useTranslation();
@@ -73,6 +75,47 @@ export default function Sidebar(props) {
     setOpen(!open);
     setDisableFunctions((disableFunctions) => !disableFunctions);
   };
+  useEffect(() => {
+    // Define sidebar items based on current page
+    let newSidebarItems = [];
+    if (location === "/dashboard") {
+      newSidebarItems = [
+        { path: "/dashboard", text: "Dashboard", icon: <HomeIcon /> },
+        { path: "/survey", text: "Survey", icon: <PollIcon /> },
+        { path: "/documents", text: "Documents", icon: <FolderOpenIcon /> },
+        // Add more items as needed
+      ];
+    } else if (location === "/survey") {
+      newSidebarItems = [
+        // Define items for other pages
+      ];
+    } else if (location === "/documents") {
+      newSidebarItems = [
+        // Define items for other pages
+      ];
+    } else if (location === "/archivings") {
+      newSidebarItems = [
+        // Define items for other pages
+      ];
+    } else if (location === "/transactions") {
+      newSidebarItems = [
+        // Define items for other pages
+      ];
+    } else if (location === "/setting") {
+      newSidebarItems = [
+        // Define items for other pages
+      ];
+    }
+    setSidebarItems(newSidebarItems);
+  }, [location]);
+  // const sidebarItems = [
+  //   { path: "/dashboard", text: `${t("home_section.dashboard")}`, icon: <HomeIcon /> },
+  //   { path: "/survey", text: `${t("home_section.survey")}`, icon: <PollIcon /> },
+  //   { path: "/documents", text: `${t("home_section.documents")}`, icon: <FolderOpenIcon /> },
+  //   { path: "/archivings", text: `${t("home_section.archivings")}`, icon: <ArchiveIcon /> },
+  //   { path: "/transactions", text: `${t("home_section.transactions")}`, icon: <BackupTableIcon /> },
+  //   { path: "/setting", text: `${t("home_section.setting")}`, icon: <SettingsIcon /> },
+  // ];
   return (
     <>
       <Box
@@ -86,7 +129,7 @@ export default function Sidebar(props) {
           right: language === "ar" ? "28px" : "auto",
           width:"45px", 
           height:"45px",
-          color:`${open ? "var(--primary-color)" : "#0f4b56"}`,
+          color:`${open ? "var(--primary-color)" : "var(--secondary-color)"}`,
           zIndex: "1001",
           cursor: "pointer",
       }}
@@ -108,140 +151,39 @@ export default function Sidebar(props) {
           open={open}
         >
           <List
-            sx={{
-              "& > a , & > div": { left: "7px" },
-              top: "85px",
-              maxHeight: "calc(100vh - 85px)",
-              overflowX: "hidden",
-              "&::scrollbar": {
-                width: "5px",
-              },
-              scrollbarWidth: "thin",
-              overflowY: "auto",
-            }}
-            onClick={() => setOpen(true)}
+          sx={{
+            "& > a , & > div": { left: "7px" },
+            top: "85px",
+            maxHeight: "calc(100vh - 85px)",
+            overflowX: "hidden",
+            "&::scrollbar": {
+              width: "5px",
+            },
+            scrollbarWidth: "thin",
+            overflowY: "auto",
+          }}
+          onClick={() => setOpen(true)}
           >
-            <ListItemButton
-              selected={selectedIndex === "Dashboard"}
-              onClick={() => setSelectedIndex("Dashboard")}
-              key="Dashboard"
-              sx={{
-                "& span ": {
-                  color:
-                    selectedIndex === "Dashboard" || location === "/dashboard"
-                      ? "var(--primary-color)"
-                      : "currentColor",
-                },
-              }}
-              component={NavLink}
-              to="/dashboard"
-            >
-              <ListItemIcon>
-                <HomeIcon sx={{color: selectedIndex === "Dashboard" || location === "/dashboard" ? "var(--primary-color)" : "#0f4b56"}} />
-              </ListItemIcon>
-              <ListItemText primary={`${t("home_section.dashboard")}`} />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedIndex === "survey"}
-              onClick={() => setSelectedIndex("survey")}
-              key="survey"
-              sx={{
-                "& span ": {
-                  color:
-                    selectedIndex === "survey" || location === "/survey"
-                      ? "var(--primary-color)"
-                      : "currentColor",
-                },
-              }}
-              component={NavLink}
-              to="/survey"
-            >
-              <ListItemIcon>
-                <PollIcon sx={{color: selectedIndex === "survey" || location === "/survey" ? "var(--primary-color)" : "#0f4b56"}} />
-              </ListItemIcon>
-              <ListItemText primary={`${t("home_section.survey")}`} />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedIndex === "documents"}
-              onClick={() => setSelectedIndex("documents")}
-              key="documents"
-              sx={{
-                "& span ": {
-                  color:
-                    selectedIndex === "documents" || location === "/documents"
-                      ? "var(--primary-color)"
-                      : "currentColor",
-                },
-              }}
-              component={NavLink}
-              to="/documents"
-            >
-              <ListItemIcon>
-                <FolderOpenIcon sx={{color: selectedIndex === "documents" || location === "/documents" ? "var(--primary-color)" : "#0f4b56"}} />
-              </ListItemIcon>
-              <ListItemText primary={`${t("home_section.documents")}`} />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedIndex === "archivings"}
-              onClick={() => setSelectedIndex("archivings")}
-              key="archivings"
-              sx={{
-                "& span ": {
-                  color:
-                    selectedIndex === "archivings" || location === "/archivings"
-                      ? "var(--primary-color)"
-                      : "currentColor",
-                },
-              }}
-              component={NavLink}
-              to="/archivings"
-            >
-              <ListItemIcon>
-                <ArchiveIcon sx={{color: selectedIndex === "archivings" || location === "/archivings" ? "var(--primary-color)" : "#0f4b56"}} />
-              </ListItemIcon>
-              <ListItemText primary={`${t("home_section.archivings")}`} />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedIndex === "transactions"}
-              onClick={() => setSelectedIndex("transactions")}
-              key="transactions"
-              sx={{
-                "& span ": {
-                  color:
-                    selectedIndex === "transactions" || location === "/transactions"
-                      ? "var(--primary-color)"
-                      : "currentColor",
-                },
-              }}
-              component={NavLink}
-              to="/transactions"
-            >
-              <ListItemIcon>
-                <BackupTableIcon sx={{color: selectedIndex === "transactions" || location === "/transactions" ? "var(--primary-color)" : "#0f4b56"}} />
-              </ListItemIcon>
-              <ListItemText primary={`${t("home_section.transactions")}`} />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedIndex === "setting"}
-              onClick={() => setSelectedIndex("setting")}
-              key="setting"
-              sx={{
-                "& span ": {
-                  color:
-                    selectedIndex === "setting" || location === "/setting"
-                      ? "var(--primary-color)"
-                      : "currentColor",
-                },
-              }}
-              component={NavLink}
-              to="/setting"
-            >
-              <ListItemIcon>
-                <SettingsIcon sx={{color: selectedIndex === "setting" || location === "/setting" ? "var(--primary-color)" : "#0f4b56"}} />
-              </ListItemIcon>
-              <ListItemText primary={`${t("home_section.setting")}`} />
-            </ListItemButton>
-           
+            {sidebarItems.map((item, index) => (
+              <ListItemButton
+                selected={selectedIndex === item.text}
+                onClick={() => setSelectedIndex(item.text)}
+                key={index}
+                component={NavLink}
+                to={item.path}
+                sx={{
+                  "& span ": {
+                    color:
+                      selectedIndex === item.name || location === item.path
+                        ? "var(--primary-color)"
+                        : "currentColor",
+                  },
+                }}
+              >
+                <ListItemIcon sx={{color: selectedIndex === item.text || location === item.path ? "var(--primary-color)" : "var(--secondary-color)"}}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            ))}
           </List>
         </Drawer>
       </Box>

@@ -1,22 +1,18 @@
+/* .mainContent{
+    width: 100%;
+} */
 .homeContainer{
-    display: grid;
+    display: grid; 
     place-items: center;
-    height: calc(100vh - 80px);
+    /* height: calc(100vh - 80px); */
+    width: 100%;
 }
 
 .cardContainer{
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 60px;
-    row-gap: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
 }
-@media screen and (max-width: 768px) {
-    .cardContainer {
-        grid-template-columns: repeat(4, 1fr); /* Displays 4 items per row for smaller screens */
-        column-gap: 20px;
-    }
-  }
 .homeCard{
     display:flex;
     justify-content:center;

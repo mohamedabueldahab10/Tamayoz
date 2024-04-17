@@ -15,10 +15,21 @@ import Documents from './pages/Documents/Documents';
 import Archivings from './pages/Archivings/Archivings';
 import Transactions from './pages/Transactions/Transactions';
 import Setting from './pages/Setting/Setting';
+import Discuss from './pages/Discuss/Discuss';
+import MeetingRoom from './pages/MeetingRoom/MeetingRoom';
+import Calender from './pages/Calender/Calender';
+import ToDo from './pages/ToDo/ToDo';
+import Contacts from './pages/Contacts/Contacts';
+import TimeSheet from './pages/TimeSheet/TimeSheet';
+import Knowledge from './pages/Knowledge/Knowledge';
+import Planning from './pages/Planning/Planning';
+import Appraisals from './pages/Appraisals/Appraisals';
+import Attendances from './pages/Attendances/Attendances';
+import TimeOff from './pages/TimeOff/TimeOff';
+import Employees from './pages/Employees/Employees';
 function App() {
   const { i18n } = useTranslation();
   const { language } = i18n;
-  console.log("current Language",language);
   const theme = createTheme({
     palette: {
       primary: {
@@ -46,6 +57,18 @@ function App() {
               <Route path='/archivings' element={<Archivings />} />
               <Route path='/transactions' element={<Transactions />} />
               <Route path='/setting' element={<Setting />} />
+              <Route path='/discuss' element={<Discuss />} />
+              <Route path='/meeting-room' element={<MeetingRoom />} />
+              <Route path='/calender' element={<Calender />} />
+              <Route path='/to-do' element={<ToDo />} />
+              <Route path='/contacts' element={<Contacts />} />
+              <Route path='/time-sheet' element={<TimeSheet />} />
+              <Route path='/knowledge' element={<Knowledge />} />
+              <Route path='/planning' element={<Planning />} />
+              <Route path='/appraisals' element={<Appraisals />} />
+              <Route path='/attendances' element={<Attendances />} />
+              <Route path='/time-off' element={<TimeOff />} />
+              <Route path='/employees' element={<Employees />} />
             </Route>
           </Routes>
         </div>

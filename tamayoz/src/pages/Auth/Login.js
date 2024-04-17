@@ -19,7 +19,6 @@ const Login = () => {
   const { t } = useTranslation("login");  
   const { i18n } = useTranslation();
   const { language } = i18n;
-  console.log("current Language",language);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -46,13 +45,7 @@ const Login = () => {
       changeLanguage("en");
     }
   }
-  const { LoginError } = useSelector((state) => {
-    console.log(state);
-    return {
-      LoginError: state.auth.LoginError,
-    };
-  });
-  console.log("LoginError",LoginError.code);
+  const { LoginError } = useSelector((state) => state.auth);
   // ====================
   async function handleLogin(data) {
     setLoading(true);
@@ -65,15 +58,12 @@ const Login = () => {
     }
   }
   useEffect(() => {
-    if(LoginError.code === "ERR_BAD_REQUEST"){
+    if(LoginError?.code === "ERR_BAD_REQUEST"){
       setSnack(true);
-      setError(LoginError.message);
+      setError(LoginError?.message);
     }
   }, [LoginError])
   
-
-  console.log("loading",loading);
-  console.log("Error",error);
   return (
     <Box sx={{height:"100vh"}}>
     <div className={styles.authContainer}>

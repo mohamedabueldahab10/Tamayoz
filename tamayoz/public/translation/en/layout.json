@@ -1,12 +1,26 @@
 {
     "home_section": {
+        "apps": "Apps",
         "home": "Home",
         "dashboard": "Dashboard",
         "survey": "Survey",
         "documents": "Documents",
         "archivings": "Archivings",
         "transactions": "Transactions",
-        "setting": "Setting"
+        "setting": "Setting",
+        "discuss": "Discuss",
+        "meeting_room": "Meeting Room",
+        "calender": "Calender",
+        "to_do": "To Do",
+        "contacts": "Contacts",
+        "project": "Projects",
+        "time_sheet": "Time Sheet",
+        "knowledge": "Knowledge",
+        "planning": "Planning",
+        "appraisals": "Appraisals",
+        "attendances": "Attendances",
+        "time_off": "Time Off",
+        "employees": "Employees"
     },
     "navbar": {
         "log_out": "Log out",
