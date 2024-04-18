@@ -56,11 +56,24 @@ const Login = () => {
       dispatch(handleUserLogin(userData));
       setLoading(false);
     }
+    if(LoginError?.code === "ERR_BAD_REQUEST"){
+      setSnack(true);
+      setError(LoginError?.message);
+    }
+    if(LoginError === true){
+      setSnack(true);
+      setError(t("error.message"));
+    }
   }
+  console.log("Error",LoginError);
   useEffect(() => {
     if(LoginError?.code === "ERR_BAD_REQUEST"){
       setSnack(true);
       setError(LoginError?.message);
+    }
+    if(LoginError === true){
+      setSnack(true);
+      setError(t("error.message"));
     }
   }, [LoginError])
   

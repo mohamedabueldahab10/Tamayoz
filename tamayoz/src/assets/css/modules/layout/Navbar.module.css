@@ -13,7 +13,7 @@
 .homenavbarContainer {
     width: 100%;
     position: fixed;
-    height: var(--home-navbar-height);
+    height: var(--navbar-height);
     display: flex;
     justify-content: space-between;
     align-items: center;

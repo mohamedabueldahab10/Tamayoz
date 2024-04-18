@@ -38,9 +38,7 @@ a:hover {
   text-align: center;
   display: grid;
   place-items: center;
-  /* border: 1px solid var(--primary-color); */
   cursor: pointer;
-  color: var(--primary-color);
 }
 .iconContainer{
   background-color: #00000030;
@@ -52,10 +50,21 @@ a:hover {
   border-radius: 10px;
   margin-bottom: 5px;
 }
-.iconContainer:hover{
-  transform: translateY(-3px);
-  border: 1px solid #fff;
-  color: var(--secondary-color);
+.cardTxt{
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: #ccc;
+}
+.mainCard:hover{
+  .iconContainer{
+    transform: translateY(-3px);
+    border: 1px solid #fff;
+    color: var(--secondary-color);
+  }
+  .cardTxt{
+    color: var(--primary-color);
+    font-size: 21px;
+  }
 }
 @media screen and (max-width: 550px) {
   .formHeader{

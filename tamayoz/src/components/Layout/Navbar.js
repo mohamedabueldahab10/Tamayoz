@@ -99,66 +99,68 @@ export default function Navbar() {
     { path: "/employees", text: `${t("home_section.employees")}`, icon: <BadgeIcon /> },
   ];
   return (
-    <div className={styles.navbarContainer}>
+    <div className={location==="/"? styles.homenavbarContainer: styles.navbarContainer}>
       <div className={styles.navbarLeft}>
       <img src={LogoImg} alt='Tamayoz' />
       </div>
       <div className={styles.navbarRoutes}>
-      <div>
-      <StyledButton
-        small="true"
-        id="basic-button"
-        aria-controls={openEl ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={openEl ? 'true' : undefined}
-        onClick={handleQuickLink}
-      >
-        {`${t("home_section.apps")}`} 
-      </StyledButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={quickLinks}
-        open={openQuick}
-        onClose={handleCloseQuick}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <List
-          sx={{
-            maxHeight: "250px",
-            overflowX: "hidden",
-            "&::scrollbar": {
-              width: "5px",
-            },
-            scrollbarWidth: "thin",
-            overflowY: "auto",
-          }}
-          onClick={() => setQuickLinks(false)}
+      {location==="/" ? <></> :
+        <div>
+          <StyledButton
+            small="true"
+            id="basic-button"
+            aria-controls={openEl ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={openEl ? 'true' : undefined}
+            onClick={handleQuickLink}
           >
-            {sidebarItems.map((item, index) => (
-              <ListItemButton
-                selected={selectedIndex === item.text}
-                onClick={() => setSelectedIndex(item.text)}
-                key={index}
-                component={NavLink}
-                to={item.path}
-                sx={{
-                  "& span ": {
-                    color:
-                      selectedIndex === item.name || location === item.path
-                        ? "var(--primary-color)"
-                        : "currentColor",
-                  },
-                }}
+            {`${t("home_section.apps")}`} 
+          </StyledButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={quickLinks}
+            open={openQuick}
+            onClose={handleCloseQuick}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <List
+              sx={{
+                maxHeight: "250px",
+                overflowX: "hidden",
+                "&::scrollbar": {
+                  width: "5px",
+                },
+                scrollbarWidth: "thin",
+                overflowY: "auto",
+              }}
+              onClick={() => setQuickLinks(false)}
               >
-                <ListItemIcon sx={{color: selectedIndex === item.text || location === item.path ? "var(--primary-color)" : "var(--secondary-color)"}}>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            ))}
-          </List>
-      </Menu>
-    </div>
+                {sidebarItems.map((item, index) => (
+                  <ListItemButton
+                    selected={selectedIndex === item.text}
+                    onClick={() => setSelectedIndex(item.text)}
+                    key={index}
+                    component={NavLink}
+                    to={item.path}
+                    sx={{
+                      "& span ": {
+                        color:
+                          selectedIndex === item.name || location === item.path
+                            ? "var(--primary-color)"
+                            : "currentColor",
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{color: selectedIndex === item.text || location === item.path ? "var(--primary-color)" : "var(--secondary-color)"}}>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                ))}
+              </List>
+          </Menu>
+        </div>
+        }
       </div>
       <div className={styles.navbarRight}>
         <div className={styles.iconslist}>

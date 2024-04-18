@@ -2,7 +2,6 @@ import React from 'react';
 import { Grid, Typography, Container, Box } from '@mui/material';
 import "../assets/css/App.css"
 import { useNavigate } from "react-router-dom";
-import HomeNav from '../components/Layout/HomeNav';
 import { useTranslation } from "react-i18next";
 import {
     DashboardIcon,
@@ -49,7 +48,6 @@ const MainMenu = () => {
 const navigate = useNavigate();
   return (
     <>
-    <HomeNav />
     <div className="mainMenu">
       <Container sx={{width:"80%",minWidth:"300px",marginBlock:"60px"}}>
         <Grid container spacing={6} justifyContent="start">
@@ -59,7 +57,7 @@ const navigate = useNavigate();
                         <Box>
                             {item.icon} 
                         </Box>
-                        <Typography sx={{fontSize:"21px",letterSpacing:"-0.5px"}}>{item.text}</Typography>
+                        <Typography className='cardTxt'>{item.text}</Typography>
                     </Box>
                 </Grid>
             ))}

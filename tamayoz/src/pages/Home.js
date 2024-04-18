@@ -45,7 +45,7 @@ const Home = () => {
     if (isLoggedIn) {
       return (
         <>
-          {location === "/" ? <></> :<Navbar />}
+          <Navbar />
           <Box
             className={styles.cardContainer}
             dir={language === "ar" ? "rtl" : "ltr"}
@@ -55,7 +55,7 @@ const Home = () => {
             <Box 
               sx={{ 
                 width: location === "/" ? "100%" : `calc(100% - ${currentWidth})`,
-                padding: location === "/" ? "0px" : "30px",
+                padding: location === "/" ? "0px" : "10px 15px",
                 marginTop: location === "/" ? "0px" : "var(--navbar-height)"
               }}
             >

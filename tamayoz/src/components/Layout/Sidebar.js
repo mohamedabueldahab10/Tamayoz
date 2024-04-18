@@ -3,9 +3,6 @@ import { styled } from "@mui/material/styles";
 import HomeIcon from '@mui/icons-material/Home';
 import PollIcon from '@mui/icons-material/Poll';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import BackupTableIcon from '@mui/icons-material/BackupTable';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 import {
   Box,
@@ -71,7 +68,7 @@ export default function Sidebar(props) {
   const handleHoverOn = () => setOpen(true);
   const handleHoverOff = () => setOpen(false);
   const handleToggleNavbar = () => {
-    setCurrentWidth(!open ? "260px" : "73px");
+    setCurrentWidth(!open ? "200px" : "73px");
     setOpen(!open);
     setDisableFunctions((disableFunctions) => !disableFunctions);
   };
@@ -80,9 +77,9 @@ export default function Sidebar(props) {
     let newSidebarItems = [];
     if (location === "/dashboard") {
       newSidebarItems = [
-        { path: "/dashboard", text: "Dashboard", icon: <HomeIcon /> },
-        { path: "/survey", text: "Survey", icon: <PollIcon /> },
-        { path: "/documents", text: "Documents", icon: <FolderOpenIcon /> },
+        { path: "/dashboard", text: `${t("home_section.dashboard")}`, icon: <HomeIcon /> },
+        { path: "/survey", text: `${t("home_section.survey")}`, icon: <PollIcon /> },
+        { path: "/documents", text: `${t("home_section.documents")}`, icon: <FolderOpenIcon /> },
         // Add more items as needed
       ];
     } else if (location === "/survey") {
@@ -124,9 +121,9 @@ export default function Sidebar(props) {
         <MenuIcon
         sx={{ 
           position: "fixed",
-          top: 25,
+          top: 5,
           left: language === "ar" ? "auto" : "15px",
-          right: language === "ar" ? "28px" : "auto",
+          right: language === "ar" ? "15px" : "auto",
           width:"45px", 
           height:"45px",
           color:`${open ? "var(--primary-color)" : "var(--secondary-color)"}`,
@@ -154,7 +151,7 @@ export default function Sidebar(props) {
           sx={{
             "& > a , & > div": { left: "7px" },
             top: "85px",
-            maxHeight: "calc(100vh - 85px)",
+            maxHeight: "calc(100vh - 55px)",
             overflowX: "hidden",
             "&::scrollbar": {
               width: "5px",
@@ -166,21 +163,25 @@ export default function Sidebar(props) {
           >
             {sidebarItems.map((item, index) => (
               <ListItemButton
-                selected={selectedIndex === item.text}
-                onClick={() => setSelectedIndex(item.text)}
-                key={index}
+              selected={selectedIndex === item.text}
+              onClick={() => setSelectedIndex(item.text)}
+              key={index}
                 component={NavLink}
                 to={item.path}
                 sx={{
                   "& span ": {
                     color:
-                      selectedIndex === item.name || location === item.path
-                        ? "var(--primary-color)"
-                        : "currentColor",
+                    selectedIndex === item.name || location === item.path
+                    ? "var(--primary-color)"
+                    : "currentColor",
                   },
                 }}
               >
-                <ListItemIcon sx={{color: selectedIndex === item.text || location === item.path ? "var(--primary-color)" : "var(--secondary-color)"}}>{item.icon}</ListItemIcon>
+                <ListItemIcon 
+                  sx={{color: selectedIndex === item.text || location === item.path ? "var(--primary-color)" : "var(--secondary-color)"}}
+                >
+                    {item.icon}
+                </ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
             ))}

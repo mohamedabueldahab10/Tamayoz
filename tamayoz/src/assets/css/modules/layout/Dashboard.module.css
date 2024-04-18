@@ -1,6 +1,4 @@
-/* .mainContent{
-    width: 100%;
-} */
+/* Home.js page styling */
 .homeContainer{
     display: grid; 
     place-items: center;
@@ -34,4 +32,19 @@
     font-weight: 700;
     font-size: 18px;
     color: var(--primary-color);
+}
+/* ============================================================ */
+/* Dashboard.js page styling */
+.arrowContainer{
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    display: grid;
+    place-items: center;
+    margin: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.MuiDataGrid-footerContainer{
+    display: none !important;
 }
