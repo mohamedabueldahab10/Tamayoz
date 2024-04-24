@@ -1,11 +1,14 @@
 import { InputBase } from "@mui/material";
 import styled from "styled-components";
 const StyledInputBase = styled(InputBase)(() => ({
-    minWidth: "220px",
+    width: "100%",
+    maxWidth:"250px",
+    minWidth:"230px",
     "& .MuiInputBase-input": {
+      width:"100%",
       border: "2px solid var(--primary-color)",
       borderRadius: "5px",
-      padding: "7px 35px",
+      padding: "7px",
       display: `${(props) =>
       props.variant === "flex" ? "flex" : ""}`,
       transition: "box-shadow .5s",

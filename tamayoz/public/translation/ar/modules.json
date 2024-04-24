@@ -1,0 +1,31 @@
+{
+    "employees": {
+        "name":"الموظفين",
+        "new":"جديد",
+        "start": "بدأ",
+        "send": "إرسال",
+        "resend": "إعادة إرسال",
+        "stop": "إيقاف",
+        "close": "إغلاق",
+        "edit":"تعديل",
+        "delete":"حذف"
+    },
+    "form": {
+        "employee_name": "اسم الموظف",
+        "job_position": "المسمى الوظيفي",
+        "tags": "القسم",
+        "work_mobile": "موبايل العمل",
+        "department": "الإدارة",
+        "work_phone": "هاتف العمل",
+        "work_mail": "البريد الإلكتروني",
+        "manager": "المدير",
+        "company": "الشركة",
+        "coach": "المشرف",
+        "next_appraisal_date": "تاريخ التقييم التالي"
+    },
+    "validation": {
+        "employee_name": "برجاء إدخال اسم الموظف",
+        "job_position": "برجاء إدخال المسمى الوظيفي"
+    }
+}
+  

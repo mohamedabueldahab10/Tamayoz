@@ -52,7 +52,7 @@ const navigate = useNavigate();
       <Container sx={{width:"80%",minWidth:"300px",marginBlock:"60px"}}>
         <Grid container spacing={6} justifyContent="start">
             {sidebarItems.map((item, index) => (
-                <Grid item xs={6} sm={4} md={2} sx={{display:"grid",placeItems:"center"}}>
+                <Grid key={index} item xs={6} sm={4} md={2} sx={{display:"grid",placeItems:"center"}}>
                     <Box className='mainCard' onClick={() => navigate(item.path)}>
                         <Box>
                             {item.icon} 

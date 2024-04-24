@@ -1,0 +1,31 @@
+{
+    "employees": {
+        "name":"Employees",
+        "new":"New",
+        "start": "Start",
+        "send": "Send",
+        "resend": "Resend",
+        "stop": "Stop",
+        "close": "Close",
+        "edit":"Edit",
+        "delete":"Delete"
+    },
+    "form": {
+        "employee_name": "Employee Name",
+        "job_position": "Job Position",
+        "tags": "Tags",
+        "work_mobile": "Work Mobile",
+        "department": "Department",
+        "work_phone": "Work Phone",
+        "work_mail": "Work Email",
+        "manager": "Manager",
+        "company": "Company",
+        "coach": "Coach",
+        "next_appraisal_date": "Next Appraisal Date"
+    },
+    "validation": {
+        "employee_name": "Please Enter Employee Name",
+        "job_position": "Please Enter Job Position"
+    }
+}
+  

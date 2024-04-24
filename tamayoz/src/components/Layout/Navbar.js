@@ -332,6 +332,7 @@ export default function Navbar() {
                   marginTop: "10px",
                   marginBottom: "10px",
                   fontSize: "18px",
+                  paddingInline:"10px"
                 }}
               >
                 {t("navbar.no_Notification")}

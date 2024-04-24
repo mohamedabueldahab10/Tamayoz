@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import '../src/assets/css/global.css';
 import '../src/assets/css/App.css';
 import Loading from './components/Loading';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./components/helpers/i18n"
 import { useTranslation } from "react-i18next";
 import Home from "./pages/Home";
@@ -27,6 +27,7 @@ import Appraisals from './pages/Appraisals/Appraisals';
 import Attendances from './pages/Attendances/Attendances';
 import TimeOff from './pages/TimeOff/TimeOff';
 import Employees from './pages/Employees/Employees';
+import NewEmployee from './pages/Employees/NewEmployee';
 function App() {
   const { i18n } = useTranslation();
   const { language } = i18n;
@@ -40,6 +41,14 @@ function App() {
       },
     },
   });
+  const navigate = useNavigate();
+  useEffect(() => {
+    const currentPage = localStorage.getItem('currentPage');
+
+    if (currentPage) {
+      navigate(currentPage)
+    }
+  }, [navigate]);
   return (
     <Suspense fallback={<Loading />}>
       <ThemeProvider theme={theme}>
@@ -69,6 +78,7 @@ function App() {
               <Route path='/attendances' element={<Attendances />} />
               <Route path='/time-off' element={<TimeOff />} />
               <Route path='/employees' element={<Employees />} />
+              <Route path="/employees/new_employee" element={<NewEmployee />} />
             </Route>
           </Routes>
         </div>
