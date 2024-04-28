@@ -87,19 +87,19 @@ export default function NewEmployee() {
     const methods = useForm({
         mode: "onTouched",
         resolver: yupResolver(schema),
-        defaultValues: {
-        employeeName: "",
-        // jobPosition: 0,
-        // tags: 0,
-        workMobile: "",
-        // department: 0,
-        workPhone: "",
-        jobPositionName: "",
-        workMail: "",
-        // manager: 0,
-        // company: 0,
-        // coach: 0,
-        nextAppraisalDate: ""
+       defaultValues: {
+        employeeName: '',
+        workMobile: '',
+        workPhone: '',
+        jobPositionName: '',
+        workMail: '',
+        nextAppraisalDate: '',
+        tags: [],
+        department: [],
+        jobPosition: [],
+        manager: [],
+        company: [],
+        coach: [],
     },
   });
     const {
@@ -113,6 +113,10 @@ export default function NewEmployee() {
     async function handleFormSubmit(data){
         console.log('Employee Data',data);
     }
+  const handleDepartmentChange = (e, newValue) => {
+    // Handle department change here
+    console.log("Department value changed:", newValue);
+  };
     const currencies = [
   { label: 'Sales', id: 1,},
   { label: 'Trainer', id: 2,},
@@ -138,27 +142,27 @@ return (
                             {...register("jobPositionName")}
                         />
                     </Box>
-                    <Controller
+                     <Controller
                         name="tags"
                         control={control}
-                        defaultValue={[]} // Set default value as an array
+                        sx={{
+                            border: "none !importants ",
+                            width: "300px",
+                        }}
                         render={({ field }) => (
-                        <CustomizedAutoComplete
-                            {...field}
-                            options={currencies} // Example options array
-                            getOptionLabel={(option) => option.label} // Function to get label from option
-                            id="customized-auto-complete"
-                            multiple // Set to true if you want to allow multiple selections
-                        />
-                        )}
-                    />
-                        {/* <CustomizedAutoComplete
-                            options={currencies}
-                            name="tags"
-                            label={t("form.tags")}
-                            fullWidth
-                            control={control}
-                        /> */}
+                            <CustomizedAutoComplete
+                                {...field}
+                                defaultValue={[]}
+                                id="autocomplete"
+                                label="Tags"
+                                options={currencies}
+                                getOptionLabel={(option) => option.label}
+                                multiple // Enable multiple selection
+                                onChange={handleDepartmentChange}
+                            />
+                            )
+                        }
+                />
                 </Box>
                 <Box>
                 <div>
@@ -213,24 +217,18 @@ return (
                     placeholder={t("form.work_mobile")}
                     {...register("workMobile")}
                     />
-                    </Box>
+                </Box>
                 <Box sx={singleRow}>
                     <Box sx={{width:"100px"}}>
                     <CustomLabel>{t("form.department")}</CustomLabel> 
                     </Box>
-                       <Controller
+                    <CustomizedAutoComplete
                         name="department"
-                        control={control}
-                        defaultValue={[]} // Set default value as an array
-                        render={({ field }) => (
-                        <CustomizedAutoComplete
-                            {...field}
-                            options={currencies} // Example options array
-                            getOptionLabel={(option) => option.label} // Function to get label from option
-                            id="customized-auto-complete"
-                            multiple // Set to true if you want to allow multiple selections
-                        />
-                        )}
+                        label={t("form.department")}
+                        options={currencies} 
+                        getOptionLabel={(option) => option.label} 
+                        id="customized-auto-complete"
+                        multiple 
                     />
                 </Box>
             </Box>
@@ -249,19 +247,13 @@ return (
                     <Box sx={{width:"100px"}}>
                     <CustomLabel>{t("form.job_position")}</CustomLabel> 
                     </Box>
-                        <Controller
+                    <CustomizedAutoComplete
                         name="jobPosition"
-                        control={control}
-                        defaultValue={[]} // Set default value as an array
-                        render={({ field }) => (
-                        <CustomizedAutoComplete
-                            {...field}
-                            options={currencies} // Example options array
-                            getOptionLabel={(option) => option.label} // Function to get label from option
-                            id="customized-auto-complete"
-                            multiple // Set to true if you want to allow multiple selections
-                        />
-                        )}
+                        label={t("form.job_position")}
+                        options={currencies} 
+                        getOptionLabel={(option) => option.label} 
+                        id="customized-auto-complete"
+                        multiple 
                     />
                 </Box>
             </Box>
@@ -280,19 +272,13 @@ return (
                     <Box sx={{width:"100px"}}>
                     <CustomLabel>{t("form.manager")}</CustomLabel> 
                     </Box>
-                      <Controller
+                    <CustomizedAutoComplete
                         name="manager"
-                        control={control}
-                        defaultValue={[]} // Set default value as an array
-                        render={({ field }) => (
-                        <CustomizedAutoComplete
-                            {...field}
-                            options={currencies} // Example options array
-                            getOptionLabel={(option) => option.label} // Function to get label from option
-                            id="customized-auto-complete"
-                            multiple // Set to true if you want to allow multiple selections
-                        />
-                        )}
+                        label={t("form.manager")}
+                        options={currencies} 
+                        getOptionLabel={(option) => option.label} 
+                        id="customized-auto-complete"
+                        multiple 
                     />
                     </Box>
             </Box>
@@ -301,38 +287,26 @@ return (
                     <Box sx={{width:"100px"}}>
                     <CustomLabel>{t("form.company")}</CustomLabel> 
                     </Box>
-                       <Controller
+                    <CustomizedAutoComplete
                         name="company"
-                        control={control}
-                        defaultValue={[]} // Set default value as an array
-                        render={({ field }) => (
-                        <CustomizedAutoComplete
-                            {...field}
-                            options={currencies} // Example options array
-                            getOptionLabel={(option) => option.label} // Function to get label from option
-                            id="customized-auto-complete"
-                            multiple // Set to true if you want to allow multiple selections
-                        />
-                        )}
+                        label={t("form.company")}
+                        options={currencies} 
+                        getOptionLabel={(option) => option.label} 
+                        id="customized-auto-complete"
+                        multiple 
                     />
                     </Box>
                 <Box sx={singleRow}>
                     <Box sx={{width:"100px"}}>
                     <CustomLabel>{t("form.coach")}</CustomLabel> 
                     </Box>
-                        <Controller
+                    <CustomizedAutoComplete
                         name="coach"
-                        control={control}
-                        defaultValue={[]} // Set default value as an array
-                        render={({ field }) => (
-                        <CustomizedAutoComplete
-                            {...field}
-                            options={currencies} // Example options array
-                            getOptionLabel={(option) => option.label} // Function to get label from option
-                            id="customized-auto-complete"
-                            multiple // Set to true if you want to allow multiple selections
-                        />
-                        )}
+                        label={t("form.coach")}
+                        options={currencies} 
+                        getOptionLabel={(option) => option.label} 
+                        id="customized-auto-complete"
+                        multiple 
                     />
                 </Box>
             </Box>
