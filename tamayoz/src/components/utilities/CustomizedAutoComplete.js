@@ -6,35 +6,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
 import { useFormContext, Controller } from "react-hook-form";
-
-const Root = styled('div')`
-  color: rgba(255,255,255,0.65);
-  font-size: 14px;
-`;
-
-const Label = styled('label')`
-  padding: 0 0 4px;
-  line-height: 1.5;
-  display: block;
-  color:#000;
-`;
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import ErrorText from './ErrorText';
 const InputWrapper = styled('div')`
   width: 230px;
   border: 2px solid var(--primary-color);
-  border-radius: 4px;
+  border-inline: none !important;
+  border-top: none !important;
   padding: 1px;
   display: flex;
   flex-wrap: wrap;
-
-  &:hover {
-    border-color: 'var(--primary-color)';
-  }
-
-  &:focused {
-    border: '5px solid var(--secondary-color)';
-  }
-
+  position: relative;
   & input {
     background-color: #fff;
     color: #ccc;
@@ -47,6 +30,11 @@ const InputWrapper = styled('div')`
     border: 0;
     margin: 0;
     outline: 0;
+    &::placeholder {
+      font-size: 18px;
+      color: #ccc;
+      letter-spacing: 0.5px;
+    }
   }
 `;
 
@@ -75,18 +63,17 @@ const Tag = ({ label, onDelete }) => (
     <CloseIcon sx={{cursor:"pointer",padding:"2px"}} onClick={onDelete} />
   </div>
 );
-
 Tag.propTypes = {
   label: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
-
-
 const Listbox = styled('ul')`
   width: 300px;
   margin: 2px 0 0;
   padding: 0;
   position: absolute;
+  top: 100%;
+  left: 0;
   list-style: none;
   background-color: #fff;
   overflow: auto;
@@ -127,18 +114,20 @@ const Listbox = styled('ul')`
   }
 `;
 
-const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel, label, name, onChange }) => {
+const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel,label, name, error }) => {
+  const { control, setValue } = useFormContext();
+   const handleAutocompleteChange = (event, newValue) => {
+    console.log("value", newValue);
+    console.log("name", name);
+    setValue(name, newValue, { shouldValidate: true });
+  };
   const {
-    getRootProps,
-    getInputLabelProps,
     getInputProps,
     getTagProps,
     getListboxProps,
     getOptionProps,
     groupedOptions,
     value,
-    focused,
-    setAnchorEl,
   } = useAutocomplete({
     id,
     defaultValue,
@@ -146,59 +135,59 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     options,
     getOptionLabel,
     isOptionEqualToValue: (option, value) => option.id === value.id,
+    onChange: handleAutocompleteChange,
   });
-  const { control } = useFormContext();
-  
-  const handleAutocompleteChange = (event, newValue) => {
-    if (onChange) {
-      onChange(newValue);
-    }
-  };
-
+//   const schema = yup.object().shape({
+//   name: yup.array().min(1, 'Please select at least one department').required('Department is required'),
+// });
   return (
-    <Root>
-      <div {...getRootProps()}>
-        <Label {...getInputLabelProps()}>{label}</Label>
-        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
+    <>
+      <div>
+        <InputWrapper>
           {value.map((option, index) => (
-            <Tag key={index} label={option.label} onDelete={() => {}} {...getTagProps({ index })} />
+            <Tag label={option.label} {...getTagProps({ index })} />
           ))}
           <Controller
             name={name}
             control={control}
             render={({ field }) => (
-              <input
-                {...field}
-                {...getInputProps()}
-                onChange={(event) => handleAutocompleteChange(event, event.target.value)}
-              />
+            <input
+            {...field} 
+            value={value}
+            {...getInputProps()} 
+            placeholder={label}
+            />
             )}
-          />
+        />
+        {groupedOptions.length > 0 ? (
+          <Listbox {...getListboxProps()}>
+            {groupedOptions.map((option, index) => (
+              <li {...getOptionProps({ option, index })}>
+                <span>{option.label}</span>
+                <CheckIcon fontSize="small" />
+              </li>
+            ))}
+          </Listbox>
+        ) : null}
         </InputWrapper>
+        {error ? <ErrorText>{error.message}</ErrorText> : null}
       </div>
-      {groupedOptions.length > 0 ? (
-        <Listbox {...getListboxProps()}>
-          {groupedOptions.map((option, index) => (
-            <li key={index} {...getOptionProps({ option, index })}>
-              <span>{option.label}</span>
-              <CheckIcon fontSize="small" />
-            </li>
-          ))}
-        </Listbox>
-      ) : null}
-    </Root>
+    </>
   );
 };
 
 CustomizedAutoComplete.propTypes = {
-  options: PropTypes.array.isRequired,
-  defaultValue: PropTypes.array,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  defaultValue: PropTypes.arrayOf(PropTypes.object),
   multiple: PropTypes.bool,
-  id: PropTypes.string.isRequired,
-  getOptionLabel: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
+  id: PropTypes.string,
+  getOptionLabel: PropTypes.func,
+};
+CustomizedAutoComplete.defaultProps = {
+  defaultValue: [],
+  multiple: false,
+  id: 'customized-autocomplete',
 };
 
 export default CustomizedAutoComplete;
+

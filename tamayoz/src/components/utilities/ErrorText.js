@@ -2,6 +2,6 @@ import styled from "styled-components";
 
 const ErrorText = styled.p`
   color: red;
-  padding-top: 10px;
+  font-size: 15px;
 `;
 export default ErrorText;

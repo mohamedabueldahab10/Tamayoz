@@ -25,7 +25,17 @@
     },
     "validation": {
         "employee_name": "Please Enter Employee Name",
-        "job_position": "Please Enter Job Position"
+        "job_position_name": "Please Enter Job Position",
+        "tags": "Please Enter Tags",
+        "work_mobile": "Please Enter Work Mobile",
+        "department": "Please Enter Department",
+        "work_phone": "Please Enter Work Phone",
+        "job_position": "Please Enter Job Position",
+        "work_mail": "Please Enter Work Mail",
+        "manager": "Please Enter Manger",
+        "company": "Please Enter Job Position",
+        "coach": "Please Enter Coach",
+        "date": "Please Enter Date"
     }
 }
   
