@@ -5,22 +5,25 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext, Controller, useController } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorText from './ErrorText';
 const InputWrapper = styled('div')`
   width: 230px;
-  border: 2px solid var(--primary-color);
+  border: 1px solid var(--secondary-color);
   border-inline: none !important;
   border-top: none !important;
   padding: 1px;
   display: flex;
   flex-wrap: wrap;
   position: relative;
+   &:focus-within {
+    border: 2px solid var(--primary-color);
+  }
   & input {
     background-color: #fff;
-    color: #ccc;
+    color: var(--primary-color);
     height: 35px;
     box-sizing: border-box;
     padding: 6px;
@@ -114,11 +117,10 @@ const Listbox = styled('ul')`
   }
 `;
 
-const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel,label, name, error }) => {
+const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel,label, name, errors}) => {
   const { control, setValue } = useFormContext();
-   const handleAutocompleteChange = (event, newValue) => {
-    console.log("value", newValue);
-    console.log("name", name);
+  const {field} = useController({name}); 
+  const handleAutocompleteChange = (event, newValue) => {
     setValue(name, newValue, { shouldValidate: true });
   };
   const {
@@ -128,6 +130,8 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     getOptionProps,
     groupedOptions,
     value,
+    focused,
+    setAnchorEl,
   } = useAutocomplete({
     id,
     defaultValue,
@@ -135,15 +139,12 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     options,
     getOptionLabel,
     isOptionEqualToValue: (option, value) => option.id === value.id,
-    onChange: handleAutocompleteChange,
+    onChange:handleAutocompleteChange,
   });
-//   const schema = yup.object().shape({
-//   name: yup.array().min(1, 'Please select at least one department').required('Department is required'),
-// });
   return (
     <>
       <div>
-        <InputWrapper>
+        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
           {value.map((option, index) => (
             <Tag label={option.label} {...getTagProps({ index })} />
           ))}
@@ -170,7 +171,7 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
           </Listbox>
         ) : null}
         </InputWrapper>
-        {error ? <ErrorText>{error.message}</ErrorText> : null}
+        {errors && <ErrorText>{errors[name]?.message}</ErrorText> }
       </div>
     </>
   );

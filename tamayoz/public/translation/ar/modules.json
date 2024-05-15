@@ -23,6 +23,24 @@
         "coach": "المشرف",
         "next_appraisal_date": "تاريخ التقييم التالي"
     },
+    "resume": {
+        "resume":"السيرة الذاتية",
+        "add_resume":"أضف جديد",
+        "timeline": "الإحصائيات",
+        "skills": "المهارات",
+        "skills_captions": "يمكنك إضافة مهارات الى الملف التعريفي للموظف, اذا لم تجد بعض المهارات فيمكن انشاؤها بواسطة مسؤول الموارد البشرية",
+        "pick_skill": "اختر مهارة من القائمة",
+        "select_skills": "اختر المهارات"
+    },
+    "work_info": {
+        "work_info":"معلومات العمل"
+    },
+    "private_info": {
+        "private_info":"معلومات خاصة"
+    },
+    "hr_settings": {
+        "hr_settings":"إعدادات الموارد البشرية"
+    },
     "validation": {
         "employee_name": "برجاء إدخال اسم الموظف",
         "job_position_name": "برجاء إدخال المسمى الوظيفي",

@@ -12,6 +12,9 @@ const StyledButton = styled.button`
   color: #fff;
   text-transform: capitalize;
   cursor: pointer;
+  &:hover {
+    background: ${(props) => (props.hoverColor ? props.hoverColor : "var(--text-primary-color)")};
+  }
 `;
 export default StyledButton;
 

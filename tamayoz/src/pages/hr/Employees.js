@@ -271,7 +271,7 @@ export default function Employees() {
     return () => {
       localStorage.removeItem('currentPage');
     };
-  }, [location.pathname]);
+  }, []);
   return (
     <div>
       <Box 

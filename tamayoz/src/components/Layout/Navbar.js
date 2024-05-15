@@ -7,6 +7,7 @@ import SearchBar from "../SearchBar";
 import LogoImg from "../../assets/images/tamayoz-logo.png"
 import ButtonsContainer from "../utilities/ButtonsContainer"
 import Notification from "../utilities/Notification"
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -79,7 +80,8 @@ export default function Navbar() {
     setQuickLinks(null);
   };
   const sidebarItems = [
-    { path: "/dashboard", text: `${t("home_section.dashboard")}`, icon: <HomeIcon /> },
+    { path: "/", text: `${t("home_section.main_menu")}`, icon: <HomeIcon /> },
+    { path: "/dashboard", text: `${t("home_section.dashboard")}`, icon: <DashboardIcon /> },
     { path: "/survey", text: `${t("home_section.survey")}`, icon: <PollIcon /> },
     { path: "/documents", text: `${t("home_section.documents")}`, icon: <FolderOpenIcon /> },
     { path: "/archivings", text: `${t("home_section.archivings")}`, icon: <ArchiveIcon /> },

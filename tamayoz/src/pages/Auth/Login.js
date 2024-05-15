@@ -2,7 +2,7 @@ import React, { useState , useEffect } from 'react'
 import LoginInputUser from '../../components/utilities/LoginInputUser'
 import PasswordInput from '../../components/utilities/PasswordInput'
 import styles from "../../assets/css/modules/auth/Login.module.css";
-import {Box, Alert, Snackbar, IconButton , Stack} from "@mui/material";
+import {Box, Alert, Snackbar, IconButton , Stack, CircularProgress} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import LogoImg from "../../assets/images/tamayoz-logo.png"
 import StyledButton from '../../components/utilities/StyledButton';
@@ -56,24 +56,18 @@ const Login = () => {
       dispatch(handleUserLogin(userData));
       setLoading(false);
     }
-    if(LoginError?.code === "ERR_BAD_REQUEST"){
-      setSnack(true);
-      setError(LoginError?.message);
-    }
-    if(LoginError === true){
-      setSnack(true);
-      setError(t("error.message"));
-    }
   }
-  console.log("Error",LoginError);
+  console.log("Error:-",LoginError?.error.message);
   useEffect(() => {
-    if(LoginError?.code === "ERR_BAD_REQUEST"){
+    if(LoginError?.error.message === 'Request failed with status code 400'){
       setSnack(true);
-      setError(LoginError?.message);
+      console.log(LoginError);
+      setError(t("error.message_credentials"));
     }
-    if(LoginError === true){
-      setSnack(true);
-      setError(t("error.message"));
+    else if(LoginError?.error){
+      setSnack(true)
+      console.log(LoginError);
+      setError(t("error.message_unexpected"));
     }
   }, [LoginError])
   
@@ -118,7 +112,7 @@ const Login = () => {
                   <p>{t("form.or")}</p>
                 </div>
                 <div className={styles.register}>
-                  <StyledButton >{t("form.register_button")}</StyledButton>
+                  <StyledButton>{loading ? <CircularProgress  /> :t("form.register_button")}</StyledButton>
                 </div>
             </div>
           </form>
@@ -133,7 +127,7 @@ const Login = () => {
         {/* {error ? ( */}
         <Stack spacing={2} sx={{ width: "100%" }}>
           <Snackbar
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
               open={snack}
               autoHideDuration={4500}
               onClose={handleClose}

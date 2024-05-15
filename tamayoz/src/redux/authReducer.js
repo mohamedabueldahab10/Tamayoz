@@ -16,8 +16,8 @@ export const handleUserLogin = createAsyncThunk(
         },
       }
     );
-    
     return response.data;
+    
   }
 );
 
@@ -31,15 +31,16 @@ export const handleLogout = () => {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isLoggedIn: null,
+    isLoggedIn: false,
+    isLoading: false,
     AuthedUser: null,
-    LoginError: false,
+    LoginError: null,
   },
   reducers: {
     setAuthedUser: (state, action) => {
       state.AuthedUser = action.payload;
       state.isLoggedIn = true;
-      state.LoginError = false;
+      state.LoginError = null;
     },
     checkUser: (state) => {
     const AuthedUser = localStorage.getItem("AuthedUser");
@@ -59,20 +60,24 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(handleUserLogin.pending, (state) => {
-      state.loading = true;
+      state.isLoading = true;
       state.error = null;
     })  
     .addCase(
         handleUserLogin.fulfilled,
         (state, action) => {
+          console.log(action);
+          state.isLoading = false;
           state.AuthedUser = action.payload;
           state.isLoggedIn = true;
           localStorage.setItem("AuthedUser", JSON.stringify(action.payload));
         }
-        )
-        .addCase(handleUserLogin.rejected, (state,action) => {
-        state.LoginError = action.error;
-        state.LoginError = true;
+      )
+      .addCase(handleUserLogin.rejected, (state,action) => {
+        console.log(action);
+        state.LoginError = action;
+        state.isLoading = false;
+        // state.LoginError = true;
       });
   },
 });

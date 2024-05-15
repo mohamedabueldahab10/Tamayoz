@@ -23,6 +23,24 @@
         "coach": "Coach",
         "next_appraisal_date": "Next Appraisal Date"
     },
+    "resume": {
+        "resume":"Resume",
+        "add_resume":"Add New Entry",
+        "skills": "Skills",
+        "timeline": "Timeline",
+        "skills_captions": "You can add skills from our library to the employee profile.If skills are missing, they can be created by an HR officer.",
+        "pick_skill": "Pick a skill from the list",
+        "select_skills": "Select Skills"
+    },
+    "work_info": {
+        "work_info":"Work Information"
+    },
+    "private_info": {
+        "private_info":"Private Information"
+    },
+    "hr_settings": {
+        "hr_settings":"HR Settings"
+    },
     "validation": {
         "employee_name": "Please Enter Employee Name",
         "job_position_name": "Please Enter Job Position",

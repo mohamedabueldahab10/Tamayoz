@@ -23,7 +23,8 @@
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
     },
     "error": {
-        "message" : "حدث خطأ غير متوقع"
+        "message_unexpected" : "حدث خطأ غير متوقع",
+        "message_credentials" : "اسم المستخدم او كلمة السر غير صحيحة"
     }
 }
   

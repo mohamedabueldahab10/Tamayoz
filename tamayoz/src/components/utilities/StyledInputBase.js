@@ -6,8 +6,9 @@ const StyledInputBase = styled(InputBase)(() => ({
     props.maxwidth ? props.maxwidth : "250px"}`,
     minWidth:"230px",
     "& .MuiInputBase-input": {
+      color: "var(--primary-color)",
       width:"100%",
-      border: "2px solid var(--primary-color)",
+      border: "1px solid var(--secondary-color)",
       borderInline: "none !important",
       borderTop: "none !important",
       padding: "7px",
@@ -21,6 +22,11 @@ const StyledInputBase = styled(InputBase)(() => ({
         fontWeight: "500",
         letterSpacing: "0.5px",
       },
+      "&:focus": {
+        border: "2px solid var(--primary-color)",
+        borderInline: "none !important",
+        borderTop: "none !important",
+      }
     },
   }));
 export default StyledInputBase
