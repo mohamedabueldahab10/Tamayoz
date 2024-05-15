@@ -60,7 +60,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-export default function NewEmployee() {
+const NewEmployee = React.memo(() => {
     const location = useLocation();
     console.log("New Employee",location)
     useEffect(() => {
@@ -187,6 +187,6 @@ return (
         </FormProvider>
     </div>
   )
-}
-
+});
+export default NewEmployee;
 

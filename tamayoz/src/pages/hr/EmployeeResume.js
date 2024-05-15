@@ -79,7 +79,7 @@ const { t } = useTranslation("modules");
         <Divider />
         <Box sx={{marginBlock:"20px"}}>
             <Typography sx={{fontSize:"16px",color:'var(--text-secondary-color)'}}>
-               {t("resume.skills_captions")}
+                {t("resume.skills_captions")}
             </Typography>
         </Box>
         <Box>
