@@ -1,7 +1,7 @@
-import { Box, Divider, Input, Tab, Tabs, Tooltip, Typography } from '@mui/material'
+import { Box, Divider, Input, Tab, Tabs, Tooltip } from '@mui/material'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { useForm, FormProvider  } from "react-hook-form";
 import { useTranslation } from 'react-i18next';
@@ -46,9 +46,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
+          <>{children}</>
       )}
     </div>
   );
@@ -60,15 +58,15 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const NewEmployee = React.memo(() => {
+export default function NewEmployee() {
     const location = useLocation();
-    console.log("New Employee",location)
     useEffect(() => {
-    localStorage.setItem('currentPage', location.pathname);
+        localStorage.setItem('currentPage', location.pathname);
     return () => {
-    localStorage.removeItem('currentPage');
+        localStorage.removeItem('currentPage');
     };
-  }, []);
+  }, [location.pathname]);
+  console.log(location)
     const { t } = useTranslation("modules");
     const schema = yup.object().shape({
         employeeName: yup.string().required(t("validation.employee_name")),
@@ -113,6 +111,7 @@ const NewEmployee = React.memo(() => {
     });
     
     const methods = useForm({
+        shouldUnregister: true,
         mode: "onTouched",
         resolver: yupResolver(schema),
        defaultValues: {
@@ -122,21 +121,44 @@ const NewEmployee = React.memo(() => {
         jobPositionName: '',
         workMail: '',
         nextAppraisalDate: '',
-        tags: [],
-        department: [],
-        jobPosition: [],
-        manager: [],
-        company: [],
-        coach: [],
+        tags: {
+            label: '',
+            id: '',
+        },
+        department: {
+            label: '',
+            id: '',
+        },
+        jobPosition: {
+            label: '',
+            id: '',
+        },
+        manager: {
+            label: '',
+            id: '',
+        },
+        company: {
+            label: '',
+            id: '',
+        },
+        coach: {
+            label: '',
+            id: '',
+        },
     },
   });
     async function handleFormSubmit(data){
         console.log('Employee Data',data);
     }
-  const [value, setValue] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTabValue(newValue);
   };
+  const [open, setOpen] =  useState(false);
+  const handleToggleModal = () => setOpen(!open);
+    const MemoizedEmployeeResume = useMemo(() => <EmployeeResume handleToggleModal={handleToggleModal} open={open} control={methods.control} />,
+    [open, methods.control]
+  );
 return (
     <div>
         <Box sx={headerInfo}>
@@ -152,7 +174,7 @@ return (
                 <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <Tabs 
-                        value={value} 
+                        value={tabValue} 
                         onChange={handleChange} 
                         aria-label="basic tabs example" 
                         sx={{
@@ -168,18 +190,18 @@ return (
                     <Tab sx={tabStyle} label={t("hr_settings.hr_settings")} {...a11yProps(3)} />
                     </Tabs>
                 </Box>
-                <CustomTabPanel value={value} index={0}>
+                <CustomTabPanel value={tabValue} index={0}>
                     <Box sx={nameInfo}>
-                        <EmployeeResume />
+                        {MemoizedEmployeeResume}
                     </Box>
                 </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
+                <CustomTabPanel value={tabValue} index={1}>
                     Work Information
                 </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
+                <CustomTabPanel value={tabValue} index={2}>
                     Private Information
                 </CustomTabPanel>
-                <CustomTabPanel value={value} index={3}>
+                <CustomTabPanel value={tabValue} index={3}>
                     HR Settings
                 </CustomTabPanel>
                 </Box>
@@ -187,6 +209,5 @@ return (
         </FormProvider>
     </div>
   )
-});
-export default NewEmployee;
+}
 

@@ -8,8 +8,7 @@ import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import BoxModal from '../../components/utilities/BoxModal';
 import CloseIcon from '@mui/icons-material/Close';
 import SecondaryBtn from '../../components/utilities/SecondaryBtn';
-import { useLocation } from 'react-router-dom';
-
+import { Controller } from 'react-hook-form';
 const resumeContainer = {
     display:"flex",
     justifyContent:"space-between",
@@ -48,14 +47,10 @@ const skills = [
     { label: 'Programming', value: 'programming' },
     { label: 'Soft Skills', value: 'softskills' },
 ];
-const EmployeeResume = React.memo(() => {
-    const location = useLocation();
-    console.log(location)
+export default function EmployeeResume({control, handleToggleModal,open}) {
 const { t } = useTranslation("modules");
-  const { register, formState: { errors } } = useFormContext();
-  const [open, setOpen] =  useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+//   const { register, formState: { errors } } = useFormContext();
+
   return (
     <>
     <Box sx={resumeContainer}>
@@ -84,15 +79,14 @@ const { t } = useTranslation("modules");
         </Box>
         <Box>
             <SecondaryBtn 
-                onClick={() => setOpen(true)}
+                onClick={handleToggleModal}
             >
                 {t("resume.pick_skill")}
             </SecondaryBtn>
         </Box>
         </Box>
     </Box>
-    {open &&
-    <Modal open={true} onClose={handleClose}>
+    <Modal open={open} onClose={handleToggleModal}>
     <BoxModal>
         <Box sx={modalStyle}>
             <Typography color='var(--dark-color)' fontWeight='bold'>
@@ -107,21 +101,27 @@ const { t } = useTranslation("modules");
                 cursor:"pointer"
             }}
             >
-                <CloseIcon onClick={handleClose} />
+                <CloseIcon onClick={handleToggleModal} />
             </Box>
         </Box>
         <Divider />
         <Box sx={resumeForm}>
-         <RadioGroup aria-label="skills" name="skills" {...register("skills")}>
-        {skills.map((skill) => (
-          <FormControlLabel key={skill.value} value={skill.value} control={<Radio />} label={skill.label} />
-        ))}
-      </RadioGroup>
+            <Controller
+            name="skills"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+                <RadioGroup aria-label="skills" name="skills" {...field}>
+                    {skills.map((skill) => (
+                    <FormControlLabel key={skill.value} value={skill.value} control={<Radio />} label={skill.label} />
+                    ))}
+                </RadioGroup>
+            )}
+          />
+         
         </Box>
     </BoxModal>
     </Modal>
-    }
     </>
   )
-});
-export default EmployeeResume;
+}
