@@ -71,6 +71,7 @@ export default function EmployeeInfo() {
     setImageUrl(null);
     }
     };
+    console.log("errors",errors)
   return (
     <>
         <Box sx={nameInfo}>
@@ -169,7 +170,7 @@ export default function EmployeeInfo() {
                     getOptionLabel={(option) => option.label} 
                     id="autoDepartment"
                     multiple 
-                    errors={errors.department}
+                    errors={errors}
                 />
             </Box>
             <Box sx={singleRow}>
@@ -194,7 +195,7 @@ export default function EmployeeInfo() {
                     getOptionLabel={(option) => option.label} 
                     id="autoJobPosition"
                     multiple
-                    errors={errors.jobPosition} 
+                    errors={errors} 
                 />
             </Box>
             <Box sx={singleRow}>
@@ -218,7 +219,7 @@ export default function EmployeeInfo() {
                     getOptionLabel={(option) => option.label} 
                     id="autoManager"
                     multiple 
-                    errors={errors.manager}
+                    errors={errors}
                 />
             </Box>
             <Box sx={singleRow}>
@@ -230,7 +231,7 @@ export default function EmployeeInfo() {
                     getOptionLabel={(option) => option.label} 
                     id="autoCompany"
                     multiple 
-                    errors={errors.company}
+                    errors={errors}
                 />
             </Box>
             <Box sx={singleRow}>
@@ -242,7 +243,7 @@ export default function EmployeeInfo() {
                     getOptionLabel={(option) => option.label} 
                     id="autoCoach"
                     multiple
-                    errors={errors.coach}
+                    errors={errors}
                 />
             </Box>
             <Box sx={singleRow}>

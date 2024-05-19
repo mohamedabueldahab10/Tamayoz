@@ -9,6 +9,7 @@ import { useFormContext, Controller, useController } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import ErrorText from './ErrorText';
+
 const InputWrapper = styled('div')`
   width: 230px;
   border: 1px solid var(--secondary-color);
@@ -42,8 +43,7 @@ const InputWrapper = styled('div')`
 `;
 
 const Tag = ({ label, onDelete }) => (
-  <div style =
-  {{
+  <div style={{
     display: "flex",
     alignItems: "center",
     height: "24px",
@@ -56,20 +56,21 @@ const Tag = ({ label, onDelete }) => (
     padding: "0 4px 0 10px",
     outline: "0",
     overflow: "hidden",
-    color:"var(--primary-color)",
+    color: "var(--primary-color)",
     "&:focus": {
-    backgroundColor: "var(--secondary-color)",
+      backgroundColor: "var(--secondary-color)",
     },
-    }}
-    >
-    <span style={{overflow:"hidden", whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{label}</span>
-    <CloseIcon sx={{cursor:"pointer",padding:"2px"}} onClick={onDelete} />
+  }}>
+    <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{label}</span>
+    <CloseIcon sx={{ cursor: "pointer", padding: "2px" }} onClick={onDelete} />
   </div>
 );
+
 Tag.propTypes = {
   label: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
+
 const Listbox = styled('ul')`
   width: 300px;
   margin: 2px 0 0;
@@ -117,9 +118,9 @@ const Listbox = styled('ul')`
   }
 `;
 
-const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel,label, name, errors}) => {
+const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel, label, name, errors }) => {
   const { control, setValue } = useFormContext();
-  const {field} = useController({name}); 
+  const { field } = useController({ name });
   const handleAutocompleteChange = (event, newValue) => {
     setValue(name, newValue, { shouldValidate: true });
   };
@@ -139,8 +140,9 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     options,
     getOptionLabel,
     isOptionEqualToValue: (option, value) => option.id === value.id,
-    onChange:handleAutocompleteChange,
+    onChange: handleAutocompleteChange,
   });
+  console.log("Errors: ", errors);
   return (
     <>
       <div>
@@ -152,26 +154,26 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
             name={name}
             control={control}
             render={({ field }) => (
-            <input
-            {...field} 
-            value={value}
-            {...getInputProps()} 
-            placeholder={label}
-            />
+              <input
+                {...field}
+                value={value}
+                {...getInputProps()}
+                placeholder={label}
+              />
             )}
-        />
-        {groupedOptions.length > 0 ? (
-          <Listbox {...getListboxProps()}>
-            {groupedOptions.map((option, index) => (
-              <li {...getOptionProps({ option, index })}>
-                <span>{option.label}</span>
-                <CheckIcon fontSize="small" />
-              </li>
-            ))}
-          </Listbox>
-        ) : null}
+          />
+          {groupedOptions.length > 0 ? (
+            <Listbox {...getListboxProps()}>
+              {groupedOptions.map((option, index) => (
+                <li {...getOptionProps({ option, index })}>
+                  <span>{option.label}</span>
+                  <CheckIcon fontSize="small" />
+                </li>
+              ))}
+            </Listbox>
+          ) : null}
         </InputWrapper>
-        {errors && <ErrorText>{errors[name]?.message}</ErrorText> }
+        {errors && <ErrorText>{errors[name]?.message}</ErrorText>}
       </div>
     </>
   );
@@ -183,7 +185,11 @@ CustomizedAutoComplete.propTypes = {
   multiple: PropTypes.bool,
   id: PropTypes.string,
   getOptionLabel: PropTypes.func,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  errors: PropTypes.object, // Added prop
 };
+
 CustomizedAutoComplete.defaultProps = {
   defaultValue: [],
   multiple: false,
@@ -191,4 +197,3 @@ CustomizedAutoComplete.defaultProps = {
 };
 
 export default CustomizedAutoComplete;
-

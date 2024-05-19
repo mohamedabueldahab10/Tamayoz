@@ -21,7 +21,9 @@
         "manager": "Manager",
         "company": "Company",
         "coach": "Coach",
-        "next_appraisal_date": "Next Appraisal Date"
+        "next_appraisal_date": "Next Appraisal Date",
+        "skill": "Skill",
+        "skill_level": "Skill Level"
     },
     "resume": {
         "resume":"Resume",
@@ -30,7 +32,12 @@
         "timeline": "Timeline",
         "skills_captions": "You can add skills from our library to the employee profile.If skills are missing, they can be created by an HR officer.",
         "pick_skill": "Pick a skill from the list",
-        "select_skills": "Select Skills"
+        "select_skills": "Select Skills",
+        "skill_type": "Skill Type",
+        "save_close": "Save & Close",
+        "save_new": "Save & New",
+        "discard": "Discard",
+        "skills_error": "Unexpected error happened"
     },
     "work_info": {
         "work_info":"Work Information"
@@ -53,7 +60,10 @@
         "manager": "Please Enter Manger",
         "company": "Please Enter Job Position",
         "coach": "Please Enter Coach",
-        "date": "Please Enter Date"
+        "date": "Please Enter Date",
+        "skill": "Please Enter Skill",
+        "skill_level": "Please Enter Skill Level",
+        "skill_type": "Please Enter Skill Type"
     }
 }
   

@@ -66,7 +66,6 @@ export default function NewEmployee() {
         localStorage.removeItem('currentPage');
     };
   }, [location.pathname]);
-  console.log(location)
     const { t } = useTranslation("modules");
     const schema = yup.object().shape({
         employeeName: yup.string().required(t("validation.employee_name")),
@@ -107,7 +106,7 @@ export default function NewEmployee() {
             id: yup.number().required(t("validation.coach")),
         })
         ).required(t("validation.coach")),
-        date: yup.string().required(t("validation.date")),
+        // date: yup.string().required(t("validation.date")),
     });
     
     const methods = useForm({
@@ -147,29 +146,27 @@ export default function NewEmployee() {
         },
     },
   });
-    async function handleFormSubmit(data){
+    const handleFormSubmit = async (data) => {
         console.log('Employee Data',data);
+        console.log('Skills Data',data.skills);
     }
   const [tabValue, setTabValue] = useState(0);
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
-  const [open, setOpen] =  useState(false);
-  const handleToggleModal = () => setOpen(!open);
-    const MemoizedEmployeeResume = useMemo(() => <EmployeeResume handleToggleModal={handleToggleModal} open={open} control={methods.control} />,
-    [open, methods.control]
-  );
+console.log("Form State",methods.formState)
+console.log("errr",methods.formState.errors)
 return (
     <div>
         <Box sx={headerInfo}>
             <Tooltip title="Save">
                 <SaveAltIcon 
                 sx={{color:"var(--primary-color)", fontSize:"28px",cursor:"pointer"}} 
-                onClick={methods.handleSubmit(handleFormSubmit)} />
+                onClick={() => methods.handleSubmit(handleFormSubmit)()} />
             </Tooltip>
         </Box>
         <FormProvider {...methods}>
-            <form>
+            <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
                 <EmployeeInfo />
                 <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
@@ -192,7 +189,7 @@ return (
                 </Box>
                 <CustomTabPanel value={tabValue} index={0}>
                     <Box sx={nameInfo}>
-                        {MemoizedEmployeeResume}
+                        <EmployeeResume control={methods.control} />
                     </Box>
                 </CustomTabPanel>
                 <CustomTabPanel value={tabValue} index={1}>
