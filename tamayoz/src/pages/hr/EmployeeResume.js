@@ -1,4 +1,4 @@
-import { Alert, Box, Divider, FormControlLabel, FormLabel, LinearProgress, Modal, Radio, RadioGroup, Snackbar, Stack, Typography } from '@mui/material'
+import { Alert, Box, Divider, FormLabel, LinearProgress, Modal, Snackbar, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import TypographyHeader from '../../components/utilities/TypographyHeader'
 import StyledButton from '../../components/utilities/StyledButton'
@@ -7,12 +7,12 @@ import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import BoxModal from '../../components/utilities/BoxModal';
 import CloseIcon from '@mui/icons-material/Close';
 import SecondaryBtn from '../../components/utilities/SecondaryBtn';
-import { Controller } from 'react-hook-form';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
-import { useForm, FormProvider  } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import axios from 'axios';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import CustomRadioGroup from '../../components/utilities/CustomRadioGroup';
 const resumeContainer = {
     display:"flex",
     justifyContent:"space-between",
@@ -77,35 +77,49 @@ const skills = [
     { label: 'Programming', id: 4, value: 'programming' },
     { label: 'Soft Skills', id: 5, value: 'softskills' },
 ];
-export default function EmployeeResume({control}) {
+export default function EmployeeResume() {
 const { t } = useTranslation("modules");
-//   const { register, formState: { errors } } = useFormContext();
   const [open, setOpen] =  useState(false);
   const handleToggleModal = () => setOpen(!open);
-  console.log("props control",control)
   const [snack, setSnack] = useState(false);
+  const handleCloseSnack = () => setSnack(false);
   const [disable, setDisable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const handleClose = (reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnack(false);
-  };
-const schema = yup.object().shape({
-    skill: yup.string().required(t("validation.skill")),
+  const [result, setResult] = useState(null);
+const resumeSchema = yup.object().shape({
+    skill: yup.array().of(yup.object().shape({
+            label: yup.string().required(t("validation.skill")),
+            value: yup.string().required(t("validation.coach")),
+            id: yup.number().required(t("validation.skill")),
+        })
+        ).required(t("validation.skill")),
+    skillType: yup.string().required(t("validation.coach")),
+    skillLevel: yup.array().of(yup.object().shape({
+            label: yup.string().required(t("validation.coach")),
+            value: yup.string().required(t("validation.coach")),
+            id: yup.number().required(t("validation.coach")),
+        })
+        ).required(t("validation.coach")),
 
 })
-  const methods = useForm({
-    resolver: yupResolver(schema),
+  const resumeMethods  = useForm({
+    resolver: yupResolver(resumeSchema),
     mode: "onTouched",
+    defaultValues: {
+        skillType: [],
+        skill: [],
+        skillLevel: [],
+        
+    }
   });
-   const handleSkills = (data) => {
+  const { handleSubmit: handleSubmitResume, reset: resetResume, formState : resumeFormState } = resumeMethods;
+  const handleSkills = (data) => {
+    console.log("SkillsData");
     console.log("SkillsData", data);
+    setResult(data)
     setDisable(true);
     setIsLoading(true);
-    methods.reset();
+    //reset();
     // axios
     //   .post("https://vsoft.com-eg.net:4041/api/Branches/Add", data)
     //   .then((res) => {
@@ -115,6 +129,7 @@ const schema = yup.object().shape({
     //     setSnack(true);
     //   });
   };
+  console.log("resumeErr",resumeFormState.errors);
   return (
     <>
     <Box sx={resumeContainer}>
@@ -151,8 +166,8 @@ const schema = yup.object().shape({
         </Box>
     </Box>
     <Modal open={open} onClose={handleToggleModal}>
-        <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleSkills)}>
+        <FormProvider {...resumeMethods}>
+            <form onSubmit={handleSubmitResume(handleSkills)}>
                 <BoxModal>
                     <Box sx={modalStyle}>
                         <Typography color='var(--dark-color)' fontWeight='bold'>
@@ -174,62 +189,35 @@ const schema = yup.object().shape({
                     <Box sx={resumeForm}>
                         <Box sx={singleRow}>
                         <FormLabel sx={{mt:"10px"}}>{t("resume.skill_type")}</FormLabel>
-                        <Controller
-                        name="skills"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
-                            <RadioGroup aria-label="skills" {...field}>
-                                {skills.map((skill) => (
-                                <FormControlLabel key={skill.value} value={skill.value} control={<Radio sx={{'& .MuiSvgIcon-root': {fontSize: "16px",},}}/>} label={skill.label} />
-                                ))}
-                            </RadioGroup>
-                        )}
-                        />
+                            <CustomRadioGroup name='skillType' options={skills} error={resumeFormState.errors} />
                         </Box>
                         <Box sx={singleColumn}>
-                        <Controller
-                        name="skills"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
                             <CustomizedAutoComplete
-                                {...field}
                                 defaultValue={[]}
                                 id="autoSkills"
-                                name="skills"
+                                name="skill"
                                 label={t("form.skill")}
                                 options={skills}
                                 multiple
-                                // errors={errors}
+                                errors={resumeFormState.errors}
                             />
-                        )}
-                        />
-                        <Controller
-                        name="skillLevel"
-                        control={control}
-                        defaultValue=""
-                        render={({ field }) => (
                             <CustomizedAutoComplete
-                                {...field}
                                 defaultValue={[]}
                                 id="autoSkillLevel"
                                 name="skillLevel"
                                 label={t("form.skill_level")}
                                 options={skills}
                                 multiple
-                                // errors={errors}
+                                errors={resumeFormState.errors}
                             />
-                        )}
-                        />
-                        <Box sx={{width:"230px",display:"flex",justifyContent:"start",alignItems:"center", gap:"10px"}}>
-                        <LinearProgress 
-                            variant="determinate" 
-                            sx={{width:"200px",height:"15px",color:"var(--primary-color)",borderRadius:"2px"}} 
-                            value={20} 
-                        />
-                        <Typography> 20%</Typography>
-                        </Box>
+                            <Box sx={{width:"230px",display:"flex",justifyContent:"start",alignItems:"center", gap:"10px"}}>
+                                <LinearProgress 
+                                    variant="determinate" 
+                                    sx={{width:"200px",height:"15px",color:"var(--primary-color)",borderRadius:"2px"}} 
+                                    value={20} 
+                                />
+                                <Typography> 20%</Typography>
+                            </Box>
                         </Box>
                     
                     </Box>
@@ -237,26 +225,31 @@ const schema = yup.object().shape({
                     <Box sx={ButtonContainer}>
                         <StyledButton 
                             disabled={disable} 
-                            customWidth="120px" 
-                            customMinWidth="100px"
-                            type='submit'
+                            customwidth="120px" 
+                            customminwidth="100px"
+                            onClick={() => {
+                                console.log("Skills Submitted");
+                                handleSubmitResume(handleSkills)();
+                                setOpen(false);
+                            }}
                         >
                             {t("resume.save_close")}
                         </StyledButton>
                         <StyledButton 
                             disabled={disable} 
-                            customWidth="120px" 
-                            customMinWidth="100px"
+                            customwidth="120px" 
+                            customminwidth="100px"
                             onClick={() => {
-                                methods.handleSubmit(handleSkills)();
-                                methods.reset();
+                                console.log("Skills Submitted");
+                                handleSubmitResume(handleSkills)();
+                                resetResume();
                             }}
                         >
                             {t("resume.save_new")}
                         </StyledButton>
                         <StyledButton 
-                            customWidth="120px" 
-                            customMinWidth="100px"
+                            customwidth="120px" 
+                            customminwidth="100px"
                         >
                             {t("resume.discard")}
                         </StyledButton>
@@ -271,7 +264,7 @@ const schema = yup.object().shape({
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             open={snack}
             autoHideDuration={4500}
-            onClose={handleClose}
+            onClose={handleCloseSnack}
           >
             <Alert severity="error" sx={{ width: "100%" }}>
               {t("resume.skills_error")}

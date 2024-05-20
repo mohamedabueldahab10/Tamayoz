@@ -75,6 +75,12 @@ export default function NewEmployee() {
             id: yup.number().required(t("validation.tags")),
         })
         ).required(t("validation.tags")),
+        // tags: yup.array().of(
+        //     yup.object().shape({
+        //     label: yup.string().required("Please enter a label for the tag."),
+        //     id: yup.number().required("Please enter an ID for the tag."),
+        //     })
+        // ).required("Please enter at least one tag."),
         workMobile: yup.string().required(t("validation.work_mobile")),
         // department: yup.string().required(t("validation.department")),
         department: yup.array().of(yup.object().shape({
@@ -106,7 +112,7 @@ export default function NewEmployee() {
             id: yup.number().required(t("validation.coach")),
         })
         ).required(t("validation.coach")),
-        // date: yup.string().required(t("validation.date")),
+        date: yup.date().required(t("validation.date")),
     });
     
     const methods = useForm({
@@ -120,43 +126,40 @@ export default function NewEmployee() {
         jobPositionName: '',
         workMail: '',
         nextAppraisalDate: '',
-        tags: {
+        tags: [{
             label: '',
             id: '',
-        },
-        department: {
+        }],
+        department: [{
             label: '',
             id: '',
-        },
-        jobPosition: {
+        }],
+        jobPosition: [{
             label: '',
             id: '',
-        },
-        manager: {
+        }],
+        manager: [{
             label: '',
             id: '',
-        },
-        company: {
+        }],
+        company: [{
             label: '',
             id: '',
-        },
-        coach: {
+        }],
+        coach: [{
             label: '',
             id: '',
-        },
+        }],
     },
   });
     const handleFormSubmit = async (data) => {
         console.log('Employee Data',data);
-        console.log('Skills Data',data.skills);
     }
   const [tabValue, setTabValue] = useState(0);
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
-console.log("Form State",methods.formState)
-console.log("errr",methods.formState.errors)
-return (
+  return (
     <div>
         <Box sx={headerInfo}>
             <Tooltip title="Save">
@@ -168,41 +171,41 @@ return (
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
                 <EmployeeInfo />
-                <Box sx={{ width: '100%' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
-                    <Tabs 
-                        value={tabValue} 
-                        onChange={handleChange} 
-                        aria-label="basic tabs example" 
-                        sx={{
-                            width:"fit-content",
-                            "& .Mui-selected":{
-                                border:"1px solid var(--primary-color)", 
-                            }
-                        }}
-                    >
-                    <Tab sx={tabStyle} label={t("resume.resume")} {...a11yProps(0)} />
-                    <Tab sx={tabStyle} label={t("work_info.work_info")} {...a11yProps(1)} />
-                    <Tab sx={tabStyle} label={t("private_info.private_info")} {...a11yProps(2)} />
-                    <Tab sx={tabStyle} label={t("hr_settings.hr_settings")} {...a11yProps(3)} />
-                    </Tabs>
-                </Box>
-                <CustomTabPanel value={tabValue} index={0}>
-                    <Box sx={nameInfo}>
-                        <EmployeeResume control={methods.control} />
-                    </Box>
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={1}>
-                    Work Information
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={2}>
-                    Private Information
-                </CustomTabPanel>
-                <CustomTabPanel value={tabValue} index={3}>
-                    HR Settings
-                </CustomTabPanel>
-                </Box>
             </form>
+            <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
+                <Tabs 
+                    value={tabValue} 
+                    onChange={handleChange} 
+                    aria-label="basic tabs example" 
+                    sx={{
+                        width:"fit-content",
+                        "& .Mui-selected":{
+                            border:"1px solid var(--primary-color)", 
+                        }
+                    }}
+                >
+                <Tab sx={tabStyle} label={t("resume.resume")} {...a11yProps(0)} />
+                <Tab sx={tabStyle} label={t("work_info.work_info")} {...a11yProps(1)} />
+                <Tab sx={tabStyle} label={t("private_info.private_info")} {...a11yProps(2)} />
+                <Tab sx={tabStyle} label={t("hr_settings.hr_settings")} {...a11yProps(3)} />
+                </Tabs>
+            </Box>
+            <CustomTabPanel value={tabValue} index={0}>
+                <Box sx={nameInfo}>
+                    <EmployeeResume />
+                </Box>
+            </CustomTabPanel>
+            <CustomTabPanel value={tabValue} index={1}>
+                Work Information
+            </CustomTabPanel>
+            <CustomTabPanel value={tabValue} index={2}>
+                Private Information
+            </CustomTabPanel>
+            <CustomTabPanel value={tabValue} index={3}>
+                HR Settings
+            </CustomTabPanel>
+            </Box>
         </FormProvider>
     </div>
   )

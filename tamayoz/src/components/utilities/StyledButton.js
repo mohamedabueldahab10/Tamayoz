@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  width: ${(props) => (props.small ? "170px" : props.customWidth ? props.customWidth : "220px")};
-  min-width: ${(props) => (props.customMinWidth ? props.customMinWidth : "150px")};
+  width: ${(props) => (props.small ? "170px" : props.customwidth ? props.customwidth : "220px")};
+  min-width: ${(props) => (props.customminwidth ? props.customminwidth : "150px")};
   height: 40px;
   background: ${(props) => (props.color ? props.color : "var(--primary-color)")};
   border: 0;

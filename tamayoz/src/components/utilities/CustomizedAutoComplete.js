@@ -5,10 +5,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
-import { useFormContext, Controller, useController } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useFormContext, Controller } from "react-hook-form";
+
 import ErrorText from './ErrorText';
+import { InputBase } from '@mui/material';
 
 const InputWrapper = styled('div')`
   width: 230px;
@@ -19,9 +19,9 @@ const InputWrapper = styled('div')`
   display: flex;
   flex-wrap: wrap;
   position: relative;
-   &:focus-within {
-    border: 2px solid var(--primary-color);
-  }
+  &:focus-within {
+  border: 2px solid var(--primary-color);
+}
   & input {
     background-color: #fff;
     color: var(--primary-color);
@@ -36,7 +36,7 @@ const InputWrapper = styled('div')`
     outline: 0;
     &::placeholder {
       font-size: 18px;
-      color: #ccc;
+      color: #5f5f5f;
       letter-spacing: 0.5px;
     }
   }
@@ -120,7 +120,6 @@ const Listbox = styled('ul')`
 
 const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel, label, name, errors }) => {
   const { control, setValue } = useFormContext();
-  const { field } = useController({ name });
   const handleAutocompleteChange = (event, newValue) => {
     setValue(name, newValue, { shouldValidate: true });
   };
@@ -142,7 +141,13 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     isOptionEqualToValue: (option, value) => option.id === value.id,
     onChange: handleAutocompleteChange,
   });
-  console.log("Errors: ", errors);
+const mergedErr = errors && errors[name]?.reduce((acc, obj) => {
+    Object.entries(obj).forEach(([key, value]) => {
+        acc[key] = value;
+    });
+    return acc;
+}, {});
+console.log("autocomplete ERRRRR",errors);
   return (
     <>
       <div>
@@ -154,7 +159,16 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
             name={name}
             control={control}
             render={({ field }) => (
-              <input
+              <InputBase
+                sx={{
+                  width: '100%',
+                  "::placeholder": {
+                    fontSize: "18px",
+                    color: "red",
+                    letterSpacing: "0.5px",
+                  }
+                
+                }}
                 {...field}
                 value={value}
                 {...getInputProps()}
@@ -173,7 +187,7 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
             </Listbox>
           ) : null}
         </InputWrapper>
-        {errors && <ErrorText>{errors[name]?.message}</ErrorText>}
+        {errors && <ErrorText>{mergedErr?.label?.message}</ErrorText>}
       </div>
     </>
   );

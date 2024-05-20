@@ -71,7 +71,6 @@ export default function EmployeeInfo() {
     setImageUrl(null);
     }
     };
-    console.log("errors",errors)
   return (
     <>
         <Box sx={nameInfo}>
@@ -144,9 +143,6 @@ export default function EmployeeInfo() {
                     multiple
                     errors={errors}
                 />
-                    <Box>
-                        <ErrorText>{errors.tags?.message}</ErrorText>
-                    </Box>
             </Box>
             <Box sx={singleRow}>
                 <Box>
