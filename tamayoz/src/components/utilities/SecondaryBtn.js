@@ -1,5 +1,8 @@
 import styled from "styled-components";
 const SecondaryBtn = styled.button`
+    width: ${(props) => (props.small ? "170px" : props.customwidth ? props.customwidth : "220px")};
+    min-width: ${(props) => (props.customminwidth ? props.customminwidth : "150px")};
+    height: 40px;
     padding: 5px 10px;
     height: 40px;
     background-color: var(--btn-bg-color);

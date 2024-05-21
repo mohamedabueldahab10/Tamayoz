@@ -23,7 +23,13 @@
         "coach": "Coach",
         "next_appraisal_date": "Next Appraisal Date",
         "skill": "Skill",
-        "skill_level": "Skill Level"
+        "skill_level": "Skill Level",
+        "title": "Title",
+        "employee": "Employee",
+        "duration": "Duration",
+        "type": "Type",
+        "display_type": "Display Type",
+        "description": "Description"
     },
     "resume": {
         "resume":"Resume",
@@ -37,7 +43,8 @@
         "save_close": "Save & Close",
         "save_new": "Save & New",
         "discard": "Discard",
-        "skills_error": "Unexpected error happened"
+        "skills_error": "Unexpected error happened",
+        "create_resume": "Create a Resume"
     },
     "work_info": {
         "work_info":"Work Information"

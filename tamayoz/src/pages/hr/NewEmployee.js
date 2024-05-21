@@ -74,44 +74,35 @@ export default function NewEmployee() {
             label: yup.string().required(t("validation.tags")),
             id: yup.number().required(t("validation.tags")),
         })
-        ).required(t("validation.tags")),
-        // tags: yup.array().of(
-        //     yup.object().shape({
-        //     label: yup.string().required("Please enter a label for the tag."),
-        //     id: yup.number().required("Please enter an ID for the tag."),
-        //     })
-        // ).required("Please enter at least one tag."),
+        ).min(1, t("validation.tags")).required(t("validation.tags")),
         workMobile: yup.string().required(t("validation.work_mobile")),
-        // department: yup.string().required(t("validation.department")),
         department: yup.array().of(yup.object().shape({
             label: yup.string().required(t("validation.department")),
             id: yup.number().required(t("validation.department")),
         })
-        ).required(t("validation.department")),
+        ).min(1, t("validation.department")).required(t("validation.department")),
         workPhone: yup.string().required(t("validation.work_phone")),
-        // jobPosition: yup.string().required(t("validation.job_position")),
         jobPosition: yup.array().of(yup.object().shape({
-            label: yup.string().required(t("validation.jobPosition")),
-            id: yup.number().required(t("validation.jobPosition")),
+            label: yup.string().required(t("validation.job_position")),
+            id: yup.number().required(t("validation.job_position")),
         })
-        ).required(t("validation.jobPosition")),
+        ).min(1, t("validation.job_position")).required(t("validation.job_position")),
         workMail: yup.string().required(t("validation.work_mail")),
-        // manager: yup.string().required(t("validation.manager")),
         manager: yup.array().of(yup.object().shape({
             label: yup.string().required(t("validation.manager")),
             id: yup.number().required(t("validation.manager")),
         })
-        ).required(t("validation.manager")),
+        ).min(1, t("validation.manager")).required(t("validation.manager")),
         company: yup.array().of(yup.object().shape({
             label: yup.string().required(t("validation.company")),
             id: yup.number().required(t("validation.company")),
         })
-        ).required(t("validation.company")),
+        ).min(1, t("validation.company")).required(t("validation.company")),
         coach: yup.array().of(yup.object().shape({
             label: yup.string().required(t("validation.coach")),
             id: yup.number().required(t("validation.coach")),
         })
-        ).required(t("validation.coach")),
+        ).min(1, t("validation.coach")).required(t("validation.coach")),
         date: yup.date().required(t("validation.date")),
     });
     
@@ -126,30 +117,12 @@ export default function NewEmployee() {
         jobPositionName: '',
         workMail: '',
         nextAppraisalDate: '',
-        tags: [{
-            label: '',
-            id: '',
-        }],
-        department: [{
-            label: '',
-            id: '',
-        }],
-        jobPosition: [{
-            label: '',
-            id: '',
-        }],
-        manager: [{
-            label: '',
-            id: '',
-        }],
-        company: [{
-            label: '',
-            id: '',
-        }],
-        coach: [{
-            label: '',
-            id: '',
-        }],
+        tags: [],
+        department: [],
+        jobPosition: [],
+        manager: [],
+        company: [],
+        coach: [],
     },
   });
     const handleFormSubmit = async (data) => {

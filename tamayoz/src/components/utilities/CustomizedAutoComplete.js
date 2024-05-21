@@ -141,12 +141,12 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     isOptionEqualToValue: (option, value) => option.id === value.id,
     onChange: handleAutocompleteChange,
   });
-const mergedErr = errors && errors[name]?.reduce((acc, obj) => {
-    Object.entries(obj).forEach(([key, value]) => {
-        acc[key] = value;
-    });
-    return acc;
-}, {});
+// const mergedErr = errors && errors[name]?.reduce((acc, obj) => {
+//     Object.entries(obj).forEach(([key, value]) => {
+//         acc[key] = value;
+//     });
+//     return acc;
+// }, {});
 console.log("autocomplete ERRRRR",errors);
   return (
     <>
@@ -171,8 +171,9 @@ console.log("autocomplete ERRRRR",errors);
                 }}
                 {...field}
                 value={value}
-                {...getInputProps()}
-                placeholder={label}
+                inputProps={{ ...getInputProps(), placeholder: label}}
+                // {...getInputProps()}
+                // placeholder={label}
               />
             )}
           />
@@ -187,7 +188,7 @@ console.log("autocomplete ERRRRR",errors);
             </Listbox>
           ) : null}
         </InputWrapper>
-        {errors && <ErrorText>{mergedErr?.label?.message}</ErrorText>}
+        {errors && <ErrorText>{errors[name]?.message}</ErrorText>}
       </div>
     </>
   );

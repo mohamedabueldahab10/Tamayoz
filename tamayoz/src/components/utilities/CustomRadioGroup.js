@@ -1,9 +1,12 @@
 import React from 'react';
 import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import ErrorText from './ErrorText';
 
-const CustomRadioGroup = ({ name, options, control, error }) => {
+const CustomRadioGroup = ({ name, options, errors }) => {
+    const { control } = useFormContext();
+
+  console.log('RadioGroup OOOO',errors)
   return (
     <>
     <div>
@@ -14,17 +17,18 @@ const CustomRadioGroup = ({ name, options, control, error }) => {
           <RadioGroup {...field}>
             {options.map((option) => (
               <FormControlLabel 
-                key={option.value} 
-                value={option.value} 
+                key={option.id} 
+                value={option.label} 
                 control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: '16px' } }} />} 
                 label={option.label}
+                defaultValue=""
               />
             ))}
           </RadioGroup>
         )}
       />
+      {errors && <ErrorText>{errors[name]?.message}</ErrorText>}
     </div>
-      {error && <ErrorText error>{error.message}</ErrorText>}
     </>
   );
 };

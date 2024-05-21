@@ -1,4 +1,4 @@
-import { Box, Input, Tooltip } from '@mui/material'
+import { Box, FormLabel, Input, Tooltip } from '@mui/material'
 import React, { useState } from 'react'
 import StyledInputBase from '../../components/utilities/StyledInputBase'
 import { useFormContext } from 'react-hook-form';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
+import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 
 const nameInfo = {
     display:"flex",
@@ -35,6 +36,14 @@ const singleRow = {
     minWidth:"320px",
     marginBottom:"5px",
 }
+// const dateRow = {
+//     display:"flex",
+//     justifyContent:"start",
+//     alignItems:"start",
+//     minWidth:"320px",
+//     marginBottom:"5px",
+//     marginTop:"10px"
+// }
 const deleteImage = { 
     position: 'absolute',
     bottom: "0",
@@ -74,63 +83,63 @@ export default function EmployeeInfo() {
   return (
     <>
         <Box sx={nameInfo}>
-                    <Box sx={{width:"70%"}}>
-                    <StyledInputBase
-                        maxwidth="600px"
-                        sx={{width:"100%",display:"block"}} 
-                        type='text'
-                        placeholder={t("form.employee_name")}
-                        {...register("employeeName")}
+            <Box sx={{width:"70%"}}>
+            <StyledInputBase
+                maxwidth="600px"
+                sx={{width:"100%",display:"block"}} 
+                type='text'
+                placeholder={t("form.employee_name")}
+                {...register("employeeName")}
+            />
+            <ErrorText>{errors.employeeName?.message}</ErrorText>
+            <StyledInputBase 
+                maxwidth="600px"
+                sx={{width:"100%",display:"block"}} 
+                type='text'
+                placeholder={t("form.job_position")}
+                {...register("jobPositionName")}
+                />
+            <ErrorText>{errors.jobPositionName?.message}</ErrorText>
+            </Box>
+            <Box>
+            <div>
+            {!selectedImage ? (
+                <>
+                <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ display: 'none' }}
+                    id="image-upload-input"
+                    // {...register("employeeImage")}
+                />
+                <label htmlFor="image-upload-input">
+                    <ImageContainer>
+                        <AddAPhotoIcon sx={{fontSize:"80px",color:"var(--primary-color)"}} />
+                    </ImageContainer>
+                </label>
+                </> )
+                :
+                (<>
+                <ImageContainer>
+                    <img
+                    src={imageUrl}
+                    alt="Selected"
+                    style={{ maxWidth: '100%', maxHeight: '100px' }}
                     />
-                    <ErrorText>{errors.employeeName?.message}</ErrorText>
-                    <StyledInputBase 
-                        maxwidth="600px"
-                        sx={{width:"100%",display:"block"}} 
-                        type='text'
-                        placeholder={t("form.job_position")}
-                        {...register("jobPositionName")}
-                        />
-                    <ErrorText>{errors.jobPositionName?.message}</ErrorText>
+                    <Box
+                        onClick={handleDelete}
+                        sx={deleteImage}
+                    >
+                        <Tooltip title="Delete">
+                            <DeleteForeverIcon sx={{fontSize:"25px",color:"var(--primary-color)"}} />
+                        </Tooltip>
                     </Box>
-                    <Box>
-                    <div>
-                    {!selectedImage ? (
-                        <>
-                        <Input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            style={{ display: 'none' }}
-                            id="image-upload-input"
-                            // {...register("employeeImage")}
-                        />
-                        <label htmlFor="image-upload-input">
-                            <ImageContainer>
-                                <AddAPhotoIcon sx={{fontSize:"80px",color:"var(--primary-color)"}} />
-                            </ImageContainer>
-                        </label>
-                        </> )
-                        :
-                        (<>
-                        <ImageContainer>
-                            <img
-                            src={imageUrl}
-                            alt="Selected"
-                            style={{ maxWidth: '100%', maxHeight: '100px' }}
-                            />
-                            <Box
-                                onClick={handleDelete}
-                                sx={deleteImage}
-                            >
-                                <Tooltip title="Delete">
-                                    <DeleteForeverIcon sx={{fontSize:"25px",color:"var(--primary-color)"}} />
-                                </Tooltip>
-                            </Box>
-                        </ImageContainer>
-                        </>)
-                    }
-                    </div>
-                    </Box>
+                </ImageContainer>
+                </>)
+            }
+            </div>
+            </Box>
         </Box>
         <Box sx={nameInfo}>
             <Box sx={singleRow}>
@@ -243,7 +252,13 @@ export default function EmployeeInfo() {
                 />
             </Box>
             <Box sx={singleRow}>
-                <Box>
+                <Box sx={{
+                    display:"flex",
+                    justifyContent:"start",
+                    alignItems:"center",
+                    gap:"10px"
+                    }}>
+                    <CustomizedLabel spacebottom={"-10px"}>{t("form.next_appraisal_date")}</CustomizedLabel>
                     <StyledInputBase
                     type='date'
                     placeholder={t("form.next_appraisal_date")}
