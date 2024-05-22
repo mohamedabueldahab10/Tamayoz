@@ -60,7 +60,7 @@ const resumeForm ={
     display:"flex",
     justifyContent:"space-between",
     alignItems:"start",
-    margin: "10px",
+    margin: "5px",
     width: "100%",
     flexWrap:"wrap"
 }
@@ -148,28 +148,38 @@ const skillsSchema = yup.object().shape({
   const [ResumeLoading, setResumeLoading] = useState(false);
   const [ResumeResult, setResumeResult] = useState(null);
   const resumeSchema = yup.object().shape({
-    skillType: yup.string().required(t("validation.skill_type")),
-    skill: yup.array().of(
+    title: yup.string().required(t("validation.title")),
+    employee: yup.array().of(
         yup.object().shape({
-            label: yup.string().required(t("validation.skill")),
-            id: yup.number().required(t("validation.skill")),
+            label: yup.string().required(t("validation.employee")),
+            id: yup.number().required(t("validation.employee")),
         })
-        ).min(1, t("validation.skill")).required(t("validation.skill")),
-    skillLevel: yup.array().of(yup.object().shape({
-            label: yup.string().required(t("validation.skill_level")),
-            id: yup.number().required(t("validation.skill_level")),
+        ).min(1, t("validation.employee")).required(t("validation.employee")),
+    type: yup.array().of(yup.object().shape({
+            label: yup.string().required(t("validation.type")),
+            id: yup.number().required(t("validation.type")),
         })
-        ).min(1, t("validation.skill_level")).required(t("validation.skill_level")),
+        ).min(1, t("validation.type")).required(t("validation.type")),
+    displayType: yup.array().of(yup.object().shape({
+            label: yup.string().required(t("validation.display_type")),
+            id: yup.number().required(t("validation.display_type")),
+        })
+        ).min(1, t("validation.display_type")).required(t("validation.display_type")),
+    description: yup.string().required(t("validation.description")),
+    duration: yup.date().required(t("validation.duration")),
+
 
 })
   const resumeMethods  = useForm({
     resolver: yupResolver(resumeSchema),
     mode: "onTouched",
     defaultValues: {
-        skillType: '',
-        skill: [],
-        skillLevel: [],
-        
+        title: '',
+        employee: [],
+        type: [],
+        displayType: [],
+        description: '',
+        duration: '',
     }
   });
   const { handleSubmit: handleSubmitResume, reset: resetResume, formState : {errors:resumeErrors} } = resumeMethods;
@@ -238,9 +248,9 @@ const skillsSchema = yup.object().shape({
                                         sx={{width:"100%",display:"block"}} 
                                         type='text'
                                         placeholder={t("form.title")}
-                                        // {...register("title")}
+                                        {...resumeMethods.register("title")}
                                     />
-                                    <ErrorText>{resumeErrors.employeeName?.message}</ErrorText>
+                                    <ErrorText>{resumeErrors.title?.message}</ErrorText>
                                 </Box>                   
                             </Box>
                             <Box sx={resumeForm}>
@@ -264,11 +274,12 @@ const skillsSchema = yup.object().shape({
                                         }}>
                                         <CustomizedLabel spacebottom={"-10px"}>{t("form.duration")}</CustomizedLabel>
                                         <StyledInputBase
-                                        type='date'
-                                        placeholder={t("form.duration")}
-                                        // {...register("duration")}
+                                            type='date'
+                                            placeholder={t("form.duration")}
+                                            {...resumeMethods.register("duration")}
                                         />
                                     </Box>
+                                    <ErrorText>{resumeErrors.duration?.message}</ErrorText>
                                 </Box>
                                 <Box sx={singleRow}>
                                     <CustomizedAutoComplete
@@ -294,18 +305,19 @@ const skillsSchema = yup.object().shape({
                                         errors={resumeErrors}
                                     />
                                 </Box>
-                                <Box sx={resumeForm}>
-                                    <Box sx={{width:"70%"}}>
+                                {/* <Box sx={resumeForm}> */}
+                                    <Box sx={{width:"95%"}}>
                                         <StyledInputBase
-                                            maxwidth="600px"
+                                            // maxwidth="600px"
                                             sx={{width:"100%",display:"block"}} 
                                             type='text'
+                                            fullWidth={true}
                                             placeholder={t("form.description")}
-                                            // {...register("title")}
+                                            {...resumeMethods.register("description")}
                                         />
-                                        <ErrorText>{resumeErrors.employeeName?.message}</ErrorText>
+                                        <ErrorText>{resumeErrors.description?.message}</ErrorText>
                                     </Box>                   
-                            </Box>
+                            {/* </Box> */}
                             </Box>
                             <Divider />
                             <Box sx={ButtonContainer}>
@@ -314,8 +326,11 @@ const skillsSchema = yup.object().shape({
                                     customwidth="120px" 
                                     customminwidth="100px"
                                     onClick={() => {
-                                        handleSubmitResume(handleResume)();
-                                        setOpenResume(false);
+                                        handleSubmitResume((data) => {
+                                        handleResume(data); 
+                                        setOpenResume(false);                                     
+                                        resetResume(); 
+                                        })();
                                     }}
                                 >
                                     {t("resume.save_close")}
@@ -325,8 +340,10 @@ const skillsSchema = yup.object().shape({
                                     customwidth="120px" 
                                     customminwidth="100px"
                                     onClick={() => {
-                                        handleSubmitResume(handleResume)();
+                                        handleSubmitResume((data) => {
+                                        handleResume(data);
                                         resetResume();
+                                        })();
                                     }}
                                 >
                                     {t("resume.save_new")}

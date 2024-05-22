@@ -110,7 +110,7 @@ export default function NewEmployee() {
         shouldUnregister: true,
         mode: "onTouched",
         resolver: yupResolver(schema),
-       defaultValues: {
+        defaultValues: {
         employeeName: '',
         workMobile: '',
         workPhone: '',
