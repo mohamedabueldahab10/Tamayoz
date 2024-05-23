@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Survey = () => {
-  return (
-    <div>
-      Survey
-    </div>
-  )
-}
+  return <div>Survey</div>;
+};
 
-export default Survey
+export default Survey;

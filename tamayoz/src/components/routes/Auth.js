@@ -1,15 +1,15 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import "../../assets/css/global.css";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import '../../assets/css/global.css';
+import { useSelector } from 'react-redux';
 import {
   ForgetPassword,
   Login,
   // NewPassword,
   // Signup,
   // Verify,
-} from "../../pages/Auth";
-import NotFound from "../NotFound";
+} from '../../pages/Auth';
+import NotFound from '../NotFound';
 export default function Auth() {
   const { isLoggedIn } = useSelector((state) => state.auth);
 

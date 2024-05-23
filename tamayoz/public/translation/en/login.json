@@ -1,30 +1,29 @@
 {
-    "validation": {
-        "user_name_required":"User Name is Required",
-        "password_required":"Password is Required"
-    },
-    "quick_actions" : {
-        "privacy_policy" : "Privacy Policy",
-        "about_us" : "About Us",
-        "contact_us" : "Contact Us",
-        "help" : "Help",
-        "language" : "العربية"
-    },
-    "form": {
-        "user_placeholder": "Email address or Phone Number",
-        "password_placeholder": "Password",
-        "login_button": "Login",
-        "forget_password": "Forget Password ?",
-        "or": "Or",
-        "register_button": "Register"
-    },
-    "login_word": {
-        "welcome": "Welcome To Tamayoz",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-    },
-    "error": {
-        "message_unexpected" : "Unexpected Error Happened",
-        "message_credentials" : "Username or password is incorrect"
-    }
+  "validation": {
+    "user_name_required": "User Name is Required",
+    "password_required": "Password is Required"
+  },
+  "quick_actions": {
+    "privacy_policy": "Privacy Policy",
+    "about_us": "About Us",
+    "contact_us": "Contact Us",
+    "help": "Help",
+    "language": "العربية"
+  },
+  "form": {
+    "user_placeholder": "Email address or Phone Number",
+    "password_placeholder": "Password",
+    "login_button": "Login",
+    "forget_password": "Forget Password ?",
+    "or": "Or",
+    "register_button": "Register"
+  },
+  "login_word": {
+    "welcome": "Welcome To Tamayoz",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+  },
+  "error": {
+    "message_unexpected": "Unexpected Error Happened",
+    "message_credentials": "Username or password is incorrect"
+  }
 }
-  

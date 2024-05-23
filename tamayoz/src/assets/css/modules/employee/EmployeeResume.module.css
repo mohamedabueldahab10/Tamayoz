@@ -1,0 +1,67 @@
+.resumeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin: 20px 0px 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.resumeSide {
+  width: 60%;
+  min-width: 300px;
+}
+.singleRow {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  min-width: 320px;
+  margin-bottom: 5px;
+  gap: 25px;
+}
+.singleColumn {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  min-width: 320px;
+  margin-bottom: 5px;
+  gap: 25px;
+}
+.dateContainer {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  min-width: 320px;
+  margin-bottom: 5px;
+  gap: 5px;
+  margin-block: 10px;
+}
+.skillsSide {
+  width: 35%;
+  min-width: 300px;
+}
+.modalStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 15px 5px;
+  width: 100%;
+}
+.resumeForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin: 5px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.ButtonContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-block: 10px;
+}

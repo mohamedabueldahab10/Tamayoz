@@ -1,0 +1,35 @@
+.employeeContainer {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-bottom: 5px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.nameInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 5px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.headerInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 5px;
+  width: 100%;
+  flex-wrap: wrap;
+  box-shadow: 0px 3px 0px #eee;
+  padding: 0px 0px 5px;
+}
+
+.singleRow {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  min-width: 320px;
+  margin-bottom: 5px;
+}

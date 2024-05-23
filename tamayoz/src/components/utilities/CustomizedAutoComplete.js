@@ -5,7 +5,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext, Controller } from 'react-hook-form';
 
 import ErrorText from './ErrorText';
 import { InputBase } from '@mui/material';
@@ -20,8 +20,8 @@ const InputWrapper = styled('div')`
   flex-wrap: wrap;
   position: relative;
   &:focus-within {
-  border: 2px solid var(--primary-color);
-}
+    border: 2px solid var(--primary-color);
+  }
   & input {
     background-color: #fff;
     color: var(--primary-color);
@@ -43,26 +43,36 @@ const InputWrapper = styled('div')`
 `;
 
 const Tag = ({ label, onDelete }) => (
-  <div style={{
-    display: "flex",
-    alignItems: "center",
-    height: "24px",
-    margin: "2px",
-    lineHeight: "22px",
-    backgroundColor: "var(--secondary-color)",
-    border: "1px solid var(--primary-color)",
-    borderRadius: "2px",
-    boxSizing: "content-box",
-    padding: "0 4px 0 10px",
-    outline: "0",
-    overflow: "hidden",
-    color: "var(--primary-color)",
-    "&:focus": {
-      backgroundColor: "var(--secondary-color)",
-    },
-  }}>
-    <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>{label}</span>
-    <CloseIcon sx={{ cursor: "pointer", padding: "2px" }} onClick={onDelete} />
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      height: '24px',
+      margin: '2px',
+      lineHeight: '22px',
+      backgroundColor: 'var(--secondary-color)',
+      border: '1px solid var(--primary-color)',
+      borderRadius: '2px',
+      boxSizing: 'content-box',
+      padding: '0 4px 0 10px',
+      outline: '0',
+      overflow: 'hidden',
+      color: 'var(--primary-color)',
+      '&:focus': {
+        backgroundColor: 'var(--secondary-color)',
+      },
+    }}
+  >
+    <span
+      style={{
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+      }}
+    >
+      {label}
+    </span>
+    <CloseIcon sx={{ cursor: 'pointer', padding: '2px' }} onClick={onDelete} />
   </div>
 );
 
@@ -118,7 +128,16 @@ const Listbox = styled('ul')`
   }
 `;
 
-const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOptionLabel, label, name, errors }) => {
+const CustomizedAutoComplete = ({
+  options,
+  defaultValue,
+  multiple,
+  id,
+  getOptionLabel,
+  label,
+  name,
+  errors,
+}) => {
   const { control, setValue } = useFormContext();
   const handleAutocompleteChange = (event, newValue) => {
     setValue(name, newValue, { shouldValidate: true });
@@ -141,13 +160,13 @@ const CustomizedAutoComplete = ({ options, defaultValue, multiple, id, getOption
     isOptionEqualToValue: (option, value) => option.id === value.id,
     onChange: handleAutocompleteChange,
   });
-// const mergedErr = errors && errors[name]?.reduce((acc, obj) => {
-//     Object.entries(obj).forEach(([key, value]) => {
-//         acc[key] = value;
-//     });
-//     return acc;
-// }, {});
-console.log("autocomplete ERRRRR",errors);
+  // const mergedErr = errors && errors[name]?.reduce((acc, obj) => {
+  //     Object.entries(obj).forEach(([key, value]) => {
+  //         acc[key] = value;
+  //     });
+  //     return acc;
+  // }, {});
+  console.log('autocomplete ERRRRR', errors);
   return (
     <>
       <div>
@@ -162,16 +181,15 @@ console.log("autocomplete ERRRRR",errors);
               <InputBase
                 sx={{
                   width: '100%',
-                  "::placeholder": {
-                    fontSize: "18px",
-                    color: "red",
-                    letterSpacing: "0.5px",
-                  }
-                
+                  '::placeholder': {
+                    fontSize: '18px',
+                    color: 'red',
+                    letterSpacing: '0.5px',
+                  },
                 }}
                 {...field}
                 value={value}
-                inputProps={{ ...getInputProps(), placeholder: label}}
+                inputProps={{ ...getInputProps(), placeholder: label }}
                 // {...getInputProps()}
                 // placeholder={label}
               />

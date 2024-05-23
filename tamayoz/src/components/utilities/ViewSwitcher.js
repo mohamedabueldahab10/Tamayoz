@@ -9,7 +9,7 @@
 // const ViewSwitcher = ({ rows, columns}) => {
 // const [pagination, setPagination] = useState({
 //     page: 0,
-//     pageCount: Math.ceil(rows?.length / 10), 
+//     pageCount: Math.ceil(rows?.length / 10),
 //     hasPrevPage: false,
 //     hasNextPage: true,
 //     });
@@ -62,7 +62,7 @@
 //             </div>
 //             </Box>
 //         </Box>
-    
+
 //         {view === 'list' && (
 //         <>
 //             <div style={{ height: 450, width: '100%' }}>

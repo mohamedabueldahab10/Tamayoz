@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, Popover, Paper } from '@mui/material';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
-import  FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
-import StyledInputBase from "./StyledInputBase";
+import StyledInputBase from './StyledInputBase';
 const AdvancedSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,22 +28,27 @@ const AdvancedSearch = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', alignItems: 'center',paddingInline:"0px" }}>
+      <div
+        style={{ display: 'flex', alignItems: 'center', paddingInline: '0px' }}
+      >
         <StyledInputBase
-          sx={{width:"300px",minWidth:"280px",borderRadius:"5px"}}
+          sx={{ width: '300px', minWidth: '280px', borderRadius: '5px' }}
           label="Search"
           variant="outlined"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           InputProps={{
             endAdornment: (
-              <Button sx={{minWidth:"30px",margin:"0px",width:"40px"}} onClick={handleOpenActions}>
-                <ExpandMoreIcon/>
+              <Button
+                sx={{ minWidth: '30px', margin: '0px', width: '40px' }}
+                onClick={handleOpenActions}
+              >
+                <ExpandMoreIcon />
               </Button>
             ),
           }}
         />
-        
+
         {/* <Button variant="contained" color="primary" style={{ marginLeft: '10px' }} onClick={handleSearch}>
           Search
         </Button> */}
@@ -61,9 +66,23 @@ const AdvancedSearch = () => {
           horizontal: 'left',
         }}
       >
-        <Paper style={{ padding: '20px',width:'300px',display:'flex',justifyContent:'space-between',alignItems:'center' }}>         
-        <div><FilterAltIcon />Filter</div>
-        <div><AutoAwesomeMotionIcon />Group By</div>
+        <Paper
+          style={{
+            padding: '20px',
+            width: '300px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <FilterAltIcon />
+            Filter
+          </div>
+          <div>
+            <AutoAwesomeMotionIcon />
+            Group By
+          </div>
         </Paper>
       </Popover>
     </div>

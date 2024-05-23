@@ -1,36 +1,34 @@
 {
-    "home_section": {
-        "apps": "التطبيقات",
-        "main_menu": "القائمة الرئيسية",
-        "home": "الصفحة الرئيسية",
-        "dashboard": "لوحة المعلومات",
-        "survey": "الاستفتاءات",
-        "documents": "المجلدات",
-        "archivings": "الأرشفة",
-        "transactions": "المعاملات",
-        "setting": "الاعدادات",
-        "discuss": "المناقشة",
-        "meeting_room": "الاجتماعات",
-        "calender": "التقويم",
-        "to_do": "المهام",
-        "contacts": "الاسماء",
-        "project": "المشاريع",
-        "time_sheet": "الجدول الزمني",
-        "knowledge": "المعرفة",
-        "planning": "التخطيط",
-        "appraisals": "تقييمات",
-        "attendances": "الحضور",
-        "time_off": "الاجازات",
-        "employees": "الموظفين"
-
-    },
-    "navbar": {
-        "log_out": "تسجيل الخروج",
-        "profile": "الحساب",
-        "all_notifications": "مشاهدة كل الاشعارات",
-        "no_Notification": "لا يوجد اشعارات",
-        "change_password":"تغيير كلمة المرور",
-        "search": "بحث ..."
-      }
+  "home_section": {
+    "apps": "التطبيقات",
+    "main_menu": "القائمة الرئيسية",
+    "home": "الصفحة الرئيسية",
+    "dashboard": "لوحة المعلومات",
+    "survey": "الاستفتاءات",
+    "documents": "المجلدات",
+    "archivings": "الأرشفة",
+    "transactions": "المعاملات",
+    "setting": "الاعدادات",
+    "discuss": "المناقشة",
+    "meeting_room": "الاجتماعات",
+    "calender": "التقويم",
+    "to_do": "المهام",
+    "contacts": "الاسماء",
+    "project": "المشاريع",
+    "time_sheet": "الجدول الزمني",
+    "knowledge": "المعرفة",
+    "planning": "التخطيط",
+    "appraisals": "تقييمات",
+    "attendances": "الحضور",
+    "time_off": "الاجازات",
+    "employees": "الموظفين"
+  },
+  "navbar": {
+    "log_out": "تسجيل الخروج",
+    "profile": "الحساب",
+    "all_notifications": "مشاهدة كل الاشعارات",
+    "no_Notification": "لا يوجد اشعارات",
+    "change_password": "تغيير كلمة المرور",
+    "search": "بحث ..."
+  }
 }
-  

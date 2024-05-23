@@ -1,72 +1,72 @@
 .navbarContainer {
-    width: 100%;
-    position: fixed;
-    height: var(--navbar-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 65px;
-    background: white;
-    z-index: 100;
-    box-shadow: 3px 3px 2px #eee;
-  }
+  width: 100%;
+  position: fixed;
+  height: var(--navbar-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 65px;
+  background: white;
+  z-index: 100;
+  box-shadow: 3px 3px 2px #eee;
+}
 .homenavbarContainer {
-    width: 100%;
-    position: fixed;
-    height: var(--navbar-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 65px;
-    background: transparent;
-    z-index: 100;
-  }
+  width: 100%;
+  position: fixed;
+  height: var(--navbar-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 65px;
+  background: transparent;
+  z-index: 100;
+}
 .navbarLeft {
-    display: flex;
-    gap: 15px;
-    justify-content: space-between;
-    align-items: center;
-  }
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
 .navbarRight {
-    display: flex;
-    gap: 50px;
-  }
+  display: flex;
+  gap: 50px;
+}
 .iconslist {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    color: var(--primary-color);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: var(--primary-color);
+}
 .iconslist div {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
 .iconslist svg {
-    width: 24px;
-  }
-.navbarRoutes{
+  width: 24px;
+}
+.navbarRoutes {
   display: flex;
   gap: 10px;
   justify-content: space-between;
   align-items: center;
   color: var(--primary-color);
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-    ul li {
-        display: inline;
-        margin-right: 10px;
-    }
+  ul li {
+    display: inline;
+    margin-right: 10px;
+  }
 
-    ul li a {
-        text-decoration: none;
-        color: var(--secondary-color);
-        padding: 5px 10px;
-    }
+  ul li a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    padding: 5px 10px;
+  }
 
-    ul li a.active {
-        color: var(--primary-color);
-    }
+  ul li a.active {
+    color: var(--primary-color);
+  }
 }

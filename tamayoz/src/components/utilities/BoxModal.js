@@ -1,5 +1,5 @@
-import { Box } from "@mui/material";
-import styled from "styled-components";
+import { Box } from '@mui/material';
+import styled from 'styled-components';
 
 const BoxModal = styled(Box)`
   position: absolute;
@@ -8,7 +8,7 @@ const BoxModal = styled(Box)`
   transform: translate(-50%, -50%);
   min-width: 600px;
   width: auto;
-//   width: ${(props) => (props.variant === "solo" ? "40%" : " 55%")};
+  //   width: ${(props) => (props.variant === 'solo' ? '40%' : ' 55%')};
   background: #fff;
   border-radius: 5px;
   box-shadow: 24;

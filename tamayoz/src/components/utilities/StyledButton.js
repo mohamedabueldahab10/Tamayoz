@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  width: ${(props) => (props.small ? "170px" : props.customwidth ? props.customwidth : "220px")};
-  min-width: ${(props) => (props.customminwidth ? props.customminwidth : "150px")};
+  width: ${(props) =>
+    props.small ? '170px' : props.customwidth ? props.customwidth : '220px'};
+  min-width: ${(props) =>
+    props.customminwidth ? props.customminwidth : '150px'};
   height: 40px;
-  background: ${(props) => (props.color ? props.color : "var(--primary-color)")};
+  background: ${(props) =>
+    props.color ? props.color : 'var(--primary-color)'};
   border: 0;
   border-radius: 5px;
   font-weight: bold;
@@ -13,8 +16,8 @@ const StyledButton = styled.button`
   text-transform: capitalize;
   cursor: pointer;
   &:hover {
-    background: ${(props) => (props.hoverColor ? props.hoverColor : "var(--text-primary-color)")};
+    background: ${(props) =>
+      props.hoverColor ? props.hoverColor : 'var(--text-primary-color)'};
   }
 `;
 export default StyledButton;
-

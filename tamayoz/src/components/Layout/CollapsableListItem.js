@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   List,
   ListItemIcon,
   ListItemText,
   ListItemButton,
   Collapse,
-} from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+} from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 const CollapsableListItem = ({
   children,
   setSelectedIndex,
@@ -29,19 +29,19 @@ const CollapsableListItem = ({
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
         <ListItemText
           primary={name}
-          color={subsection ? (open ? "var(--primary-color)" : "") : ""}
-          sx={{ "& span": { fontSize: subsection ? 13 : "" } }}
+          color={subsection ? (open ? 'var(--primary-color)' : '') : ''}
+          sx={{ '& span': { fontSize: subsection ? 13 : '' } }}
         />
         {open ? (
           <ArrowDropDownIcon
             sx={{
-              color: open ? "var(--secondary-color)" : "#4B7CF3",
+              color: open ? 'var(--secondary-color)' : '#4B7CF3',
             }}
           />
         ) : (
           <ArrowRightIcon
             sx={{
-              color: open ? "var(--secondary-color)" : "#4B7CF3",
+              color: open ? 'var(--secondary-color)' : '#4B7CF3',
             }}
           />
         )}

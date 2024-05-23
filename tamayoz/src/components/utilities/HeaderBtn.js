@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const HeaderBtn = styled.button`
   width: 100px;
   min-width: 80px;
   height: 40px;
-  background: ${(props) => (props.color ? props.color : "var(--primary-color)")};
+  background: ${(props) =>
+    props.color ? props.color : 'var(--primary-color)'};
   border: 0;
   border-radius: 5px;
   font-weight: bold;
@@ -14,4 +15,3 @@ const HeaderBtn = styled.button`
   cursor: pointer;
 `;
 export default HeaderBtn;
-

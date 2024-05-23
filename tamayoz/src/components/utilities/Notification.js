@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 // import axiosInstance from "../../helpers/AxiosInstance";
 
 const Container = styled.div`
   padding: 20px 30px;
-  background: ${(props) => (props.active ? "#E7F1FA" : "white")};
+  background: ${(props) => (props.active ? '#E7F1FA' : 'white')};
   border-radius: 10px;
   cursor: pointer;
 `;
@@ -27,7 +27,7 @@ const Title = styled.div`
   font-size: 20px;
   letter-spacing: 0px;
   text-align: left;
-  color: ${(props) => (props.primary ? "var(--primary-color)" : "#252e48")};
+  color: ${(props) => (props.primary ? 'var(--primary-color)' : '#252e48')};
   text-transform: capitalize;
   opacity: 1;
   @media (max-width: 1440px) {
@@ -47,13 +47,13 @@ const ItemContainer = styled.div`
   gap: 5px;
 `;
 const NotificationItem = styled.div`
-  font-size: ${(props) => (props.small ? "18px" : "20px")};
+  font-size: ${(props) => (props.small ? '18px' : '20px')};
   font-weight: 600;
   letter-spacing: 0px;
   color: #010e3f;
   margin-top: 10px;
   @media (max-width: 1440px) {
-    font-size: ${(props) => (props.small ? "15px" : "18px")};
+    font-size: ${(props) => (props.small ? '15px' : '18px')};
   }
 `;
 
@@ -88,8 +88,8 @@ export default function Notification({
       <Header>
         <ItemContainer>
           <Title>
-            {language === "ar" ? "الشحنة رقم" : "Shipment No"}
-            {" :"}
+            {language === 'ar' ? 'الشحنة رقم' : 'Shipment No'}
+            {' :'}
           </Title>
           <Title>{AWB}</Title>
           <Title>--</Title>
@@ -98,16 +98,16 @@ export default function Notification({
         <Title primary>{AWB}</Title>
       </Header>
       <ContentContainer>
-        {Body.split("\n")
-          .filter((item) => item.split(":")[1] !== " ")
+        {Body.split('\n')
+          .filter((item) => item.split(':')[1] !== ' ')
           .map((item, index) => (
             <ItemContainer key={index}>
               <NotificationItem>
-                {item.split(":")[0]}
+                {item.split(':')[0]}
                 {` :`}
               </NotificationItem>
-              <NotificationItem style={{ color: "var(--primary-color)" }}>
-                {item.split(":")[1]}
+              <NotificationItem style={{ color: 'var(--primary-color)' }}>
+                {item.split(':')[1]}
               </NotificationItem>
             </ItemContainer>
           ))}
@@ -131,15 +131,15 @@ export default function Notification({
       <Header>
         <ItemContainer>
           <Title primary>
-            {language === "ar" ? "الشحنة رقم" : "Shipment No"}
-            {" :"}
+            {language === 'ar' ? 'الشحنة رقم' : 'Shipment No'}
+            {' :'}
           </Title>
           <Title primary>{AWB}</Title>
           <Title primary>--</Title>
           <Title primary>{Status}</Title>
         </ItemContainer>
       </Header>
-      {Body.split("\n").map((item, index) => (
+      {Body.split('\n').map((item, index) => (
         <NotificationItem key={index} small>
           {item}
         </NotificationItem>

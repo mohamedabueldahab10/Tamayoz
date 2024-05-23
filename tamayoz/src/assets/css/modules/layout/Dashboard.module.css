@@ -1,50 +1,50 @@
 /* Home.js page styling */
-.homeContainer{
-    display: grid; 
-    place-items: center;
-    /* height: calc(100vh - 80px); */
-    width: 100%;
+.homeContainer {
+  display: grid;
+  place-items: center;
+  /* height: calc(100vh - 80px); */
+  width: 100%;
 }
 
-.cardContainer{
-    width: 100%;
-    display: flex;
-    justify-content: end;
+.cardContainer {
+  width: 100%;
+  display: flex;
+  justify-content: end;
 }
-.homeCard{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
+.homeCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.cardLogo{
-    cursor: pointer;
-    width: 70px;
-    height: 70px;
-    background-color: rgba(84, 150, 81, 0.425);
-    display: grid;
-    place-items: center;
-    border-radius: 5px;
+.cardLogo {
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  background-color: rgba(84, 150, 81, 0.425);
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
 }
-.cardName{
-    cursor: pointer;
-    font-family: "Cairo", sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--primary-color);
+.cardName {
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary-color);
 }
 /* ============================================================ */
 /* Dashboard.js page styling */
-.arrowContainer{
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-    display: grid;
-    place-items: center;
-    margin: 10px;
-    border-radius: 50%;
-    cursor: pointer;
+.arrowContainer {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  display: grid;
+  place-items: center;
+  margin: 10px;
+  border-radius: 50%;
+  cursor: pointer;
 }
-.MuiDataGrid-footerContainer{
-    display: none !important;
+.MuiDataGrid-footerContainer {
+  display: none !important;
 }

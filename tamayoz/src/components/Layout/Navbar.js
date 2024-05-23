@@ -1,19 +1,19 @@
-import styles from "../../assets/css/modules/layout/Navbar.module.css";
-import { handleLogout } from "../../redux/authReducer";
-import { useDispatch } from "react-redux";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import SearchBar from "../SearchBar";
-import LogoImg from "../../assets/images/tamayoz-logo.png"
-import ButtonsContainer from "../utilities/ButtonsContainer"
-import Notification from "../utilities/Notification"
+import styles from '../../assets/css/modules/layout/Navbar.module.css';
+import { handleLogout } from '../../redux/authReducer';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import SearchBar from '../SearchBar';
+import LogoImg from '../../assets/images/tamayoz-logo.png';
+import ButtonsContainer from '../utilities/ButtonsContainer';
+import Notification from '../utilities/Notification';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import styled from "styled-components";
-import Translation from "../utilities/Translation";
-import React, { useState } from "react";
+import styled from 'styled-components';
+import Translation from '../utilities/Translation';
+import React, { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import PollIcon from '@mui/icons-material/Poll';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -38,16 +38,22 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemButton,
-  Menu, MenuItem, Divider, IconButton,Popover,Card,Button 
-} from "@mui/material";
-import StyledButton from "../utilities/StyledButton";
+  Menu,
+  MenuItem,
+  Divider,
+  IconButton,
+  Popover,
+  Card,
+  Button,
+} from '@mui/material';
+import StyledButton from '../utilities/StyledButton';
 const Line = styled.hr`
   border: 1px solid var(--primary-color);
 `;
 export default function Navbar() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const location = useLocation().pathname;
-  const { t } = useTranslation("layout");
+  const { t } = useTranslation('layout');
   // const [searchBarInput, setSearchBarInput] = useState("");
   // const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -80,64 +86,142 @@ export default function Navbar() {
     setQuickLinks(null);
   };
   const sidebarItems = [
-    { path: "/", text: `${t("home_section.main_menu")}`, icon: <HomeIcon /> },
-    { path: "/dashboard", text: `${t("home_section.dashboard")}`, icon: <DashboardIcon /> },
-    { path: "/survey", text: `${t("home_section.survey")}`, icon: <PollIcon /> },
-    { path: "/documents", text: `${t("home_section.documents")}`, icon: <FolderOpenIcon /> },
-    { path: "/archivings", text: `${t("home_section.archivings")}`, icon: <ArchiveIcon /> },
-    { path: "/transactions", text: `${t("home_section.transactions")}`, icon: <BackupTableIcon /> },
-    { path: "/setting", text: `${t("home_section.setting")}`, icon: <SettingsIcon /> },
-    { path: "/discuss", text: `${t("home_section.discuss")}`, icon: <ChatBubbleIcon /> },
-    { path: "/meeting-room", text: `${t("home_section.meeting_room")}`, icon: <Groups3Icon /> },
-    { path: "/calender", text: `${t("home_section.calender")}`, icon: <EventNoteIcon /> },
-    { path: "/to-do", text: `${t("home_section.to_do")}`, icon: <ChecklistRtlIcon /> },
-    { path: "/contacts", text: `${t("home_section.contacts")}`, icon: <AssignmentIndIcon /> },
-    { path: "/time-sheet", text: `${t("home_section.time_sheet")}`, icon: <PunchClockIcon /> },
-    { path: "/knowledge", text: `${t("home_section.knowledge")}`, icon: <SchoolIcon /> },
-    { path: "/planning", text: `${t("home_section.planning")}`, icon: <NoteAltIcon /> },
-    { path: "/appraisals", text: `${t("home_section.appraisals")}`, icon: <StarHalfIcon /> },
-    { path: "/attendances", text: `${t("home_section.attendances")}`, icon: <PeopleAltIcon /> },
-    { path: "/time-off", text: `${t("home_section.time_off")}`, icon: <TimerOffIcon /> },
-    { path: "/employees", text: `${t("home_section.employees")}`, icon: <BadgeIcon /> },
+    { path: '/', text: `${t('home_section.main_menu')}`, icon: <HomeIcon /> },
+    {
+      path: '/dashboard',
+      text: `${t('home_section.dashboard')}`,
+      icon: <DashboardIcon />,
+    },
+    {
+      path: '/survey',
+      text: `${t('home_section.survey')}`,
+      icon: <PollIcon />,
+    },
+    {
+      path: '/documents',
+      text: `${t('home_section.documents')}`,
+      icon: <FolderOpenIcon />,
+    },
+    {
+      path: '/archivings',
+      text: `${t('home_section.archivings')}`,
+      icon: <ArchiveIcon />,
+    },
+    {
+      path: '/transactions',
+      text: `${t('home_section.transactions')}`,
+      icon: <BackupTableIcon />,
+    },
+    {
+      path: '/setting',
+      text: `${t('home_section.setting')}`,
+      icon: <SettingsIcon />,
+    },
+    {
+      path: '/discuss',
+      text: `${t('home_section.discuss')}`,
+      icon: <ChatBubbleIcon />,
+    },
+    {
+      path: '/meeting-room',
+      text: `${t('home_section.meeting_room')}`,
+      icon: <Groups3Icon />,
+    },
+    {
+      path: '/calender',
+      text: `${t('home_section.calender')}`,
+      icon: <EventNoteIcon />,
+    },
+    {
+      path: '/to-do',
+      text: `${t('home_section.to_do')}`,
+      icon: <ChecklistRtlIcon />,
+    },
+    {
+      path: '/contacts',
+      text: `${t('home_section.contacts')}`,
+      icon: <AssignmentIndIcon />,
+    },
+    {
+      path: '/time-sheet',
+      text: `${t('home_section.time_sheet')}`,
+      icon: <PunchClockIcon />,
+    },
+    {
+      path: '/knowledge',
+      text: `${t('home_section.knowledge')}`,
+      icon: <SchoolIcon />,
+    },
+    {
+      path: '/planning',
+      text: `${t('home_section.planning')}`,
+      icon: <NoteAltIcon />,
+    },
+    {
+      path: '/appraisals',
+      text: `${t('home_section.appraisals')}`,
+      icon: <StarHalfIcon />,
+    },
+    {
+      path: '/attendances',
+      text: `${t('home_section.attendances')}`,
+      icon: <PeopleAltIcon />,
+    },
+    {
+      path: '/time-off',
+      text: `${t('home_section.time_off')}`,
+      icon: <TimerOffIcon />,
+    },
+    {
+      path: '/employees',
+      text: `${t('home_section.employees')}`,
+      icon: <BadgeIcon />,
+    },
   ];
   return (
-    <div className={location==="/"? styles.homenavbarContainer: styles.navbarContainer}>
+    <div
+      className={
+        location === '/' ? styles.homenavbarContainer : styles.navbarContainer
+      }
+    >
       <div className={styles.navbarLeft}>
-      <img src={LogoImg} alt='Tamayoz' />
+        <img src={LogoImg} alt="Tamayoz" />
       </div>
       <div className={styles.navbarRoutes}>
-      {location==="/" ? <></> :
-        <div>
-          <StyledButton
-            small="true"
-            id="basic-button"
-            aria-controls={openEl ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={openEl ? 'true' : undefined}
-            onClick={handleQuickLink}
-          >
-            {`${t("home_section.apps")}`} 
-          </StyledButton>
-          <Menu
-            id="basic-menu"
-            anchorEl={quickLinks}
-            open={openQuick}
-            onClose={handleCloseQuick}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <List
-              sx={{
-                maxHeight: "250px",
-                overflowX: "hidden",
-                "&::scrollbar": {
-                  width: "5px",
-                },
-                scrollbarWidth: "thin",
-                overflowY: "auto",
+        {location === '/' ? (
+          <></>
+        ) : (
+          <div>
+            <StyledButton
+              small="true"
+              id="basic-button"
+              aria-controls={openEl ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={openEl ? 'true' : undefined}
+              onClick={handleQuickLink}
+            >
+              {`${t('home_section.apps')}`}
+            </StyledButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={quickLinks}
+              open={openQuick}
+              onClose={handleCloseQuick}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
               }}
-              onClick={() => setQuickLinks(false)}
+            >
+              <List
+                sx={{
+                  maxHeight: '250px',
+                  overflowX: 'hidden',
+                  '&::scrollbar': {
+                    width: '5px',
+                  },
+                  scrollbarWidth: 'thin',
+                  overflowY: 'auto',
+                }}
+                onClick={() => setQuickLinks(false)}
               >
                 {sidebarItems.map((item, index) => (
                   <ListItemButton
@@ -147,40 +231,49 @@ export default function Navbar() {
                     component={NavLink}
                     to={item.path}
                     sx={{
-                      "& span ": {
+                      '& span ': {
                         color:
                           selectedIndex === item.name || location === item.path
-                            ? "var(--primary-color)"
-                            : "currentColor",
+                            ? 'var(--primary-color)'
+                            : 'currentColor',
                       },
                     }}
                   >
-                    <ListItemIcon sx={{color: selectedIndex === item.text || location === item.path ? "var(--primary-color)" : "var(--secondary-color)"}}>{item.icon}</ListItemIcon>
+                    <ListItemIcon
+                      sx={{
+                        color:
+                          selectedIndex === item.text || location === item.path
+                            ? 'var(--primary-color)'
+                            : 'var(--secondary-color)',
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
                     <ListItemText primary={item.text} />
                   </ListItemButton>
                 ))}
               </List>
-          </Menu>
-        </div>
-        }
+            </Menu>
+          </div>
+        )}
       </div>
       <div className={styles.navbarRight}>
         <div className={styles.iconslist}>
           <div className={styles.notifications}>
             <IconButton
-              style={{ background: "transparent" }}
+              style={{ background: 'transparent' }}
               onClick={handleNotificationClick}
               sx={{
-                background: "transparent",
-                position: "relative",
-                "&::before": {
+                background: 'transparent',
+                position: 'relative',
+                '&::before': {
                   content: "''",
-                  position: "absolute",
-                  top: "0",
-                  right: "0",
-                  width: "15px",
-                  borderRadius: "50%",
-                  height: "15px",
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  width: '15px',
+                  borderRadius: '50%',
+                  height: '15px',
                   // backgroundColor: data?.notifications.length
                   //   ? "var(--primary-color)"
                   //   : "transparent",
@@ -204,19 +297,19 @@ export default function Navbar() {
           <div className={styles.profile}>
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
-                textAlign: "center",
+                display: 'flex',
+                alignItems: 'center',
+                textAlign: 'center',
               }}
             >
               <IconButton
                 onClick={handleClick}
                 size="small"
-                aria-controls={openEl ? "account-menu" : undefined}
+                aria-controls={openEl ? 'account-menu' : undefined}
                 aria-haspopup="true"
-                aria-expanded={openEl ? "true" : undefined}
+                aria-expanded={openEl ? 'true' : undefined}
               >
-              <ManageAccountsIcon sx={{color:"var(--primary-color)"}} />
+                <ManageAccountsIcon sx={{ color: 'var(--primary-color)' }} />
               </IconButton>
             </Box>
             <Menu
@@ -228,58 +321,52 @@ export default function Navbar() {
               PaperProps={{
                 elevation: 0,
                 sx: {
-                  overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  overflow: 'visible',
+                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                   mt: 1.5,
-                  "& .MuiAvatar-root": {
+                  '& .MuiAvatar-root': {
                     width: 32,
                     height: 32,
                     mr: 1,
                   },
                 },
               }}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
               <MenuItem
                 button
                 component={NavLink}
                 to="/home"
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "7px",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: '7px',
                 }}
               >
-                <AccountCircleIcon 
-                sx={{color:"var(--primary-color)"}}
-                />
-                <Box sx={{ fontSize: ".70em" }}>
-                  {`${t("navbar.profile")}`}
-                </Box>
+                <AccountCircleIcon sx={{ color: 'var(--primary-color)' }} />
+                <Box sx={{ fontSize: '.70em' }}>{`${t('navbar.profile')}`}</Box>
               </MenuItem>
-              <Divider sx={{ background: "var(--primary-color)" }} />
+              <Divider sx={{ background: 'var(--primary-color)' }} />
               <MenuItem
                 component="div"
                 onClick={handleLogoutBtnClick}
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "7px",
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: '7px',
                 }}
               >
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "7px",
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: '7px',
                   }}
                 >
-                <LogoutIcon  sx={{color:"var(--primary-color)"}} />
+                  <LogoutIcon sx={{ color: 'var(--primary-color)' }} />
                 </Box>
-                <Box sx={{ fontSize: ".70em" }}>{`${t(
-                  "navbar.log_out"
-                )}`}</Box>
+                <Box sx={{ fontSize: '.70em' }}>{`${t('navbar.log_out')}`}</Box>
               </MenuItem>
             </Menu>
           </div>
@@ -296,14 +383,14 @@ export default function Navbar() {
           setAnchor(null);
         }}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
-        sx={{ fontFamily: "Cairo" }}
+        sx={{ fontFamily: 'Cairo' }}
       >
         <Card>
           <div dir="rtl">
@@ -322,22 +409,22 @@ export default function Navbar() {
             <Line />
             {notifications.length ? (
               <ButtonsContainer
-                style={{ marginTop: "10px", marginBottom: "10px" }}
+                style={{ marginTop: '10px', marginBottom: '10px' }}
               >
                 <Button to="/notifications" onClick={() => setAnchor(null)}>
-                  {t("navbar.all_notifications")}
+                  {t('navbar.all_notifications')}
                 </Button>
               </ButtonsContainer>
             ) : (
               <ButtonsContainer
                 style={{
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  fontSize: "18px",
-                  paddingInline:"10px"
+                  marginTop: '10px',
+                  marginBottom: '10px',
+                  fontSize: '18px',
+                  paddingInline: '10px',
                 }}
               >
-                {t("navbar.no_Notification")}
+                {t('navbar.no_Notification')}
               </ButtonsContainer>
             )}
           </div>
