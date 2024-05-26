@@ -71,7 +71,10 @@
     "approvers": "المشرفين",
     "remote_work": "العمل عن بعد",
     "schedule": "الجداول",
-    "planning": "الخطط"
+    "planning": "الخطط",
+    "no_hierarchy": "لا يوجد تسلسل وظيفي",
+    "no_manager": "هذا الموظف ليس لديه مدير أو مشرف",
+    "set_manager": "من أجل الحصول على مخطط تنظيمي، قم بتعيين مدير واحفظ السجل."
   },
   "private_info": {
     "private_info": "معلومات خاصة"

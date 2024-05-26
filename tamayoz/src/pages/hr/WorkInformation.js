@@ -3,7 +3,7 @@ import TypographyHeader from '../../components/utilities/TypographyHeader';
 import { useTranslation } from 'react-i18next';
 import styles from '../../assets/css/modules/employee/WorkInfo.module.css';
 import publicStyles from '../../assets/css/modules/employee/NewEmployee.module.css';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
 const addresses = [
   { label: 'IT', id: 1 },
@@ -257,6 +257,11 @@ export default function WorkInformation() {
       <Box className={styles.orgChart}>
         <TypographyHeader>{t('work_info.org_chart')}</TypographyHeader>
         <Divider sx={{ marginBottom: '10px' }} />
+        <Box className={styles.hierarchyBox}>
+          <TypographyHeader>{t('work_info.no_hierarchy')}</TypographyHeader>
+          <p className={styles.infoWord}>{t('work_info.no_manager')}</p>
+          <p className={styles.infoWord}>{t('work_info.set_manager')}</p>
+        </Box>
       </Box>
     </Box>
   );

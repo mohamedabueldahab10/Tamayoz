@@ -1,0 +1,13 @@
+.privateInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
+  margin: 20px 0px 10px;
+  width: 100%;
+}
+.infoSection {
+  width: 50%;
+  min-width: 320px;
+  max-width: 600px;
+}

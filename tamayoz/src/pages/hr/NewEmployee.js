@@ -10,6 +10,8 @@ import EmployeeResume from './EmployeeResume';
 import EmployeeInfo from './EmployeeInfo';
 import styles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import WorkInformation from './WorkInformation';
+import PrivateInfo from './PrivateInfo';
+import HrSettings from './HrSettings';
 const tabStyle = {
   color: 'var(--dark-color)',
   fontSize: '14px',
@@ -201,10 +203,10 @@ export default function NewEmployee() {
             <WorkInformation />
           </CustomTabPanel>
           <CustomTabPanel value={tabValue} index={2}>
-            Private Information
+            <PrivateInfo />
           </CustomTabPanel>
           <CustomTabPanel value={tabValue} index={3}>
-            HR Settings
+            <HrSettings />
           </CustomTabPanel>
         </Box>
       </FormProvider>

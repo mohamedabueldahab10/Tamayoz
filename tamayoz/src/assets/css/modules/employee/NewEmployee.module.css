@@ -30,6 +30,6 @@
   justify-content: start;
   align-items: start;
   flex-direction: column;
-  min-width: 320px;
+  min-width: 300px;
   margin-bottom: 5px;
 }

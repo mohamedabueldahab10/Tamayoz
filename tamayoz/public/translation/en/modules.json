@@ -66,18 +66,30 @@
   },
   "work_info": {
     "work_info": "Work Information",
-    "org_chart": "Org chart",
+    "org_chart": "Organization chart",
     "location": "Location",
     "approvers": "Approvers",
     "remote_work": "Remote Work",
     "schedule": "Schedule",
-    "planning": "Planning"
+    "planning": "Planning",
+    "no_hierarchy": "No Hierarchy Position",
+    "no_manager": "This employee has no manager or subordinate.",
+    "set_manager": "In order to get an organigram, set a manager and save the record."
   },
   "private_info": {
-    "private_info": "Private Information"
+    "private_info": "Private Information",
+    "contact": "Private Contact",
+    "family_status": "Family Status",
+    "emergency": "Emergency",
+    "education": "Education",
+    "work_permit": "Work Permit",
+    "citizenship": "Citizenship"
   },
   "hr_settings": {
-    "hr_settings": "HR Settings"
+    "hr_settings": "HR Settings",
+    "status": "Status",
+    "attendance_pos_manufacturing": "Attendance / Point of Sale / Manufacturing",
+    "app_setting": "Application Settings"
   },
   "validation": {
     "employee_name": "Please Enter Employee Name",

@@ -1,11 +1,10 @@
 .workInfoContainer {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: start;
   flex-wrap: wrap;
   margin: 20px 0px 10px;
   width: 100%;
-  gap: 20px;
 }
 .formSide {
   display: flex;
@@ -17,21 +16,12 @@
   max-width: 900px;
   border-right: 1px solid var(--secondary-color);
 }
-.orgChart {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  min-width: 320px;
-}
 .singleRow {
   display: flex;
   justify-content: start;
   align-items: start;
   flex-direction: column;
   min-width: 320px;
-  /* width: 100%; */
-  /* background-color: aqua; */
   margin-bottom: 5px;
 }
 .addressInfo {
@@ -46,4 +36,30 @@
   font-size: 16px;
   color: var(--dark-color);
   font-style: italic;
+}
+.orgChart {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  min-width: 320px;
+  max-width: 600px;
+}
+.hierarchyBox {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  margin-bottom: 5px;
+  width: 90%;
+  gap: 20px;
+  border-radius: 2px;
+  background-color: #7fdf7a7c;
+  color: var(--primary-color);
+  /* --primary-color: #7fdf7a; */
+
+  padding: 15px;
+}
+.infoWord {
+  font-size: 14px;
 }
