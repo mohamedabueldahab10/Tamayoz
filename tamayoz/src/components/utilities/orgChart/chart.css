@@ -1,0 +1,41 @@
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.node {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
+  color: red;
+}
+
+.node > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.node > div > icon {
+  margin-right: 5px;
+}
+.node-children {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin-top: 10px;
+  background-color: aqua;
+}
+.org-node-container {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  /* width: 100%; */
+  background-color: #ccc;
+  z-index: 1;
+}

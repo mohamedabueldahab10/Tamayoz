@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAutocomplete } from '@mui/base/useAutocomplete';
 import CheckIcon from '@mui/icons-material/Check';
@@ -6,12 +6,22 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
 import { useFormContext, Controller } from 'react-hook-form';
-
+import AddIcon from '@mui/icons-material/Add';
 import ErrorText from './ErrorText';
-import { InputBase } from '@mui/material';
-
+import { Box, InputBase } from '@mui/material';
+const CreationLI = styled('li')`
+  cursor: pointer;
+  color: var(--primary-color);
+  &:hover {
+    background-color: #fafafa;
+    font-weight: 600;
+  }
+`;
+const NoRecords = styled('li')`
+  color: var(--primary-color);
+`;
 const InputWrapper = styled('div')`
-  width: 230px;
+  min-width: ${(props) => props.minWidth || '300px'};
   border: 1px solid var(--secondary-color);
   border-inline: none !important;
   border-top: none !important;
@@ -58,6 +68,7 @@ const Tag = ({ label, onDelete }) => (
       outline: '0',
       overflow: 'hidden',
       color: 'var(--primary-color)',
+      zIndex: '2',
       '&:focus': {
         backgroundColor: 'var(--secondary-color)',
       },
@@ -94,7 +105,7 @@ const Listbox = styled('ul')`
   max-height: 250px;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1;
+  z-index: 2;
   color: #000;
   & li {
     padding: 5px 12px;
@@ -137,10 +148,27 @@ const CustomizedAutoComplete = ({
   label,
   name,
   errors,
+  setOpen,
+  minWidth,
 }) => {
+  const [inputValue, setInputValue] = useState('');
   const { control, setValue } = useFormContext();
   const handleAutocompleteChange = (event, newValue) => {
-    setValue(name, newValue, { shouldValidate: true });
+    const valueToSet = newValue
+      ? Array.isArray(newValue)
+        ? newValue
+        : [newValue]
+      : [];
+    setValue(name, valueToSet, { shouldValidate: true });
+    console.log('auto value', newValue);
+  };
+  const handleInputChange = (event, newInputValue) => {
+    console.log(newInputValue);
+    setInputValue(newInputValue);
+  };
+  console.log(setOpen);
+  const handleCreationOption = () => {
+    setOpen(true);
   };
   const {
     getInputProps,
@@ -159,18 +187,18 @@ const CustomizedAutoComplete = ({
     getOptionLabel,
     isOptionEqualToValue: (option, value) => option.id === value.id,
     onChange: handleAutocompleteChange,
+    inputValue,
+    onInputChange: handleInputChange,
   });
-  // const mergedErr = errors && errors[name]?.reduce((acc, obj) => {
-  //     Object.entries(obj).forEach(([key, value]) => {
-  //         acc[key] = value;
-  //     });
-  //     return acc;
-  // }, {});
   console.log('autocomplete ERRRRR', errors);
   return (
     <>
-      <div>
-        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
+      <Box sx={{ minWidth }}>
+        <InputWrapper
+          ref={setAnchorEl}
+          className={focused ? 'focused' : ''}
+          minWidth={minWidth}
+        >
           {value.map((option, index) => (
             <Tag label={option.label} {...getTagProps({ index })} />
           ))}
@@ -190,12 +218,10 @@ const CustomizedAutoComplete = ({
                 {...field}
                 value={value}
                 inputProps={{ ...getInputProps(), placeholder: label }}
-                // {...getInputProps()}
-                // placeholder={label}
               />
             )}
           />
-          {groupedOptions.length > 0 ? (
+          {groupedOptions.length > 0 || inputValue ? (
             <Listbox {...getListboxProps()}>
               {groupedOptions.map((option, index) => (
                 <li {...getOptionProps({ option, index })}>
@@ -203,11 +229,24 @@ const CustomizedAutoComplete = ({
                   <CheckIcon fontSize="small" />
                 </li>
               ))}
+              {setOpen
+                ? inputValue && (
+                    <CreationLI onClick={handleCreationOption}>
+                      <span>Create "{inputValue}"</span>
+                      <AddIcon fontSize="small" />
+                    </CreationLI>
+                  )
+                : inputValue && (
+                    <NoRecords>
+                      <span>No records</span>
+                      {/* <AddIcon fontSize="small" /> */}
+                    </NoRecords>
+                  )}
             </Listbox>
           ) : null}
         </InputWrapper>
         {errors && <ErrorText>{errors[name]?.message}</ErrorText>}
-      </div>
+      </Box>
     </>
   );
 };
@@ -220,13 +259,16 @@ CustomizedAutoComplete.propTypes = {
   getOptionLabel: PropTypes.func,
   label: PropTypes.string,
   name: PropTypes.string,
-  errors: PropTypes.object, // Added prop
+  errors: PropTypes.object,
+  setOpen: PropTypes.func,
+  minWidth: PropTypes.string,
 };
 
 CustomizedAutoComplete.defaultProps = {
   defaultValue: [],
   multiple: false,
   id: 'customized-autocomplete',
+  minWidth: '300px',
 };
 
 export default CustomizedAutoComplete;

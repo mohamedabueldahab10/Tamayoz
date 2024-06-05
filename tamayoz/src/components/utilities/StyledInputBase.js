@@ -1,9 +1,9 @@
 import { InputBase } from '@mui/material';
 import styled from 'styled-components';
-const StyledInputBase = styled(InputBase)(() => ({
-  // width: "100%",
-  maxWidth: `${(props) => (props.maxwidth ? props.maxwidth : '250px')}`,
-  minWidth: '230px',
+const StyledInputBase = styled(InputBase)(({ maxWidth, minWidth }) => ({
+  width: '100%',
+  maxWidth: maxWidth || '350px', // Default maxWidth
+  minWidth: minWidth || '300px', // Default minWidth
   '& .MuiInputBase-input': {
     color: 'var(--primary-color)',
     width: '100%',

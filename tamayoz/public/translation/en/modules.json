@@ -21,6 +21,7 @@
     "manager": "Manager",
     "company": "Company",
     "coach": "Coach",
+    "degree": "Degree",
     "next_appraisal_date": "Next Appraisal Date",
     "skill": "Skill",
     "skill_level": "Skill Level",
@@ -47,7 +48,46 @@
     "workinghours": "Working Hours",
     "timezone": "Time Zone",
     "roles": "Roles",
-    "defaultrole": "Default Role"
+    "defaultrole": "Default Role",
+    "street": "Street...",
+    "street2": "Street 2...",
+    "city": "City",
+    "state": "State",
+    "zip": "ZIP",
+    "country": "Country",
+    "private_mail": "Email",
+    "private_phone": "Phone",
+    "private_mobile": "Mobile",
+    "bank_account": "Bank Account",
+    "lang": "Language",
+    "home_work_distance": "Home Work Distance",
+    "private_car_plate": "Private Car Plate",
+    "marital_status": "Marital Status",
+    "dependences_no": "Number of Dependencies",
+    "contact_name": "Contact Name",
+    "contact_no": "Contact Number",
+    "certificate_level": "Certificate Level",
+    "study_field": "Field of Study",
+    "school": "School",
+    "visa_no": "Visa Number",
+    "work_permit_no": "Work Permit Number",
+    "visa_expiration_date": "Visa Expiration Date",
+    "work_permit_expiration_date": "Work Permit Expiration Date",
+    "work_permit": "Work Permit",
+    "nationality": "Nationality",
+    "id_no": "Identification Number",
+    "ssn_no": "SSN Number",
+    "gender": "Gender",
+    "birth_date": "Date Of Birth",
+    "birth_place": "Place Of Birth",
+    "non_resident": "Non Resident",
+    "employee_type": "Employee Type",
+    "related_users": "Related Users",
+    "pin_code": "PIN Code",
+    "badge_id": "Badge ID",
+    "billing_time_target": "Billing Time Target",
+    "hourly_cost": "Hourly Cost",
+    "fleet_mobility_card": "Fleet Mobility Card"
   },
   "resume": {
     "resume": "Resume",
@@ -91,6 +131,83 @@
     "attendance_pos_manufacturing": "Attendance / Point of Sale / Manufacturing",
     "app_setting": "Application Settings"
   },
+  "department": {
+    "create_department": "Create Department",
+    "form": {
+      "department_name": "Department Name",
+      "manager_name": "Manager",
+      "parent_department": "Parent Department",
+      "custom_appraisal_template": "Custom Appraisal Template",
+      "company": "Company",
+      "appraisal_survey": "Appraisal Survey"
+    }
+  },
+  "company": {
+    "general_info": "General Information",
+    "branches": "Branches",
+    "form": {
+      "create_company": "Create Branches",
+      "company_name": "Company Name",
+      "branches": "Branches",
+      "tax_id": "Tax ID",
+      "lei": "LEI",
+      "company_id": "Company ID",
+      "currency": "Currency",
+      "website": "Website",
+      "email_domain": "Email Domain",
+      "color": "Color"
+    }
+  },
+  "jobposition": {
+    "create_jobposition": "Create Job Position",
+    "recruitment": "Recruitment",
+    "job_summary": "Job Summary",
+    "process_details": "Process Details",
+    "form": {
+      "job_position": "Job Position",
+      "department": "Department",
+      "email": "Email",
+      "employment_type": "Employee Type",
+      "company": "Company",
+      "target": "Target",
+      "new_employee_target": "New Employee",
+      "ispublished": "Is Published",
+      "website": "Website",
+      "interviewers": "Interviewers",
+      "contract_template": "Contract Template"
+    }
+  },
+  "emplymenttype": {
+    "create_employmenttype": "Create Employment Type",
+    "form": {
+      "employment_type": "Employment Type",
+      "name": "Name",
+      "country": "Country"
+    }
+  },
+  "bankaccount": {
+    "create_bank_acc": "Add Bank Account",
+    "form": {
+      "acc_number": "Account Number",
+      "bank": "Bank",
+      "acc_holder_name": "Account Holder Name",
+      "acc_holder": "Account Holder",
+      "company": "Company",
+      "currency": "Currency",
+      "send_money": "Send Money",
+      "trusted": "Trusted",
+      "untrusted": "Untrusted"
+    }
+  },
+  "bank": {
+    "create_bank": "Add Bank",
+    "form": {
+      "name": "Name",
+      "bank_id_code": "Identifier Code",
+      "bank_phone": "Bank Phone",
+      "bank_mail": "Bank Email"
+    }
+  },
   "validation": {
     "employee_name": "Please Enter Employee Name",
     "job_position_name": "Please Enter Job Position",
@@ -101,8 +218,9 @@
     "job_position": "Please Enter Job Position",
     "work_mail": "Please Enter Work Mail",
     "manager": "Please Enter Manger",
-    "company": "Please Enter Job Position",
+    "company": "Please Enter Company",
     "coach": "Please Enter Coach",
+    "degree": "Please Enter Degree",
     "date": "Please Enter Date",
     "skill": "Please Enter Skill",
     "skill_level": "Please Enter Skill Level",

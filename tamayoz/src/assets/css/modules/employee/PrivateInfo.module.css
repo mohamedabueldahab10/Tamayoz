@@ -10,4 +10,46 @@
   width: 50%;
   min-width: 320px;
   max-width: 600px;
+  padding-inline: 5px;
+}
+.dateContainer {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  min-width: 320px;
+  width: 100%;
+}
+.a1 {
+  color: #ff9c9c;
+}
+.a2 {
+  color: #f7c698;
+}
+.a3 {
+  color: #fde388;
+}
+.a4 {
+  color: #bbd7f8;
+}
+.a5 {
+  color: #d9a8cc;
+}
+.a6 {
+  color: #f8d6cb;
+}
+.a7 {
+  color: #89e1db;
+}
+.a8 {
+  color: #97a6f9;
+}
+.a9 {
+  color: #ff9ecc;
+}
+.a10 {
+  color: #b7edbe;
+}
+.a11 {
+  color: #e6dbfc;
 }

@@ -52,7 +52,6 @@ export default function NewEmployee() {
   const { t } = useTranslation('modules');
   const schema = yup.object().shape({
     employeeName: yup.string().required(t('validation.employee_name')),
-    jobPositionName: yup.string().required(t('validation.job_position_name')),
     tags: yup
       .array()
       .of(
@@ -116,6 +115,16 @@ export default function NewEmployee() {
       )
       .min(1, t('validation.coach'))
       .required(t('validation.coach')),
+    degree: yup
+      .array()
+      .of(
+        yup.object().shape({
+          label: yup.string().required(t('validation.degree')),
+          id: yup.number().required(t('validation.degree')),
+        })
+      )
+      .min(1, t('validation.degree'))
+      .required(t('validation.degree')),
     date: yup.date().required(t('validation.date')),
   });
 
@@ -160,7 +169,10 @@ export default function NewEmployee() {
         </Tooltip>
       </Box>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(handleFormSubmit)}>
+        <form
+          style={{ width: '100%' }}
+          onSubmit={methods.handleSubmit(handleFormSubmit)}
+        >
           <EmployeeInfo />
         </form>
         <Box sx={{ width: '100%' }}>
@@ -174,6 +186,8 @@ export default function NewEmployee() {
                 '& .Mui-selected': {
                   border: '1px solid var(--primary-color)',
                 },
+                display: 'flex',
+                flexWrap: 'wrap',
               }}
             >
               <Tab sx={tabStyle} label={t('resume.resume')} {...a11yProps(0)} />

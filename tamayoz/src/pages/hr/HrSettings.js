@@ -23,14 +23,14 @@ export default function HrSettings() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('hr_settings.status')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
                 customwidth="100%"
                 id="autostate"
                 name="employeeType"
-                label="Employee Type"
+                label={t('form.employee_type')}
                 options={addresses}
                 multiple
                 //   errors={errors}
@@ -42,7 +42,7 @@ export default function HrSettings() {
                 customwidth="100%"
                 id="autousers"
                 name="relatedUsers"
-                label="Related Users"
+                label={t('form.related_users')}
                 options={addresses}
                 multiple
                 //   errors={errors}
@@ -58,11 +58,11 @@ export default function HrSettings() {
             {t('hr_settings.attendance_pos_manufacturing')}
           </TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="PIN Code"
+                placeholder={t('form.pin_code')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -70,7 +70,7 @@ export default function HrSettings() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Badge ID"
+                placeholder={t('form.badge_id')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -83,18 +83,21 @@ export default function HrSettings() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('hr_settings.app_setting')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
+                justifyContent: 'start',
+                alignItems: 'start',
+                flexDirection: 'column',
                 width: '90%',
+                mb: '15px',
               }}
             >
-              <Box>
-                <CustomizedLabel>Billing Time Target</CustomizedLabel>
+              <Box sx={{ mb: '-5px' }}>
+                <CustomizedLabel>
+                  {t('form.billing_time_target')}
+                </CustomizedLabel>
               </Box>
               <Box>
                 <StyledInputBase
@@ -108,14 +111,15 @@ export default function HrSettings() {
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
+                justifyContent: 'start',
+                alignItems: 'start',
+                flexDirection: 'column',
                 width: '90%',
+                mb: '15px',
               }}
             >
-              <Box>
-                <CustomizedLabel>Hourly Cost</CustomizedLabel>
+              <Box sx={{ mb: '-5px' }}>
+                <CustomizedLabel>{t('form.hourly_cost')}</CustomizedLabel>
               </Box>
               <Box>
                 <StyledInputBase
@@ -123,7 +127,7 @@ export default function HrSettings() {
                   inputProps={{
                     min: '0',
                     step: '0.01',
-                    'aria-label': 'Billing',
+                    'aria-label': 'Cost',
                   }}
                   placeholder="00:00"
                   startAdornment={<span>$</span>}
@@ -135,7 +139,7 @@ export default function HrSettings() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Fleet Mobility Card"
+                placeholder={t('form.fleet_mobility_card')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}

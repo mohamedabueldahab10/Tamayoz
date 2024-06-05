@@ -1,5 +1,5 @@
 import { Box, Divider } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../assets/css/modules/employee/PrivateInfo.module.css';
 import publicStyles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
@@ -9,6 +9,8 @@ import StyledInputBase from '../../components/utilities/StyledInputBase';
 import ErrorText from '../../components/utilities/ErrorText';
 import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import StyledCheck from '../../components/utilities/StyledCheck';
+import CustomSingleDate from '../../components/utilities/CustomSingleDate';
+import BankAccountModal from '../../components/bankAcc/BankAccountModal';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -17,6 +19,9 @@ const addresses = [
   { label: 'Soft Skills', id: 5 },
 ];
 export default function PrivateInfo() {
+  const [bankAccOpen, setBankAccOpen] = useState(false);
+  const handleCloseBankAcc = () => setBankAccOpen(false);
+
   const { t } = useTranslation('modules');
   return (
     <Box className={styles.privateInfoContainer}>
@@ -25,11 +30,12 @@ export default function PrivateInfo() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('private_info.contact')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Street.."
+                placeholder={t('form.street')}
+                minWidth="500px"
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -37,26 +43,30 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Street 2.."
+                placeholder={t('form.street2')}
+                minWidth="500px"
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
+          </Box>
+          <Box className={publicStyles.formContainer}>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="City"
+                placeholder={t('form.city')}
+                minWidth="100px"
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                minWidth="180px"
                 defaultValue={[]}
-                customwidth="100%"
                 id="autostate"
                 name="state"
-                label="State"
+                label={t('form.state')}
                 options={addresses}
                 multiple
                 //   errors={errors}
@@ -65,18 +75,20 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="ZIP"
+                placeholder={t('form.zip')}
+                minWidth="100px"
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
+          </Box>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
-                customwidth="100%"
                 id="autocountry"
                 name="country"
-                label="country"
+                label={t('form.country')}
                 options={addresses}
                 multiple
                 //   errors={errors}
@@ -85,34 +97,51 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Email"
+                placeholder={t('form.private_mail')}
+                // {...register('employeeName')}
+              />
+              {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
+            </Box>
+          </Box>
+          <Box className={publicStyles.formContainer}>
+            <Box className={publicStyles.singleRow}>
+              <StyledInputBase
+                minWidth="270px"
+                type="text"
+                placeholder={t('form.private_phone')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
+                minWidth="270px"
                 type="text"
-                placeholder="Phone"
+                placeholder={t('form.private_mobile')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
+          </Box>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
-              <StyledInputBase
-                type="text"
-                placeholder="Bank Account Number"
-                // {...register('employeeName')}
+              <CustomizedAutoComplete
+                defaultValue={[]}
+                id="autobankaccount"
+                name="bankaccount"
+                label={t('form.bank_account')}
+                options={addresses}
+                multiple
+                //   errors={errors}
+                setOpen={() => setBankAccOpen(true)}
               />
-              {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
-                customwidth="100%"
                 id="autolanguage"
                 name="language"
-                label="language"
+                label={t('form.lang')}
                 options={addresses}
                 multiple
                 //   errors={errors}
@@ -121,15 +150,16 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Home Work Distance"
+                placeholder={t('form.home_work_distance')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
+                minWidth="300px"
                 type="text"
-                placeholder="Private Car Plate"
+                placeholder={t('form.private_car_plate')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -142,14 +172,14 @@ export default function PrivateInfo() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('private_info.family_status')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
                 customwidth="100%"
                 id="automarital"
                 name="maritalStatus"
-                label="Marital Status"
+                label={t('form.marital_status')}
                 options={addresses}
                 // multiple
                 //   errors={errors}
@@ -158,7 +188,7 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Number of Dependencies"
+                placeholder={t('form.dependences_no')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -171,11 +201,11 @@ export default function PrivateInfo() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('private_info.emergency')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Contact Name"
+                placeholder={t('form.contact_name')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -183,7 +213,7 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Contact Number"
+                placeholder={t('form.contact_no')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -196,14 +226,14 @@ export default function PrivateInfo() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('private_info.education')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
                 customwidth="100%"
                 id="autocertificate"
                 name="certificateLevel"
-                label="certificate Level"
+                label={t('form.certificate_level')}
                 options={addresses}
                 // multiple
                 //   errors={errors}
@@ -212,7 +242,7 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Field Of Study"
+                placeholder={t('form.study_field')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -220,7 +250,7 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="School"
+                placeholder={t('form.school')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -233,11 +263,11 @@ export default function PrivateInfo() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('private_info.work_permit')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Visa No"
+                placeholder={t('form.visa_no')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -245,72 +275,58 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Work Permit No"
+                placeholder={t('form.work_permit_no')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
-            {/* <Box className={publicStyles.singleRow}> */}
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
-                width: '90%',
-              }}
-            >
-              <Box>
-                <CustomizedLabel>Visa Expiration Date</CustomizedLabel>
-              </Box>
-              <Box>
-                <StyledInputBase
-                  type="date"
-                  placeholder="Visa Expiration Date"
-                  //   {...register('nextAppraisalDate')}
+            <Box className={styles.dateContainer}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <CustomSingleDate
+                  name="date"
+                  defaultValue={null}
+                  label={t('form.visa_expiration_date')}
+                  width="300px"
+                  height="40px"
                 />
-                <Box>
-                  {/* <ErrorText>{errors.nextAppraisalDate?.message}</ErrorText> */}
-                </Box>
               </Box>
             </Box>
-            {/* </Box> */}
-            {/* <Box className={publicStyles.singleRow}> */}
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
-                width: '90%',
-              }}
-            >
-              <Box>
-                <CustomizedLabel>Work Permit Expiration Date</CustomizedLabel>
-              </Box>
-              <Box>
-                <StyledInputBase
-                  type="date"
-                  placeholder="Work Permit Expiration Date"
-                  //   {...register('nextAppraisalDate')}
+            <Box className={styles.dateContainer}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <CustomSingleDate
+                  name="date"
+                  defaultValue={null}
+                  label={t('form.work_permit_expiration_date')}
+                  width="300px"
+                  height="40px"
                 />
-                <Box>
-                  {/* <ErrorText>{errors.nextAppraisalDate?.message}</ErrorText> */}
-                </Box>
               </Box>
-              {/* </Box> */}
             </Box>
-            <Box
-              sx={{
+            <div
+              style={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
-                width: '90%',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                width: '100%',
+                marginBlock: '10px',
               }}
             >
-              <Box>
-                <CustomizedLabel>Work Permit</CustomizedLabel>
+              <Box sx={{ marginBottom: '-5px !important' }}>
+                <CustomizedLabel>{t('form.work_permit')}</CustomizedLabel>
               </Box>
               <Box>
                 <StyledInputBase
@@ -322,8 +338,7 @@ export default function PrivateInfo() {
                   {/* <ErrorText>{errors.nextAppraisalDate?.message}</ErrorText> */}
                 </Box>
               </Box>
-              {/* </Box> */}
-            </Box>
+            </div>
           </Box>
         </Box>
       </Box>
@@ -332,14 +347,14 @@ export default function PrivateInfo() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('private_info.citizenship')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
                 customwidth="100%"
                 id="autonationality"
                 name="nationality"
-                label="nationality"
+                label={t('form.nationality')}
                 options={addresses}
                 // multiple
                 //   errors={errors}
@@ -348,7 +363,7 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Identification No"
+                placeholder={t('form.id_no')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -356,7 +371,7 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="SSN No"
+                placeholder={t('form.ssn_no')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -367,39 +382,35 @@ export default function PrivateInfo() {
                 customwidth="100%"
                 id="autogender"
                 name="gender"
-                label="gender"
+                label={t('form.gender')}
                 options={addresses}
                 // multiple
                 //   errors={errors}
               />
             </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '10px',
-                width: '90%',
-              }}
-            >
-              <Box>
-                <CustomizedLabel>Date of Birth</CustomizedLabel>
-              </Box>
-              <Box>
-                <StyledInputBase
-                  type="date"
-                  placeholder="Date of Birth"
-                  //   {...register('nextAppraisalDate')}
+            <Box className={styles.dateContainer}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  alignItems: 'center',
+                  gap: '10px',
+                  mb: '5px',
+                }}
+              >
+                <CustomSingleDate
+                  name="date"
+                  defaultValue={null}
+                  label={t('form.birth_date')}
+                  width="300px"
+                  height="40px"
                 />
-                <Box>
-                  {/* <ErrorText>{errors.nextAppraisalDate?.message}</ErrorText> */}
-                </Box>
               </Box>
             </Box>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
                 type="text"
-                placeholder="Place Of Birth"
+                placeholder={t('form.birth_place')}
                 // {...register('employeeName')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -414,7 +425,7 @@ export default function PrivateInfo() {
               }}
             >
               <Box>
-                <CustomizedLabel>Non-Resident</CustomizedLabel>
+                <CustomizedLabel>{t('form.non_resident')}</CustomizedLabel>
               </Box>
               <Box>
                 <StyledCheck
@@ -429,6 +440,7 @@ export default function PrivateInfo() {
           </Box>
         </Box>
       </Box>
+      <BankAccountModal open={bankAccOpen} handleClose={handleCloseBankAcc} />
     </Box>
   );
 }

@@ -45,7 +45,7 @@ export default function WorkInformation() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('work_info.approvers')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
@@ -104,7 +104,7 @@ export default function WorkInformation() {
             Specify your default work location for each day of the week. This
             schedule will repeat itself each week.
           </span>
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
@@ -195,7 +195,7 @@ export default function WorkInformation() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('work_info.schedule')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}
@@ -226,7 +226,7 @@ export default function WorkInformation() {
         <Box sx={{ width: '100%' }}>
           <TypographyHeader>{t('work_info.planning')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />
-          <Box className={publicStyles.nameInfo}>
+          <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 defaultValue={[]}

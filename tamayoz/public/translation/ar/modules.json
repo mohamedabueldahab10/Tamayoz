@@ -21,6 +21,7 @@
     "manager": "المدير",
     "company": "الشركة",
     "coach": "المشرف",
+    "degree": "الدرجة",
     "next_appraisal_date": "تاريخ التقييم التالي",
     "skill": "المهارة",
     "skill_level": "مستوى المهارة",
@@ -47,7 +48,46 @@
     "workinghours": "ساعات العمل",
     "timezone": "المنطقة الزمنية",
     "roles": "المهام",
-    "defaultrole": "المهمه الاساسية"
+    "defaultrole": "المهمه الاساسية",
+    "street": "....الشارع",
+    "street2": "....الشارع 2",
+    "city": "المدينة",
+    "state": "الولاية",
+    "zip": "الرمز البريدي",
+    "country": "الدولة",
+    "private_mail": "البريد الإلكتروني",
+    "private_phone": "الهاتف",
+    "private_mobile": "الموبايل",
+    "bank_account": "الحساب البنكي",
+    "lang": "اللغة",
+    "home_work_distance": "المسافة بين العمل والمنزل",
+    "private_car_plate": "لوحة السيارة الخاصة",
+    "marital_status": "الحالة الإجتماعية",
+    "dependences_no": "عدد الأطفال",
+    "contact_name": "اسم جهة التصال",
+    "contact_no": "رقم جهة التصال",
+    "certificate_level": "مستوى الشهادة",
+    "study_field": "مجال الدراسة",
+    "school": "المدرسة",
+    "visa_no": "رقم التأشيرة",
+    "work_permit_no": "رقم تصريح العمل",
+    "visa_expiration_date": "تاريخ انتهاء التأشيرة",
+    "work_permit_expiration_date": "تاريخ انتهاء تصريح العمل",
+    "work_permit": "تصريح العمل",
+    "nationality": "الجنسية",
+    "id_no": "رقم الهوية",
+    "ssn_no": "رقم التأمين الإجتماعي",
+    "gender": "النوع",
+    "birth_date": "تاريخ الميلاد",
+    "birth_place": "مكان الإقامة",
+    "non_resident": "غير مقيم",
+    "employee_type": "نوع الموظف",
+    "related_users": "المتسخدمين المرتبطين",
+    "pin_code": "الرمز التعريفي",
+    "badge_id": "شارة الهوية",
+    "billing_time_target": "وقت الفاتورة المستهدف",
+    "hourly_cost": "تكلفة الساعة",
+    "fleet_mobility_card": "Fleet Mobility Card"
   },
   "resume": {
     "resume": "السيرة الذاتية",
@@ -77,10 +117,95 @@
     "set_manager": "من أجل الحصول على مخطط تنظيمي، قم بتعيين مدير واحفظ السجل."
   },
   "private_info": {
-    "private_info": "معلومات خاصة"
+    "private_info": "معلومات خاصة",
+    "contact": "Private Contact",
+    "family_status": "Family Status",
+    "emergency": "Emergency",
+    "education": "Education",
+    "work_permit": "Work Permit",
+    "citizenship": "Citizenship"
   },
   "hr_settings": {
-    "hr_settings": "إعدادات الموارد البشرية"
+    "hr_settings": "إعدادات الموارد البشرية",
+    "status": "الحالة",
+    "attendance_pos_manufacturing": "الحضور / نقاط البيع / التصنيع",
+    "app_setting": "إعدادات التطبيق"
+  },
+  "department": {
+    "create_department": "أضف قسم",
+    "form": {
+      "department_name": "اسم القسم",
+      "manager_name": "المدير",
+      "parent_department": "الإدارة الرئيسية",
+      "custom_appraisal_template": "نموذج تقييم مخصصص",
+      "company": "الشركة",
+      "appraisal_survey": "استطلاع للتقييم"
+    }
+  },
+  "company": {
+    "general_info": "المعلومات الرئيسة",
+    "branches": "الفروع",
+    "form": {
+      "create_company": "أضف فروع",
+      "company_name": "اسم الشركة",
+      "branches": "الفروع",
+      "tax_id": "الهوية الضريبية",
+      "lei": "تعريف الهيئة القانونية",
+      "company_id": "رقم هوية الشركة",
+      "currency": "العملة",
+      "website": "الموقع الالكتروني",
+      "email_domain": "دومين البريد الإلكتروني",
+      "color": "اللون"
+    }
+  },
+  "jobposition": {
+    "create_jobposition": "اضف وظيفة",
+    "recruitment": "التوظيف",
+    "job_summary": "ملخص الوظيفة",
+    "form": {
+      "job_position": "وظيفة",
+      "department": "القسم",
+      "email": "البريد الإلكتروني",
+      "employment_type": "نوع التوظيف",
+      "company": "الشركة",
+      "target": "يستهدف",
+      "new_employee_target": "موظف جديد",
+      "ispublished": "تم النشر",
+      "website": "الموقع الإلكتروني",
+      "interviewers": "القائمين بالمقابلات",
+      "contract_template": "نموذج العقد",
+      "process_details": "تفاصيل"
+    }
+  },
+  "emplymenttype": {
+    "create_employmenttype": "اضف نوع التوظيف",
+    "form": {
+      "name": "الاسم",
+      "country": "الدولة"
+    }
+  },
+  "bankaccount": {
+    "create_bank_acc": "أضف حساب بنكي",
+    "form": {
+      "acc_number": "رقم الحساب",
+      "bank": "البنك",
+      "acc_holder_name": "اسم مالك الحساب",
+      "acc_holder": "مالك الحساب",
+      "company": "الشركة",
+      "currency": "العملة",
+      "send_money": "ارسال المال",
+      "trusted": "موثوق",
+      "untrusted": "غير موثوق"
+    }
+  },
+  "bank": {
+    "create_bank": "أضف بنك",
+    "form": {
+      "name": "الاسم",
+      "bank_id_code": "الكود التعريفي",
+      "bank_phone": "هاتف البنك",
+      "bank_mail": "البريد الإلكتروني للبنك"
+    }
   },
   "validation": {
     "employee_name": "برجاء إدخال اسم الموظف",
@@ -89,11 +214,12 @@
     "work_mobile": "برجاء إدخال رقم الموبايل",
     "department": "برجاء إدخال الإدارة",
     "work_phone": "برجاء إدخال هاتف",
-    "job_position": "برجاء إدخال المسى الوظيفي",
+    "job_position": "برجاء إدخال المسمى الوظيفي",
     "work_mail": "برجاء إدخال البريد الإلكتروني",
     "manager": "برجاء إدخال المدير",
     "company": "برجاء إدخال الشركة",
     "coach": "برجاء إدخال المشرف",
+    "degree": "برجاء إدخال الدرجة",
     "date": "برجاء إدخال تاريخ التقييم",
     "skill": "برجاء اختيار مهمه",
     "skill_level": "برجاء اختيار مستوى المهارة",

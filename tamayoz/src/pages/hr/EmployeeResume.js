@@ -266,8 +266,9 @@ export default function EmployeeResume() {
                         sx={{
                           display: 'flex',
                           justifyContent: 'start',
-                          alignItems: 'center',
+                          alignItems: 'end',
                           gap: '10px',
+                          width: '100%',
                         }}
                       >
                         <CustomizedLabel>{t('form.duration')}</CustomizedLabel>

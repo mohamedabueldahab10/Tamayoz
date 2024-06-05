@@ -1,0 +1,62 @@
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": [
+    {
+      "id": 1,
+      "name": "Mitchell Admin",
+      "job_id": [1, "Chief Executive Officer"],
+      "department_color": 5,
+      "hr_icon_display": "presence_present",
+      "department_id": [2, "Management"],
+      "image_1024": "",
+      "write_date": "2024-06-04 10:37:00",
+      "hr_presence_state": "present",
+      "name_work_location_display": "Unspecified",
+      "parent_id": false,
+      "child_ids": [2, 3, 5]
+    },
+    {
+      "id": 2,
+      "name": "Jeffrey Kelly",
+      "job_id": [6, "Marketing and Community Manager"],
+      "department_color": 9,
+      "hr_icon_display": "presence_present",
+      "department_id": [3, "Management / Sales"],
+      "image_1024": "",
+      "write_date": "2024-06-04 10:37:00",
+      "hr_presence_state": "present",
+      "name_work_location_display": "Unspecified",
+      "parent_id": [1, "Mitchell Admin"],
+      "child_ids": [6, 7, 8, 9]
+    },
+    {
+      "id": 3,
+      "name": "Marc Demo",
+      "job_id": [4, "Experienced Developer"],
+      "department_color": 10,
+      "hr_icon_display": "presence_holiday_absent",
+      "department_id": [4, "Management / Research & Development"],
+      "image_1024": "",
+      "write_date": "2024-06-04 10:37:00",
+      "hr_presence_state": "absent",
+      "name_work_location_display": "Unspecified",
+      "parent_id": [1, "Mitchell Admin"],
+      "child_ids": [18, 16, 4, 15]
+    },
+    {
+      "id": 5,
+      "name": "Tina Williamson",
+      "job_id": [5, "Human Resources Manager"],
+      "department_color": 8,
+      "hr_icon_display": "presence_present",
+      "department_id": [1, "Management / Administration"],
+      "image_1024": "",
+      "write_date": "2024-06-04 10:37:00",
+      "hr_presence_state": "present",
+      "name_work_location_display": "Unspecified",
+      "parent_id": [1, "Mitchell Admin"],
+      "child_ids": [11, 12, 21, 13]
+    }
+  ]
+}
