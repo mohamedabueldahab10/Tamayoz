@@ -1,5 +1,5 @@
 import React from 'react';
-import HierarchyChart from '../../components/utilities/orgChart/HierarchyChart';
+import HierarchyChart from '../../components/orgChart/HierarchyChart';
 
 export default function Knowledge() {
   return (
