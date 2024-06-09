@@ -37,5 +37,6 @@
   transform: translate(-50%, 0);
   /* width: 100%; */
   background-color: #ccc;
+  gap: '10px';
   z-index: 1;
 }

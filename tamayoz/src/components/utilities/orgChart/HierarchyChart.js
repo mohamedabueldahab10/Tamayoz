@@ -58,6 +58,26 @@ const initialData = {
           departmentColor: '#3498db',
           image: 'https://via.placeholder.com/150',
           presenceState: 'present',
+          children: [
+            {
+              id: '22',
+              name: 'Doris Cole',
+              job: 'Consultant',
+              department: 'Dept 6',
+              departmentColor: '#f1c40f',
+              image: 'https://via.placeholder.com/150',
+              presenceState: 'present',
+            },
+            {
+              id: '33',
+              name: 'Ernest Reed',
+              job: 'Consultant',
+              department: 'Dept 7',
+              departmentColor: '#f1c40f',
+              image: 'https://via.placeholder.com/150',
+              presenceState: 'present',
+            },
+          ],
         },
         {
           id: '16',
