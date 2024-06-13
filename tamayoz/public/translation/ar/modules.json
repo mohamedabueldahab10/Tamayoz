@@ -147,6 +147,7 @@
     "branches": "الفروع",
     "form": {
       "create_company": "أضف فروع",
+      "company_header": "أضف شركة",
       "company_name": "اسم الشركة",
       "branches": "الفروع",
       "tax_id": "الهوية الضريبية",
@@ -182,6 +183,18 @@
     "form": {
       "name": "الاسم",
       "country": "الدولة"
+    }
+  },
+  "relatedusers": {
+    "create_relatedusers": "اضف مستخدم",
+    "form": {
+      "name": "الاسم",
+      "email_address": "البريد الإلكتروني",
+      "company": "الشركة",
+      "phone": "رقم الهاتف",
+      "mobile": "رقم الموبايل",
+      "create_employee": "إضافة موظف",
+      "default_warehouse": "المخزن"
     }
   },
   "bankaccount": {

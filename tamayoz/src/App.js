@@ -28,6 +28,7 @@ import Attendances from './pages/Attendances/Attendances';
 import TimeOff from './pages/TimeOff/TimeOff';
 import Employees from './pages/hr/Employees';
 import NewEmployee from './pages/hr/NewEmployee';
+import { NavbarProvider } from './context/NavbarContext';
 function App() {
   const { i18n } = useTranslation();
   const { language } = i18n;
@@ -57,31 +58,36 @@ function App() {
           data-lang="en"
           dir={language === 'ar' ? 'rtl' : 'ltr'}
         >
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/Auth/*" element={<Auth />} />
-            <Route path="/" element={<Home />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/survey" element={<Survey />} />
-              <Route path="/documents" element={<Documents />} />
-              <Route path="/archivings" element={<Archivings />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/setting" element={<Setting />} />
-              <Route path="/discuss" element={<Discuss />} />
-              <Route path="/meeting-room" element={<MeetingRoom />} />
-              <Route path="/calender" element={<Calender />} />
-              <Route path="/to-do" element={<ToDo />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/time-sheet" element={<TimeSheet />} />
-              <Route path="/knowledge" element={<Knowledge />} />
-              <Route path="/planning" element={<Planning />} />
-              <Route path="/appraisals" element={<Appraisals />} />
-              <Route path="/attendances" element={<Attendances />} />
-              <Route path="/time-off" element={<TimeOff />} />
-              <Route path="/employees/" element={<Employees />} />
-              <Route path="/employees/new_employee" element={<NewEmployee />} />
-            </Route>
-          </Routes>
+          <NavbarProvider>
+            <Routes>
+              <Route path="*" element={<NotFound />} />
+              <Route path="/Auth/*" element={<Auth />} />
+              <Route path="/" element={<Home />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/survey" element={<Survey />} />
+                <Route path="/documents" element={<Documents />} />
+                <Route path="/archivings" element={<Archivings />} />
+                <Route path="/transactions" element={<Transactions />} />
+                <Route path="/setting" element={<Setting />} />
+                <Route path="/discuss" element={<Discuss />} />
+                <Route path="/meeting-room" element={<MeetingRoom />} />
+                <Route path="/calender" element={<Calender />} />
+                <Route path="/to-do" element={<ToDo />} />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/time-sheet" element={<TimeSheet />} />
+                <Route path="/knowledge" element={<Knowledge />} />
+                <Route path="/planning" element={<Planning />} />
+                <Route path="/appraisals" element={<Appraisals />} />
+                <Route path="/attendances" element={<Attendances />} />
+                <Route path="/time-off" element={<TimeOff />} />
+                <Route path="/employees/" element={<Employees />} />
+                <Route
+                  path="/employees/new_employee"
+                  element={<NewEmployee />}
+                />
+              </Route>
+            </Routes>
+          </NavbarProvider>
         </div>
       </ThemeProvider>
     </Suspense>

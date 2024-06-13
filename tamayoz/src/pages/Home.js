@@ -28,17 +28,17 @@ const Home = () => {
           className={styles.cardContainer}
           dir={language === 'ar' ? 'rtl' : 'ltr'}
         >
-          {location === '/' ? (
+          {/* {location === '/' ? (
             <></>
           ) : (
             <Sidebar setCurrentWidth={setCurrentWidth} />
-          )}
+          )} */}
 
           <Box
             sx={{
-              width: location === '/' ? '100%' : `calc(100% - ${currentWidth})`,
-              padding: location === '/' ? '0px' : '10px 15px',
-              marginTop: location === '/' ? '0px' : 'var(--navbar-height)',
+              width: '100%',
+              padding: '10px 15px',
+              // marginTop: location === '/' ? '0px' : '120px',
             }}
           >
             {location === '/' ? <MainMenu /> : <></>}

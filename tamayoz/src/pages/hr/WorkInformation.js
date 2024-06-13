@@ -3,8 +3,35 @@ import TypographyHeader from '../../components/utilities/TypographyHeader';
 import { useTranslation } from 'react-i18next';
 import styles from '../../assets/css/modules/employee/WorkInfo.module.css';
 import publicStyles from '../../assets/css/modules/employee/NewEmployee.module.css';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
+import { initialData } from '../../components/orgChart/HierarchyChart';
+import CustomTreeView from '../../components/orgChart/CustomTreeView';
+const treeData = {
+  id: 'root',
+  name: 'محمد إبراهيم عبد المقصود الجزار',
+  avatar: '/path/to/avatar.jpg',
+  role: 'CEO',
+  reports: 16,
+  children: [
+    {
+      id: '1',
+      name: 'محمد اسماعيل محمد',
+      avatar: '/path/to/avatar1.jpg',
+      role: 'Project Manager',
+      reports: 6,
+      children: [
+        {
+          id: '2',
+          name: 'أحمد سامي طه احمد دياب',
+          avatar: '/path/to/avatar2.jpg',
+          role: 'Odoo Implementer',
+          reports: 3,
+        },
+      ],
+    },
+  ],
+};
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -254,15 +281,21 @@ export default function WorkInformation() {
           </Box>
         </Box>
       </Box>
-      <Box className={styles.orgChart}>
-        <TypographyHeader>{t('work_info.org_chart')}</TypographyHeader>
-        <Divider sx={{ marginBottom: '10px' }} />
-        <Box className={styles.hierarchyBox}>
-          <TypographyHeader>{t('work_info.no_hierarchy')}</TypographyHeader>
-          <p className={styles.infoWord}>{t('work_info.no_manager')}</p>
-          <p className={styles.infoWord}>{t('work_info.set_manager')}</p>
+      {initialData.lenght > 0 ? (
+        <Box className={styles.orgChart}>
+          <TypographyHeader>{t('work_info.org_chart')}</TypographyHeader>
+          <Divider sx={{ marginBottom: '10px' }} />
+          <Box className={styles.hierarchyBox}>
+            <TypographyHeader>{t('work_info.no_hierarchy')}</TypographyHeader>
+            <p className={styles.infoWord}>{t('work_info.no_manager')}</p>
+            <p className={styles.infoWord}>{t('work_info.set_manager')}</p>
+          </Box>
         </Box>
-      </Box>
+      ) : (
+        <Box className={styles.orgChart}>
+          <CustomTreeView data={treeData} />
+        </Box>
+      )}
     </Box>
   );
 }

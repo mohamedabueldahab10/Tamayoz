@@ -68,7 +68,7 @@ export default function Sidebar(props) {
   const handleHoverOn = () => setOpen(true);
   const handleHoverOff = () => setOpen(false);
   const handleToggleNavbar = () => {
-    setCurrentWidth(!open ? '200px' : '73px');
+    setCurrentWidth(!open ? '200px' : 'var(--sidebar-width)');
     setOpen(!open);
     setDisableFunctions((disableFunctions) => !disableFunctions);
   };
@@ -147,6 +147,7 @@ export default function Sidebar(props) {
           display: 'flex',
           position: disableFunctions ? 'relative' : 'fixed',
           zIndex: '3',
+          backgroundColor: 'red',
         }}
         onMouseEnter={!disableFunctions ? handleHoverOn : null}
         onMouseLeave={!disableFunctions ? handleHoverOff : null}

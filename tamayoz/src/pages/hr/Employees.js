@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ModuleHeader from '../../components/utilities/ModuleHeader';
 import HeaderBtn from '../../components/utilities/HeaderBtn';
 import { DataGrid } from '@mui/x-data-grid';
@@ -33,6 +33,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import styled from 'styled-components';
+import NavbarContext from '../../context/NavbarContext';
+
 const cellStatusActive = {
   width: '70px',
   borderRadius: '5px',
@@ -72,7 +74,6 @@ const CustomTypography = styled(Typography)({
   fontWeight: '600',
   cursor: 'pointer',
 });
-
 export default function Employees() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -284,95 +285,100 @@ export default function Employees() {
       localStorage.removeItem('currentPage');
     };
   }, [location.pathname]);
-  return (
-    <div>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-        }}
-      >
-        <Box>
-          <TypographyHeader>{t('employees.name')}</TypographyHeader>
-        </Box>
-        <Box>
-          <SearchBar />
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          width: '100%',
-        }}
-      >
-        <Box>
-          <ModuleHeader>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'start',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-            >
-              <HeaderBtn onClick={() => navigate('/employees/new_employee')}>
-                {t('employees.new')}
-              </HeaderBtn>
-            </Box>
-          </ModuleHeader>
-        </Box>
+  const { setAdditionalNavbarItems } = useContext(NavbarContext);
+
+  useEffect(() => {
+    setAdditionalNavbarItems([
+      <Box sx={{ width: '100%' }}>
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'end',
-            gap: '10px',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
           }}
         >
-          <Box>
-            <CustomPagination
-              pagination={pagination}
-              onPageChange={onPageChange}
-            />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center',
+              columnGap: '10px',
+            }}
+          >
+            <Box>
+              <ModuleHeader>
+                <Box>
+                  <HeaderBtn
+                    onClick={() => navigate('/employees/new_employee')}
+                  >
+                    {t('employees.new')}
+                  </HeaderBtn>
+                </Box>
+              </ModuleHeader>
+            </Box>
+            <Box>
+              <TypographyHeader>{t('employees.name')}</TypographyHeader>
+            </Box>
           </Box>
-          <div>
-            <Tooltip title="list">
-              <ViewListIcon
-                sx={{
-                  color:
-                    view === 'list'
-                      ? 'var(--primary-color)'
-                      : 'var(--secondary-color)',
-                  fontSize: '30px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleViewChange('list')}
-              />
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip title="kanban">
-              <ViewKanbanIcon
-                sx={{
-                  color:
-                    view === 'kanban'
-                      ? 'var(--primary-color)'
-                      : 'var(--secondary-color)',
-                  fontSize: '30px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleViewChange('kanban')}
-              />
-            </Tooltip>
-          </div>
-        </Box>
-      </Box>
+          <Box>
+            <SearchBar />
+          </Box>
 
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'end',
+              gap: '10px',
+            }}
+          >
+            <Box>
+              <CustomPagination
+                pagination={pagination}
+                onPageChange={onPageChange}
+              />
+            </Box>
+            <div>
+              <Tooltip title="list">
+                <ViewListIcon
+                  sx={{
+                    color:
+                      view === 'list'
+                        ? 'var(--primary-color)'
+                        : 'var(--secondary-color)',
+                    fontSize: '30px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => handleViewChange('list')}
+                />
+              </Tooltip>
+            </div>
+            <div>
+              <Tooltip title="kanban">
+                <ViewKanbanIcon
+                  sx={{
+                    color:
+                      view === 'kanban'
+                        ? 'var(--primary-color)'
+                        : 'var(--secondary-color)',
+                    fontSize: '30px',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => handleViewChange('kanban')}
+                />
+              </Tooltip>
+            </div>
+          </Box>
+        </Box>
+      </Box>,
+    ]);
+
+    // Cleanup function to remove buttons when the component is unmounted
+    return () => setAdditionalNavbarItems([]);
+  }, [setAdditionalNavbarItems]);
+  return (
+    <div>
       {view === 'list' && (
         <>
           <div style={{ height: 450, width: '100%' }}>

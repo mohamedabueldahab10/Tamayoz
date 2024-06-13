@@ -19,6 +19,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 .node > div > icon {
   margin-right: 5px;
@@ -36,7 +38,6 @@
   left: 50%;
   transform: translate(-50%, 0);
   /* width: 100%; */
-  background-color: #ccc;
   gap: '10px';
   z-index: 1;
 }

@@ -147,6 +147,7 @@
     "branches": "Branches",
     "form": {
       "create_company": "Create Branches",
+      "company_header": "Create Company",
       "company_name": "Company Name",
       "branches": "Branches",
       "tax_id": "Tax ID",
@@ -183,6 +184,18 @@
       "employment_type": "Employment Type",
       "name": "Name",
       "country": "Country"
+    }
+  },
+  "relatedusers": {
+    "create_relatedusers": "Create Related User",
+    "form": {
+      "name": "Name",
+      "email_address": "Email Address",
+      "company": "Company",
+      "phone": "Phone",
+      "mobile": "Mobile",
+      "create_employee": "Create Employee",
+      "default_warehouse": "Default Workhouse"
     }
   },
   "bankaccount": {

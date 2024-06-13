@@ -1,5 +1,5 @@
 import { Box, Divider } from '@mui/material';
-import React, { useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
 import styles from '../../assets/css/modules/employee/PrivateInfo.module.css';
 import publicStyles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import StyledInputBase from '../../components/utilities/StyledInputBase';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
 import CustomizedLabel from '../../components/utilities/CustomizedLabel';
+import RelatedUsersModal from '../../components/relatedUsers/RelatedUsersModal';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -16,6 +17,10 @@ const addresses = [
 ];
 export default function HrSettings() {
   const { t } = useTranslation('modules');
+  const [openRelatedUser, setOpenRelatedUser] = useState(false);
+  const handleCloseRelatedUser = () => {
+    setOpenRelatedUser(false);
+  };
   return (
     <Box className={styles.privateInfoContainer}>
       {/* =======================Status======================= */}
@@ -46,6 +51,7 @@ export default function HrSettings() {
                 options={addresses}
                 multiple
                 //   errors={errors}
+                setOpen={() => setOpenRelatedUser(true)}
               />
             </Box>
           </Box>
@@ -147,6 +153,10 @@ export default function HrSettings() {
           </Box>
         </Box>
       </Box>
+      <RelatedUsersModal
+        open={openRelatedUser}
+        handleClose={handleCloseRelatedUser}
+      />
     </Box>
   );
 }

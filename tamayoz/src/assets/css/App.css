@@ -78,9 +78,11 @@ a:hover {
   --bg: hsl(var(--hue), 10%, 90%);
   --fg: hsl(var(--hue), 10%, 10%);
 }
-.loaderComponent {
+.loaderContainer {
   width: 100%;
   height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
   background-image: radial-gradient(
     circle farthest-corner at center,
     #88a4bb 0%,
@@ -88,69 +90,196 @@ a:hover {
   );
   color: var(--fg);
   font: 1em/1.5 sans-serif;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: start;
   font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
 }
+.loaderComponent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loaderComponent h1 {
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  font-size: 2.5em;
+  letter-spacing: 0.5em;
+  color: var(--text-primary-color);
+}
 
-.pl {
-  display: block;
+.loaderComponent span {
+  position: relative;
+  top: -0.2em;
+  /* display: inline-block; */
+  text-transform: uppercase;
+  opacity: 0;
+  transform: rotateX(-90deg);
+}
+
+.let1 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.let2 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.let3 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+.let4 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.let5 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.let6 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.7s;
+}
+
+.let7 {
+  animation: drop 1.2s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+@keyframes drop {
+  10% {
+    opacity: 0.5;
+  }
+  20% {
+    opacity: 1;
+    top: 3.78em;
+    transform: rotateX(-360deg);
+  }
+  80% {
+    opacity: 1;
+    top: 3.78em;
+    transform: rotateX(-360deg);
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    top: 6.94em;
+  }
+}
+figure {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
   width: 6.25em;
   height: 6.25em;
+  animation: rotate 2.4s linear infinite;
 }
-.pl__ring,
-.pl__ball {
-  animation: ring 2s ease-out infinite;
+.white {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  animation: flash 2.4s linear infinite;
+  opacity: 0;
 }
-.pl__ball {
-  animation-name: ball;
+.dot {
+  position: absolute;
+  margin: auto;
+  width: 2.4em;
+  height: 2.4em;
+  border-radius: 100%;
+  transition: all 1s ease;
+}
+.dot:nth-child(2) {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: #1e461c;
+  animation: dotsY 2.4s linear infinite;
+}
+.dot:nth-child(3) {
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #73ce6e;
+  animation: dotsX 2.4s linear infinite;
+}
+.dot:nth-child(4) {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: #89f286;
+  animation: dotsY 2.4s linear infinite;
+}
+.dot:nth-child(5) {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #3b553a;
+  animation: dotsX 2.4s linear infinite;
 }
 
-/* Dark theme  */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: hsl(var(--hue), 10%, 10%);
-    --fg: hsl(var(--hue), 10%, 90%);
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  10% {
+    width: 6.25em;
+    height: 6.25em;
+  }
+  66% {
+    width: 2.4em;
+    height: 2.4em;
+  }
+  100% {
+    transform: rotate(360deg);
+    width: 6.25em;
+    height: 6.25em;
   }
 }
 
-/* Animation */
-@keyframes ring {
-  from {
-    stroke-dasharray: 0 257 0 0 1 0 0 258;
+@keyframes dotsY {
+  66% {
+    opacity: 0.1;
+    width: 2.4em;
   }
-  25% {
-    stroke-dasharray: 0 0 0 0 257 0 258 0;
-  }
-  50%,
-  to {
-    stroke-dasharray: 0 0 0 0 0 515 0 0;
+  77% {
+    opacity: 1;
+    width: 0;
   }
 }
-@keyframes ball {
-  from,
-  50% {
-    animation-timing-function: ease-in;
-    stroke-dashoffset: 1;
+@keyframes dotsX {
+  66% {
+    opacity: 0.1;
+    height: 2.4em;
   }
-  64% {
-    animation-timing-function: ease-in;
-    stroke-dashoffset: -109;
+  77% {
+    opacity: 1;
+    height: 0;
   }
-  78% {
-    animation-timing-function: ease-in;
-    stroke-dashoffset: -145;
+}
+
+@keyframes flash {
+  33% {
+    opacity: 0;
+    border-radius: 0%;
   }
-  92% {
-    animation-timing-function: ease-in;
-    stroke-dashoffset: -157;
+  55% {
+    opacity: 0.6;
+    border-radius: 100%;
   }
-  57%,
-  71%,
-  85%,
-  99%,
-  to {
-    animation-timing-function: ease-out;
-    stroke-dashoffset: -163;
+  66% {
+    opacity: 0;
   }
 }

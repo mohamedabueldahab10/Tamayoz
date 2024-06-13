@@ -1,8 +1,8 @@
 import { Box, Divider, Input, Tab, Tabs, Tooltip } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import React, { useEffect, useMemo, useState } from 'react';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import BackupIcon from '@mui/icons-material/Backup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -12,6 +12,9 @@ import styles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import WorkInformation from './WorkInformation';
 import PrivateInfo from './PrivateInfo';
 import HrSettings from './HrSettings';
+import NavbarContext from '../../context/NavbarContext';
+import StyledButton from '../../components/utilities/StyledButton';
+import TypographyHeader from '../../components/utilities/TypographyHeader';
 const tabStyle = {
   color: 'var(--dark-color)',
   fontSize: '14px',
@@ -154,11 +157,21 @@ export default function NewEmployee() {
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
-  return (
-    <Box className={styles.employeeContainer}>
-      <Box className={styles.headerInfo}>
+  const { setAdditionalNavbarItems } = useContext(NavbarContext);
+
+  useEffect(() => {
+    setAdditionalNavbarItems([
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'start',
+          alignItems: 'center',
+          columnGap: '10px',
+        }}
+      >
+        <TypographyHeader>New Employee</TypographyHeader>
         <Tooltip title="Save">
-          <SaveAltIcon
+          <BackupIcon
             sx={{
               color: 'var(--primary-color)',
               fontSize: '28px',
@@ -167,7 +180,14 @@ export default function NewEmployee() {
             onClick={() => methods.handleSubmit(handleFormSubmit)()}
           />
         </Tooltip>
-      </Box>
+      </Box>,
+    ]);
+
+    // Cleanup function to remove buttons when the component is unmounted
+    return () => setAdditionalNavbarItems([]);
+  }, [setAdditionalNavbarItems]);
+  return (
+    <Box className={styles.employeeContainer}>
       <FormProvider {...methods}>
         <form
           style={{ width: '100%' }}

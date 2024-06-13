@@ -1,5 +1,5 @@
-import { Box, Divider, Modal, Tab, Tabs, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Divider, Modal, Typography } from '@mui/material';
+import React from 'react';
 import styles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,15 +7,11 @@ import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import CustomizedAutoComplete from '../utilities/CustomizedAutoComplete';
 import BoxModal from '../utilities/BoxModal';
-import TypographyHeader from '../utilities/TypographyHeader';
 import StyledInputBase from '../utilities/StyledInputBase';
 import PrivateStyles from '../../assets/css/modules/employee/PrivateInfo.module.css';
-import ColorPickerInput from '../utilities/ColorPickerInput';
-import CustomizedLabel from '../utilities/CustomizedLabel';
 import CloseIcon from '@mui/icons-material/Close';
 import SecondaryBtn from '../utilities/SecondaryBtn';
 import StyledButton from '../utilities/StyledButton';
-import CustomSwitcher from '../utilities/CustomSwitcher';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -30,18 +26,6 @@ const headModalStyle = {
   padding: '15px 5px',
   width: '100%',
 };
-const labelContainerField = {
-  display: 'flex',
-  justifyContent: 'start',
-  alignItems: 'center',
-  width: '100%',
-  gap: '10px',
-  padding: '0px 5px',
-  borderBottom: '1px solid var(--secondary-color)',
-  minWidth: '280px',
-  maxWidth: '300px',
-};
-
 export default function NewBankModal({ open, handleClose }) {
   const { t } = useTranslation('modules');
   const schema = yup.object().shape({
@@ -128,15 +112,15 @@ export default function NewBankModal({ open, handleClose }) {
                       <StyledInputBase
                         type="text"
                         placeholder={t('form.city')}
-                        minWidth="60px"
-                        maxWidth="80px"
+                        minWidth="80px"
+                        maxWidth="120px"
                         // {...register('employeeName')}
                       />
                       {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
                     </Box>
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
-                        minWidth="80px"
+                        minWidth="130px"
                         defaultValue={[]}
                         id="autostate"
                         name="state"
@@ -150,8 +134,8 @@ export default function NewBankModal({ open, handleClose }) {
                       <StyledInputBase
                         type="text"
                         placeholder={t('form.zip')}
-                        minWidth="60px"
-                        maxWidth="80px"
+                        minWidth="80px"
+                        maxWidth="120px"
                         // {...register('employeeName')}
                       />
                       {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
