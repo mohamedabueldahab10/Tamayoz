@@ -374,7 +374,6 @@ export default function Employees() {
       </Box>,
     ]);
 
-    // Cleanup function to remove buttons when the component is unmounted
     return () => setAdditionalNavbarItems([]);
   }, [setAdditionalNavbarItems]);
   return (

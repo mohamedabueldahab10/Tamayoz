@@ -37,7 +37,7 @@ const Home = () => {
           <Box
             sx={{
               width: '100%',
-              padding: '10px 15px',
+              padding: location === '/' ? '0px' : '10px 15px',
               // marginTop: location === '/' ? '0px' : '120px',
             }}
           >

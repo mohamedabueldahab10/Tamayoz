@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Input, Tooltip } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StyledInputBase from '../../components/utilities/StyledInputBase';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +14,8 @@ import DepartmentModal from '../../components/department/DepartmentModal';
 import CustomSingleDate from '../../components/utilities/CustomSingleDate';
 import CompanyModal from '../../components/company/CompanyModal';
 import JobPositionModal from '../../components/jobPosition/JobPositionModal';
-
+import DegreeModal from '../../components/degree/DegreeModal';
+import { useGetjobPosition } from '../../queries/HrQueries';
 const ImageContainer = styled(Box)`
   display: grid;
   place-items: center;
@@ -52,9 +54,34 @@ const currencies = [
   { label: 'Consultant', id: 3 },
 ];
 export default function EmployeeInfo() {
+  const [jobPosition, setJobPosition] = useState([]);
+  const [currentJobPage, setCurrentJobPage] = useState(1);
+  const handleNextPage = () => {
+    console.log('clicked load more');
+    setCurrentJobPage((prevPage) => prevPage + 1);
+  };
+  const { data: jobPositionData } = useGetjobPosition(currentJobPage);
+  useEffect(() => {
+    useGetjobPosition(currentJobPage);
+  }, [currentJobPage]);
+  useEffect(() => {
+    if (jobPositionData) {
+      setJobPosition(
+        jobPositionData.data.map((job) => ({
+          label: job.name,
+          id: job.id,
+        }))
+      );
+    }
+  }, [jobPositionData]);
+  console.log('jobPositionData', jobPositionData);
   const [departmentOpen, setDepartmentOpen] = useState(false);
   const handleCloseDepartment = () => {
     setDepartmentOpen(false);
+  };
+  const [degreeOpen, setDegreeOpen] = useState(false);
+  const handleCloseDegree = () => {
+    setDegreeOpen(false);
   };
   const [companyOpen, setCompanyOpen] = useState(false);
   const handleCloseCompany = () => {
@@ -233,12 +260,13 @@ export default function EmployeeInfo() {
               defaultValue={[]}
               name="jobPosition"
               label={t('form.job_position')}
-              options={currencies}
+              options={jobPosition}
               getOptionLabel={(option) => option.label}
               id="autoJobPosition"
               multiple
               errors={errors}
               setOpen={() => setOpenJobPosition(true)}
+              handleNextPage={handleNextPage}
             />
           </Box>
           <Box className={styles.singleRow}>
@@ -251,6 +279,7 @@ export default function EmployeeInfo() {
               id="autoDegree"
               multiple
               errors={errors}
+              setOpen={() => setDegreeOpen(true)}
             />
           </Box>
           <Box className={styles.singleRow}>
@@ -294,6 +323,7 @@ export default function EmployeeInfo() {
         open={openJobPosition}
         handleClose={handleCloseJobPosition}
       />
+      <DegreeModal open={degreeOpen} handleClose={handleCloseDegree} />
     </>
   );
 }

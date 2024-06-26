@@ -149,6 +149,7 @@ const CustomizedAutoComplete = ({
   name,
   errors,
   setOpen,
+  handleNextPage,
   minWidth,
 }) => {
   const [inputValue, setInputValue] = useState('');
@@ -160,16 +161,14 @@ const CustomizedAutoComplete = ({
         : [newValue]
       : [];
     setValue(name, valueToSet, { shouldValidate: true });
-    console.log('auto value', newValue);
   };
   const handleInputChange = (event, newInputValue) => {
-    console.log(newInputValue);
     setInputValue(newInputValue);
   };
-  console.log(setOpen);
   const handleCreationOption = () => {
     setOpen(true);
   };
+
   const {
     getInputProps,
     getTagProps,
@@ -190,7 +189,6 @@ const CustomizedAutoComplete = ({
     inputValue,
     onInputChange: handleInputChange,
   });
-  console.log('autocomplete ERRRRR', errors);
   return (
     <>
       <Box sx={{ minWidth }}>
@@ -200,7 +198,11 @@ const CustomizedAutoComplete = ({
           minWidth={minWidth}
         >
           {value.map((option, index) => (
-            <Tag label={option.label} {...getTagProps({ index })} />
+            <Tag
+              label={option.label}
+              key={option.id}
+              {...getTagProps({ index })}
+            />
           ))}
           <Controller
             name={name}
@@ -229,6 +231,12 @@ const CustomizedAutoComplete = ({
                   <CheckIcon fontSize="small" />
                 </li>
               ))}
+              {!inputValue && (
+                <NoRecords onClick={handleNextPage}>
+                  <span style={{ cursor: 'pointer' }}>Load More</span>
+                  {/* <AddIcon fontSize="small" /> */}
+                </NoRecords>
+              )}
               {setOpen
                 ? inputValue && (
                     <CreationLI onClick={handleCreationOption}>
@@ -261,6 +269,7 @@ CustomizedAutoComplete.propTypes = {
   name: PropTypes.string,
   errors: PropTypes.object,
   setOpen: PropTypes.func,
+  handleNextPage: PropTypes.func,
   minWidth: PropTypes.string,
 };
 

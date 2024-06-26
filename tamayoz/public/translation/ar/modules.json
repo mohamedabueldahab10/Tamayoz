@@ -178,6 +178,15 @@
       "process_details": "تفاصيل"
     }
   },
+  "degree": {
+    "create_degree": "اضف درجة",
+    "form": {
+      "code": "الكود",
+      "name": "الاسم",
+      "job_position": "المسمى الوظيفي",
+      "description": "الوصف"
+    }
+  },
   "emplymenttype": {
     "create_employmenttype": "اضف نوع التوظيف",
     "form": {

@@ -25,31 +25,24 @@ import {
 } from '../components/icons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import AxiosInstance from '../components/helpers/AxiosInstance';
 const MainMenu = () => {
   const { t } = useTranslation('layout');
   const [loading, setLoading] = useState(false);
   const [modules, setModules] = useState([]);
-  const accessToken = useSelector((state) => state.auth.AuthedUser.token);
+  // const AccessToken = useSelector((state) => state.auth.AuthedUser.token);
   useEffect(() => {
     getAllUsers();
   }, []);
-
+  const instance = AxiosInstance();
+  console.log('instance', instance);
   const getAllUsers = async () => {
     setLoading(true);
-    await axios
-      .post(
-        'http://168.119.12.58/modulesData/GetAllData',
-        {
-          pageNumber: '1',
-          pageSize: '10',
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+    await instance
+      .post('/modulesData/GetAllData', {
+        pageNumber: '1',
+        pageSize: '10',
+      })
       .then((res) => {
         setLoading(false);
         console.log(res.data.data);

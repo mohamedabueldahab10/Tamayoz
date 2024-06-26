@@ -178,6 +178,15 @@
       "contract_template": "Contract Template"
     }
   },
+  "degree": {
+    "create_degree": "Create Degree",
+    "form": {
+      "code": "Code",
+      "name": "Name",
+      "job_position": "Job Position",
+      "description": "Description"
+    }
+  },
   "emplymenttype": {
     "create_employmenttype": "Create Employment Type",
     "form": {

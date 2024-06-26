@@ -90,8 +90,6 @@ export default function EmployeeResume() {
       .catch((err) => {
         console.log('Validation failed:', err.errors);
       });
-    console.log('SkillsData');
-    console.log('SkillsData', data);
     setSkillsResult(data);
     setDisableSkills(true);
     setSkillsLoading(true);
@@ -105,7 +103,6 @@ export default function EmployeeResume() {
     //     setSnack(true);
     //   });
   };
-  console.log('skillsErr', skillsErrors);
   //   =======================================================================================================
   const [openResume, setOpenResume] = useState(false);
   const handleToggleResume = () => setOpenResume(!openResume);
@@ -189,8 +186,6 @@ export default function EmployeeResume() {
       .catch((err) => {
         console.log('Validation failed:', err.errors);
       });
-    console.log('resume data');
-    console.log('resume data', data);
     setResumeResult(data);
     setDisableResume(true);
     setResumeLoading(true);
@@ -204,7 +199,6 @@ export default function EmployeeResume() {
     //     setSnack(true);
     //   });
   };
-  console.log('resumeErr', resumeErrors);
   return (
     <>
       <Box className={styles.resumeContainer}>
