@@ -4,7 +4,7 @@ import i18next from 'i18next';
 export default function AxiosInstance() {
   const AuthedUser = JSON.parse(localStorage.getItem('AuthedUser'));
   const { language } = i18next;
-  const baseURL = 'http://10.10.8.223:8080';
+  const baseURL = 'http://168.119.12.58/';
   let instance;
   console.log('authedUser instance', AuthedUser);
   if (AuthedUser) {

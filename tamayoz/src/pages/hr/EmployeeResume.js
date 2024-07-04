@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
 import StyledButton from '../../components/utilities/StyledButton';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +28,11 @@ import ErrorText from '../../components/utilities/ErrorText';
 import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import CustomDatePicker from '../../components/utilities/CustomDatePicker';
 import styles from '../../assets/css/modules/employee/EmployeeResume.module.css';
+import {
+  useGetSkill,
+  useGetSkillLevel,
+  useGetSkillType,
+} from '../../queries/HrQueries';
 const skills = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -44,6 +49,49 @@ export default function EmployeeResume() {
   const [disableSkills, setDisableSkills] = useState(false);
   const [skillsLoading, setSkillsLoading] = useState(false);
   const [skillsResult, setSkillsResult] = useState(null);
+  const [skillTypeOptions, setSkillTypeOptions] = useState(null);
+
+  const { data: SkillTypeData } = useGetSkillType();
+  useEffect(() => {
+    setSkillTypeOptions(SkillTypeData?.data);
+  }, [SkillTypeData]);
+  const [skillQuery, setSkillQuery] = useState([]);
+  const [currentSkillPage, setCurrentSkillPage] = useState(1);
+  const {
+    data: skillData,
+    isLoading: isSkillLoading,
+    isError: isSkillError,
+    error: skillError,
+    fetchNextPage: fetchNextSkillPage,
+    hasNextPage: hasNextSkillPage,
+    isFetchingNextPage: isFethcingNextSkillPage,
+  } = useGetSkill(currentSkillPage);
+  console.log('CompanyData', skillData);
+  useEffect(() => {
+    if (skillData) {
+      setSkillQuery((prevOptions) => {
+        const newOptions = skillData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [skillData]);
+  const handleNextSkillPage = () => {
+    if (hasNextSkillPage) {
+      setCurrentSkillPage((prevPage) => prevPage + 1);
+      fetchNextSkillPage();
+    }
+  };
+  console.log('skillQuery', skillQuery);
   const skillsSchema = yup.object().shape({
     skillType: yup.string().required(t('validation.skill_type')),
     skill: yup
@@ -111,6 +159,44 @@ export default function EmployeeResume() {
   const [disableResume, setDisableResume] = useState(false);
   const [ResumeLoading, setResumeLoading] = useState(false);
   const [ResumeResult, setResumeResult] = useState(null);
+  // ===============================================================================
+  const [skillLevelQuery, setSkillLevelQuery] = useState([]);
+  const [currentSkillLevelPage, setCurrentSkillLevelPage] = useState(1);
+  const {
+    data: SkillLevelData,
+    isLoading: isSkillLevelLoading,
+    isError: isSkillLevelError,
+    error: skillLevelError,
+    fetchNextPage: fetchNextSkillLevelPage,
+    hasNextPage: hasNextSkillLevelPage,
+    isFetchingNextPage: isFethcingNextSkillLevelPage,
+  } = useGetSkillLevel(currentSkillLevelPage);
+  console.log('SkillLevel', SkillLevelData);
+  useEffect(() => {
+    if (SkillLevelData) {
+      setSkillLevelQuery((prevOptions) => {
+        const newOptions = SkillLevelData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [SkillLevelData]);
+  const handleNextSkillLevelPage = () => {
+    if (hasNextSkillLevelPage) {
+      setCurrentSkillLevelPage((prevPage) => prevPage + 1);
+      fetchNextSkillLevelPage();
+    }
+  };
+  console.log('skillLevelQuery', skillLevelQuery);
   const resumeSchema = yup.object().shape({
     title: yup.string().required(t('validation.title')),
     employee: yup
@@ -459,7 +545,7 @@ export default function EmployeeResume() {
                       </FormLabel>
                       <CustomRadioGroup
                         name="skillType"
-                        options={skills}
+                        options={skillTypeOptions}
                         errors={skillsErrors}
                       />
                     </Box>
@@ -468,21 +554,41 @@ export default function EmployeeResume() {
                         defaultValue={[]}
                         name="skill"
                         label={t('form.skill')}
-                        options={skills}
-                        getOptionLabel={(option) => option.label}
                         id="autoSkills"
                         multiple
                         errors={skillsErrors}
+                        options={skillQuery}
+                        isOptionEqualToValue={(option, value) =>
+                          option.id === value.id
+                        }
+                        getOptionLabel={(option) => option.name}
+                        handleNextPage={handleNextSkillPage}
+                        fetchNextPage={fetchNextSkillPage}
+                        hasNextPage={hasNextSkillPage}
+                        isFetchingNextPage={isFethcingNextSkillPage}
+                        isLoading={isSkillLoading}
+                        isError={isSkillError}
+                        error={skillError}
                       />
                       <CustomizedAutoComplete
                         defaultValue={[]}
                         id="autoSkillLevel"
                         name="skillLevel"
                         label={t('form.skill_level')}
-                        options={skills}
-                        getOptionLabel={(option) => option.label}
                         multiple
                         errors={skillsErrors}
+                        options={skillLevelQuery}
+                        isOptionEqualToValue={(option, value) =>
+                          option.id === value.id
+                        }
+                        getOptionLabel={(option) => option.name}
+                        handleNextPage={handleNextSkillLevelPage}
+                        fetchNextPage={fetchNextSkillLevelPage}
+                        hasNextPage={hasNextSkillLevelPage}
+                        isFetchingNextPage={isFethcingNextSkillLevelPage}
+                        isLoading={isSkillLevelLoading}
+                        isError={isSkillLevelError}
+                        error={skillLevelError}
                       />
                       <Box
                         sx={{

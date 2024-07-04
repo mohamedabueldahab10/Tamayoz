@@ -6,7 +6,7 @@ import ErrorText from './ErrorText';
 const CustomRadioGroup = ({ name, options, errors }) => {
   const { control } = useFormContext();
 
-  console.log('RadioGroup OOOO', errors);
+  console.log('RadioGroup Data =========', options);
   return (
     <>
       <div>
@@ -15,19 +15,22 @@ const CustomRadioGroup = ({ name, options, errors }) => {
           control={control}
           render={({ field }) => (
             <RadioGroup {...field}>
-              {options.map((option) => (
-                <FormControlLabel
-                  key={option.id}
-                  value={option.label}
-                  control={
-                    <Radio
-                      sx={{ '& .MuiSvgIcon-root': { fontSize: '16px' } }}
+              {options
+                ? options.length > 0 &&
+                  options?.map((option) => (
+                    <FormControlLabel
+                      key={option.id}
+                      value={option.name}
+                      control={
+                        <Radio
+                          sx={{ '& .MuiSvgIcon-root': { fontSize: '16px' } }}
+                        />
+                      }
+                      label={option.name}
+                      defaultValue=""
                     />
-                  }
-                  label={option.label}
-                  defaultValue=""
-                />
-              ))}
+                  ))
+                : []}
             </RadioGroup>
           )}
         />

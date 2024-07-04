@@ -1,5 +1,5 @@
 import { Box, Divider } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../assets/css/modules/employee/PrivateInfo.module.css';
 import publicStyles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
@@ -11,6 +11,7 @@ import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import StyledCheck from '../../components/utilities/StyledCheck';
 import CustomSingleDate from '../../components/utilities/CustomSingleDate';
 import BankAccountModal from '../../components/bankAcc/BankAccountModal';
+import { useGetCountry } from '../../queries/HrQueries';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -23,6 +24,43 @@ export default function PrivateInfo() {
   const handleCloseBankAcc = () => setBankAccOpen(false);
 
   const { t } = useTranslation('modules');
+  const [countryQuery, setCountryQuery] = useState([]);
+  const [currentCountryPage, setCurrentCountryPage] = useState(1);
+  const {
+    data: countryData,
+    isLoading: isCountryLoading,
+    isError: isCountryError,
+    error: countryError,
+    fetchNextPage: fetchNextCountryPage,
+    hasNextPage: hasNextCountryPage,
+    isFetchingNextPage: isFethcingNextCountryPage,
+  } = useGetCountry(currentCountryPage);
+  console.log('CountryData', countryData);
+  useEffect(() => {
+    if (countryData) {
+      setCountryQuery((prevOptions) => {
+        const newOptions = countryData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [countryData]);
+  const handleNextCountryPage = () => {
+    if (hasNextCountryPage) {
+      setCurrentCountryPage((prevPage) => prevPage + 1);
+      fetchNextCountryPage();
+    }
+  };
+  console.log('countryQuery', countryQuery);
   return (
     <Box className={styles.privateInfoContainer}>
       {/* =======================Private content======================= */}
@@ -89,8 +127,18 @@ export default function PrivateInfo() {
                 id="autocountry"
                 name="country"
                 label={t('form.country')}
-                options={addresses}
                 multiple
+                options={countryQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                // setOpen={() => setCompanyOpen(true)}
+                handleNextPage={handleNextCountryPage}
+                fetchNextPage={fetchNextCountryPage}
+                hasNextPage={hasNextCountryPage}
+                isFetchingNextPage={isFethcingNextCountryPage}
+                isLoading={isCountryLoading}
+                isError={isCountryError}
+                error={countryError}
                 //   errors={errors}
               />
             </Box>

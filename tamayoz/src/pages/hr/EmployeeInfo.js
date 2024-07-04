@@ -15,7 +15,7 @@ import CustomSingleDate from '../../components/utilities/CustomSingleDate';
 import CompanyModal from '../../components/company/CompanyModal';
 import JobPositionModal from '../../components/jobPosition/JobPositionModal';
 import DegreeModal from '../../components/degree/DegreeModal';
-import { useGetjobPosition } from '../../queries/HrQueries';
+import { useGetCompany, useGetJobPosition } from '../../queries/HrQueries';
 const ImageContainer = styled(Box)`
   display: grid;
   place-items: center;
@@ -54,27 +54,119 @@ const currencies = [
   { label: 'Consultant', id: 3 },
 ];
 export default function EmployeeInfo() {
-  const [jobPosition, setJobPosition] = useState([]);
+  const [jobPositionQuery, setJobPositionQuery] = useState([]);
   const [currentJobPage, setCurrentJobPage] = useState(1);
-  const handleNextPage = () => {
-    console.log('clicked load more');
-    setCurrentJobPage((prevPage) => prevPage + 1);
-  };
-  const { data: jobPositionData } = useGetjobPosition(currentJobPage);
-  useEffect(() => {
-    useGetjobPosition(currentJobPage);
-  }, [currentJobPage]);
+  const {
+    data: jobPositionData,
+    isLoading: isJobPositionLoading,
+    isError: isJobPositionError,
+    error: jobPostionError,
+    fetchNextPage: fetchNextJobPage,
+    hasNextPage: hasNextJobPage,
+    isFetchingNextPage: isFethcingNextJobPage,
+  } = useGetJobPosition(currentJobPage);
+  console.log('jobPositionData', jobPositionData);
   useEffect(() => {
     if (jobPositionData) {
-      setJobPosition(
-        jobPositionData.data.map((job) => ({
-          label: job.name,
-          id: job.id,
-        }))
-      );
+      setJobPositionQuery((prevOptions) => {
+        const newOptions = jobPositionData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
     }
   }, [jobPositionData]);
-  console.log('jobPositionData', jobPositionData);
+  const handleNextJobPage = () => {
+    if (hasNextJobPage) {
+      setCurrentJobPage((prevPage) => prevPage + 1);
+      fetchNextJobPage();
+    }
+  };
+  console.log('jobPositionQuery', jobPositionQuery);
+  // ===============================================================================
+  const [companyQuery, setcompanyQuery] = useState([]);
+  const [currentCompanyPage, setCurrentCompanyPage] = useState(1);
+  const {
+    data: companyData,
+    isLoading: isCompanyLoading,
+    isError: isCompanyError,
+    error: companyError,
+    fetchNextPage: fetchNextCompanyPage,
+    hasNextPage: hasNextCompanyPage,
+    isFetchingNextPage: isFethcingNextCompanyPage,
+  } = useGetCompany(currentCompanyPage);
+  console.log('CompanyData', companyData);
+  useEffect(() => {
+    if (companyData) {
+      setcompanyQuery((prevOptions) => {
+        const newOptions = companyData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [companyData]);
+  const handleNextCompanyPage = () => {
+    if (hasNextCompanyPage) {
+      setCurrentCompanyPage((prevPage) => prevPage + 1);
+      fetchNextCompanyPage();
+    }
+  };
+  console.log('companyQuery', companyQuery);
+  // ===============================================================================
+  const [departmentQuery, setDepartmentQuery] = useState([]);
+  const [currentDepartmentPage, setCurrentDepartmentPage] = useState(1);
+  const {
+    data: DepartmentData,
+    isLoading: isDepartmentLoading,
+    isError: isDepartmentError,
+    error: departmentError,
+    fetchNextPage: fetchNextDepartmentPage,
+    hasNextPage: hasNextDepartmentPage,
+    isFetchingNextPage: isFethcingNextDepartmentPage,
+  } = useGetCompany(currentDepartmentPage);
+  console.log('CompanyData', DepartmentData);
+  useEffect(() => {
+    if (DepartmentData) {
+      setDepartmentQuery((prevOptions) => {
+        const newOptions = DepartmentData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [DepartmentData]);
+  const handleNextDepartmentPage = () => {
+    if (hasNextDepartmentPage) {
+      setCurrentDepartmentPage((prevPage) => prevPage + 1);
+      fetchNextDepartmentPage();
+    }
+  };
+  console.log('departmentQuery', departmentQuery);
   const [departmentOpen, setDepartmentOpen] = useState(false);
   const handleCloseDepartment = () => {
     setDepartmentOpen(false);
@@ -220,12 +312,20 @@ export default function EmployeeInfo() {
               defaultValue={[]}
               name="company"
               label={t('form.company')}
-              options={currencies}
-              getOptionLabel={(option) => option.label}
+              options={companyQuery}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              getOptionLabel={(option) => option.name}
               id="autoCompany"
               multiple
               errors={errors}
               setOpen={() => setCompanyOpen(true)}
+              handleNextPage={handleNextCompanyPage}
+              fetchNextPage={fetchNextCompanyPage}
+              hasNextPage={hasNextCompanyPage}
+              isFetchingNextPage={isFethcingNextCompanyPage}
+              isLoading={isCompanyLoading}
+              isError={isCompanyError}
+              error={companyError}
             />
           </Box>
         </Box>
@@ -235,12 +335,20 @@ export default function EmployeeInfo() {
               defaultValue={[]}
               name="department"
               label={t('form.department')}
-              options={currencies}
-              getOptionLabel={(option) => option.label}
               id="autoDepartment"
               multiple
               errors={errors}
               setOpen={() => setDepartmentOpen(true)}
+              options={departmentQuery}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              getOptionLabel={(option) => option.name}
+              handleNextPage={handleNextDepartmentPage}
+              fetchNextPage={fetchNextDepartmentPage}
+              hasNextPage={hasNextDepartmentPage}
+              isFetchingNextPage={isFethcingNextDepartmentPage}
+              isLoading={isDepartmentLoading}
+              isError={isDepartmentError}
+              error={departmentError}
             />
           </Box>
           <Box className={styles.singleRow}>
@@ -260,13 +368,20 @@ export default function EmployeeInfo() {
               defaultValue={[]}
               name="jobPosition"
               label={t('form.job_position')}
-              options={jobPosition}
-              getOptionLabel={(option) => option.label}
+              options={jobPositionQuery}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              getOptionLabel={(option) => option.name}
               id="autoJobPosition"
               multiple
               errors={errors}
               setOpen={() => setOpenJobPosition(true)}
-              handleNextPage={handleNextPage}
+              handleNextPage={handleNextJobPage}
+              fetchNextPage={fetchNextJobPage}
+              hasNextPage={hasNextJobPage}
+              isFetchingNextPage={isFethcingNextJobPage}
+              isLoading={isJobPositionLoading}
+              isError={isJobPositionError}
+              error={jobPostionError}
             />
           </Box>
           <Box className={styles.singleRow}>

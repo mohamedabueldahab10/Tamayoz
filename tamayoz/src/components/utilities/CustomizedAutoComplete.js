@@ -8,7 +8,7 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 import { useFormContext, Controller } from 'react-hook-form';
 import AddIcon from '@mui/icons-material/Add';
 import ErrorText from './ErrorText';
-import { Box, InputBase } from '@mui/material';
+import { Box, CircularProgress, InputBase } from '@mui/material';
 const CreationLI = styled('li')`
   cursor: pointer;
   color: var(--primary-color);
@@ -149,8 +149,14 @@ const CustomizedAutoComplete = ({
   name,
   errors,
   setOpen,
-  handleNextPage,
   minWidth,
+  isOptionEqualToValue,
+  handleNextPage,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  isError,
+  error,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const { control, setValue } = useFormContext();
@@ -189,6 +195,9 @@ const CustomizedAutoComplete = ({
     inputValue,
     onInputChange: handleInputChange,
   });
+  // const restOfData = allData?.totalCount - options.length;
+  console.log(hasNextPage);
+  // console.log(allData?.totalCount);
   return (
     <>
       <Box sx={{ minWidth }}>
@@ -200,7 +209,7 @@ const CustomizedAutoComplete = ({
           {value.map((option, index) => (
             <Tag
               label={option.label}
-              key={option.id}
+              key={`tag-${option.id}`}
               {...getTagProps({ index })}
             />
           ))}
@@ -226,15 +235,30 @@ const CustomizedAutoComplete = ({
           {groupedOptions.length > 0 || inputValue ? (
             <Listbox {...getListboxProps()}>
               {groupedOptions.map((option, index) => (
-                <li {...getOptionProps({ option, index })}>
-                  <span>{option.label}</span>
+                <li
+                  key={`option-${option.id}`}
+                  {...getOptionProps({ option, index })}
+                >
+                  <span>{option.name}</span>
                   <CheckIcon fontSize="small" />
                 </li>
               ))}
-              {!inputValue && (
+              {hasNextPage !== undefined ? (
                 <NoRecords onClick={handleNextPage}>
                   <span style={{ cursor: 'pointer' }}>Load More</span>
                   {/* <AddIcon fontSize="small" /> */}
+                </NoRecords>
+              ) : (
+                <></>
+              )}
+              {isFetchingNextPage && (
+                <NoRecords>
+                  <CircularProgress size={24} />
+                </NoRecords>
+              )}
+              {isError && (
+                <NoRecords>
+                  <span>Error: {error.message}</span>
                 </NoRecords>
               )}
               {setOpen
@@ -269,8 +293,14 @@ CustomizedAutoComplete.propTypes = {
   name: PropTypes.string,
   errors: PropTypes.object,
   setOpen: PropTypes.func,
-  handleNextPage: PropTypes.func,
   minWidth: PropTypes.string,
+  isOptionEqualToValue: PropTypes.func,
+  fetchNextPage: PropTypes.func.isRequired,
+  handleNextPage: PropTypes.func.isRequired,
+  hasNextPage: PropTypes.bool.isRequired,
+  isFetchingNextPage: PropTypes.bool.isRequired,
+  isError: PropTypes.bool.isRequired,
+  error: PropTypes.object.isRequired,
 };
 
 CustomizedAutoComplete.defaultProps = {
@@ -278,6 +308,12 @@ CustomizedAutoComplete.defaultProps = {
   multiple: false,
   id: 'customized-autocomplete',
   minWidth: '300px',
+  getOptionLabel: (option) => option.label,
+  label: '',
+  name: '',
+  errors: {},
+  setOpen: null,
+  isOptionEqualToValue: (option, value) => option.id === value.id,
 };
 
 export default CustomizedAutoComplete;

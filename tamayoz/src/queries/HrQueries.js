@@ -1,204 +1,139 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 import axios from 'axios';
 import AxiosInstance from '../components/helpers/AxiosInstance';
 const instance = AxiosInstance();
-export function useGetjobPosition(currentJobPage) {
-  return useQuery('branches', async () => {
-    const { data } = await instance.post('/JobPosition/JobDropdown', {
-      pageSize: 10,
-      pageNumber: currentJobPage,
-    });
-    return data;
-  });
-}
-export function useGetReasons() {
-  return useQuery('reasons', async () => {
-    const { data } = await axios.post(
-      'https://vsoft.com-eg.net:4041/api/Reasons/GetList',
-      {
-        pageSize: 1000,
-        pageNumber: 0,
-      }
-    );
-    return data;
-  });
-}
-export function useGetUsers() {
-  return useQuery('users', async () => {
-    const { data } = await axios.post(
-      'https://vsoft.com-eg.net:4041/api/WebRunnerUsers/GetList',
-      {
-        pageSize: 0,
-        pageNumber: 0,
-      }
-    );
-    return data;
-  });
-}
-
-export function useGetRunners() {
-  return useQuery('runnerData', async () => {
-    const { data } = await axios.post(
-      `https://vsoft.com-eg.net:4041/api/Runners/GetList`,
-      {
-        pageSize: 1000,
-        pageNumber: 0,
-      }
-    );
-    return data;
-  });
-}
-export function useGetRecipient() {
-  return useQuery('recipient', async () => {
-    const { data } = await axios.post(
-      'https://vsoft.com-eg.net:4041/api/Receipts/GetList',
-      {
-        pageSize: 1000,
-        pageNumber: 0,
-      }
-    );
-    return data;
-  });
-}
-
-export function useGetClients() {
-  return useQuery(
-    'clients',
-    async () => {
-      const { data } = await axios.post(
-        'https://vsoft.com-eg.net:4041/api/Clients/GetList',
-        {
-          pageSize: 0,
-          pageNumber: 0,
-        }
-      );
-
-      return data;
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: 3000,
-    }
-  );
-}
-export function useGetProduct() {
-  return useQuery(
-    'products',
-    async () => {
-      const { data } = await axios.post(
-        'https://vsoft.com-eg.net:4041/api/bncProducts/GetPage',
-        {
-          fromDate: '2022-04-10T09:14:16.215Z',
-          toDate: '2023-04-10T09:14:16.215Z',
-          serial: 0,
-          pageParam: {
-            pageSize: 1000,
-            pageNumber: 0,
-          },
-          language: 'string',
-        }
-      );
-
-      return data;
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: 3000,
-    }
-  );
-}
-export function useGetCity() {
-  return useQuery(
-    'city',
-    async () => {
-      const { data } = await axios.post(
-        'https://vsoft.com-eg.net:4041/api/bncGeoCity/GetList',
-        {
-          pageSize: 0,
-          pageNumber: 0,
-        }
-      );
-
-      return data;
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: 3000,
-    }
-  );
-}
-export function useGetStatus() {
-  return useQuery(
-    'status',
-    async () => {
-      const { data } = await axios.post(
-        'https://vsoft.com-eg.net:4041/api/Status/GetList',
-        {
-          pageSize: 0,
-          pageNumber: 0,
-        }
-      );
-
-      return data;
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: 3000,
-    }
-  );
-}
-export function useGetCells() {
-  return useQuery(
-    'cell',
-    async () => {
-      const { data } = await axios.post(
-        'https://vsoft.com-eg.net:4041/api/Cells/GetList',
-        {
-          pageSize: 0,
-          pageNumber: 0,
-        }
-      );
-
-      return data;
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: 3000,
-    }
-  );
-}
-
-export function useGetDRSTable() {
-  return useQuery(
-    'drsTable',
-    () => {
-      return new Promise((resolve) => {
-        setTimeout(() => resolve('Table'), 10000);
+// export const useGetJobPosition = (currentJobPage) => {
+//   return useQuery(
+//     ['jobPosition', currentJobPage],
+//     async () => {
+//       const { data } = await instance.post('/JobPosition/JobDropdown', {
+//         pageSize: 10,
+//         pageNumber: currentJobPage,
+//       });
+//       return data;
+//     }
+//   );
+// };
+export const useGetJobPosition = () => {
+  return useInfiniteQuery(
+    'jobPosition',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/JobPosition/JobDropdown', {
+        pageSize: 10,
+        pageNumber: pageParam,
       });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
     },
     {
-      staleTime: Infinity,
-      cacheTime: 3000,
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
     }
   );
-}
-
-export function useGetSubAccount() {
-  return useQuery('subAccount', async () => {
-    const { data } = await axios.post(
-      `https://vsoft.com-eg.net:4041/api/ConsignmentTypes/GetByCustID/${26}`,
-      {
-        fromDate: '2022-04-10T11:18:04.943Z',
-        toDate: '2023-04-10T11:18:04.943Z',
-        serial: 0,
-        pageParam: {
-          pageSize: 1000,
-          pageNumber: 0,
-        },
-        language: 'string',
-      }
-    );
-
+};
+export const useGetCompany = () => {
+  return useInfiniteQuery(
+    'company',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/company/GetAllData', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
+export const useGetCountry = () => {
+  return useInfiniteQuery(
+    'country',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/country/DropDownData', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
+export const useGetDepartment = () => {
+  return useInfiniteQuery(
+    'department',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/department/DropDownData', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
+export const useGetSkill = () => {
+  return useInfiniteQuery(
+    'skills',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/skills/DropDown', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
+export const useGetSkillLevel = () => {
+  return useInfiniteQuery(
+    'skillLevel',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/skillLevel/GetAllData', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
+export function useGetSkillType() {
+  return useQuery('skillType', async () => {
+    const { data } = await instance.post('/skillType/GetAllData', {
+      pageSize: 1000,
+      pageNumber: 0,
+    });
     return data;
   });
 }
