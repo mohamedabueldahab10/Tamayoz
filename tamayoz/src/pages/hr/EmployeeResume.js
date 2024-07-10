@@ -18,8 +18,7 @@ import BoxModal from '../../components/utilities/BoxModal';
 import CloseIcon from '@mui/icons-material/Close';
 import SecondaryBtn from '../../components/utilities/SecondaryBtn';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
-import axios from 'axios';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import CustomRadioGroup from '../../components/utilities/CustomRadioGroup';
@@ -29,6 +28,7 @@ import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import CustomDatePicker from '../../components/utilities/CustomDatePicker';
 import styles from '../../assets/css/modules/employee/EmployeeResume.module.css';
 import {
+  useGetResumeType,
   useGetSkill,
   useGetSkillLevel,
   useGetSkillType,
@@ -66,7 +66,6 @@ export default function EmployeeResume() {
     hasNextPage: hasNextSkillPage,
     isFetchingNextPage: isFethcingNextSkillPage,
   } = useGetSkill(currentSkillPage);
-  console.log('CompanyData', skillData);
   useEffect(() => {
     if (skillData) {
       setSkillQuery((prevOptions) => {
@@ -91,7 +90,6 @@ export default function EmployeeResume() {
       fetchNextSkillPage();
     }
   };
-  console.log('skillQuery', skillQuery);
   const skillsSchema = yup.object().shape({
     skillType: yup.string().required(t('validation.skill_type')),
     skill: yup
@@ -171,7 +169,6 @@ export default function EmployeeResume() {
     hasNextPage: hasNextSkillLevelPage,
     isFetchingNextPage: isFethcingNextSkillLevelPage,
   } = useGetSkillLevel(currentSkillLevelPage);
-  console.log('SkillLevel', SkillLevelData);
   useEffect(() => {
     if (SkillLevelData) {
       setSkillLevelQuery((prevOptions) => {
@@ -196,7 +193,42 @@ export default function EmployeeResume() {
       fetchNextSkillLevelPage();
     }
   };
-  console.log('skillLevelQuery', skillLevelQuery);
+  // ===============================================================================
+  const [resumeTypeQuery, setResumeTypeQuery] = useState([]);
+  const [currentResumeTypePage, setCurrentResumeTypePage] = useState(1);
+  const {
+    data: ResumeTypeData,
+    isLoading: isResumeTypeLoading,
+    isError: isResumeTypeError,
+    error: resumeTypeError,
+    fetchNextPage: fetchNextResumeTypePage,
+    hasNextPage: hasNextResumeTypePage,
+    isFetchingNextPage: isFethcingNextResumeTypePage,
+  } = useGetResumeType(currentResumeTypePage);
+  useEffect(() => {
+    if (ResumeTypeData) {
+      setResumeTypeQuery((prevOptions) => {
+        const newOptions = ResumeTypeData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [ResumeTypeData]);
+  const handleNextResumeTypePage = () => {
+    if (hasNextResumeTypePage) {
+      setCurrentResumeTypePage((prevPage) => prevPage + 1);
+      fetchNextResumeTypePage();
+    }
+  };
   const resumeSchema = yup.object().shape({
     title: yup.string().required(t('validation.title')),
     employee: yup
@@ -251,7 +283,7 @@ export default function EmployeeResume() {
     defaultValues: {
       title: '',
       employee: [],
-      type: [],
+      resumeType: [],
       displayType: [],
       description: '',
       duration: null,
@@ -381,13 +413,23 @@ export default function EmployeeResume() {
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
                         defaultValue={[]}
-                        name="type"
+                        name="resumeType"
                         label={t('form.type')}
-                        options={skills}
-                        getOptionLabel={(option) => option.label}
                         id="autoType"
                         multiple
                         errors={resumeErrors}
+                        options={resumeTypeQuery}
+                        isOptionEqualToValue={(option, value) =>
+                          option.id === value.id
+                        }
+                        getOptionLabel={(option) => option.name}
+                        handleNextPage={handleNextResumeTypePage}
+                        fetchNextPage={fetchNextResumeTypePage}
+                        hasNextPage={hasNextResumeTypePage}
+                        isFetchingNextPage={isFethcingNextResumeTypePage}
+                        isLoading={isResumeTypeLoading}
+                        isError={isResumeTypeError}
+                        error={resumeTypeError}
                       />
                     </Box>
                     <Box className={styles.singleRow}>

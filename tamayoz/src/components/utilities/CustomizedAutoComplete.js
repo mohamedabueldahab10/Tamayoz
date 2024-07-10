@@ -195,9 +195,6 @@ const CustomizedAutoComplete = ({
     inputValue,
     onInputChange: handleInputChange,
   });
-  // const restOfData = allData?.totalCount - options.length;
-  console.log(hasNextPage);
-  // console.log(allData?.totalCount);
   return (
     <>
       <Box sx={{ minWidth }}>

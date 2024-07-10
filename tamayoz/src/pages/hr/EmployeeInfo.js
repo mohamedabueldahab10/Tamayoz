@@ -25,6 +25,7 @@ const ImageContainer = styled(Box)`
   border-radius: 5px;
   cursor: pointer;
   position: relative;
+  over-flow: hidden;
 `;
 // const dateRow = {
 //     display:"flex",
@@ -65,7 +66,6 @@ export default function EmployeeInfo() {
     hasNextPage: hasNextJobPage,
     isFetchingNextPage: isFethcingNextJobPage,
   } = useGetJobPosition(currentJobPage);
-  console.log('jobPositionData', jobPositionData);
   useEffect(() => {
     if (jobPositionData) {
       setJobPositionQuery((prevOptions) => {
@@ -90,7 +90,6 @@ export default function EmployeeInfo() {
       fetchNextJobPage();
     }
   };
-  console.log('jobPositionQuery', jobPositionQuery);
   // ===============================================================================
   const [companyQuery, setcompanyQuery] = useState([]);
   const [currentCompanyPage, setCurrentCompanyPage] = useState(1);
@@ -103,7 +102,6 @@ export default function EmployeeInfo() {
     hasNextPage: hasNextCompanyPage,
     isFetchingNextPage: isFethcingNextCompanyPage,
   } = useGetCompany(currentCompanyPage);
-  console.log('CompanyData', companyData);
   useEffect(() => {
     if (companyData) {
       setcompanyQuery((prevOptions) => {
@@ -128,7 +126,6 @@ export default function EmployeeInfo() {
       fetchNextCompanyPage();
     }
   };
-  console.log('companyQuery', companyQuery);
   // ===============================================================================
   const [departmentQuery, setDepartmentQuery] = useState([]);
   const [currentDepartmentPage, setCurrentDepartmentPage] = useState(1);
@@ -141,7 +138,6 @@ export default function EmployeeInfo() {
     hasNextPage: hasNextDepartmentPage,
     isFetchingNextPage: isFethcingNextDepartmentPage,
   } = useGetCompany(currentDepartmentPage);
-  console.log('CompanyData', DepartmentData);
   useEffect(() => {
     if (DepartmentData) {
       setDepartmentQuery((prevOptions) => {
@@ -166,7 +162,6 @@ export default function EmployeeInfo() {
       fetchNextDepartmentPage();
     }
   };
-  console.log('departmentQuery', departmentQuery);
   const [departmentOpen, setDepartmentOpen] = useState(false);
   const handleCloseDepartment = () => {
     setDepartmentOpen(false);
@@ -236,7 +231,7 @@ export default function EmployeeInfo() {
                   onChange={handleImageChange}
                   style={{ display: 'none' }}
                   id="image-upload-input"
-                  // {...register("employeeImage")}
+                  // {...register('employeeImage')}
                 />
                 <label htmlFor="image-upload-input">
                   <ImageContainer>
@@ -252,7 +247,10 @@ export default function EmployeeInfo() {
                   <img
                     src={imageUrl}
                     alt="Selected"
-                    style={{ maxWidth: '100%', maxHeight: '100px' }}
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '95px',
+                    }}
                   />
                   <Box onClick={handleDelete} sx={deleteImage}>
                     <Tooltip title="Delete">

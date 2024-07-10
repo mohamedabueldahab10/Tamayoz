@@ -11,7 +11,11 @@ import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import StyledCheck from '../../components/utilities/StyledCheck';
 import CustomSingleDate from '../../components/utilities/CustomSingleDate';
 import BankAccountModal from '../../components/bankAcc/BankAccountModal';
-import { useGetCountry } from '../../queries/HrQueries';
+import {
+  useGetCountry,
+  useGetLanguage,
+  useGetState,
+} from '../../queries/HrQueries';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -35,7 +39,6 @@ export default function PrivateInfo() {
     hasNextPage: hasNextCountryPage,
     isFetchingNextPage: isFethcingNextCountryPage,
   } = useGetCountry(currentCountryPage);
-  console.log('CountryData', countryData);
   useEffect(() => {
     if (countryData) {
       setCountryQuery((prevOptions) => {
@@ -60,7 +63,114 @@ export default function PrivateInfo() {
       fetchNextCountryPage();
     }
   };
-  console.log('countryQuery', countryQuery);
+  // =========================================================================
+  const [stateQuery, setStateQuery] = useState([]);
+  const [currentStatePage, setCurrentStatePage] = useState(1);
+  const {
+    data: stateData,
+    isLoading: isStateLoading,
+    isError: isStateError,
+    error: stateError,
+    fetchNextPage: fetchNextStatePage,
+    hasNextPage: hasNextStatePage,
+    isFetchingNextPage: isFethcingNextStatePage,
+  } = useGetState(currentStatePage);
+  useEffect(() => {
+    if (stateData) {
+      setStateQuery((prevOptions) => {
+        const newOptions = stateData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [stateData]);
+  const handleNextStatePage = () => {
+    if (hasNextStatePage) {
+      setCurrentStatePage((prevPage) => prevPage + 1);
+      fetchNextStatePage();
+    }
+  };
+  // =========================================================================
+  const [cityQuery, setCityQuery] = useState([]);
+  const [currentCityPage, setCurrentCityPage] = useState(1);
+  const {
+    data: cityData,
+    isLoading: isCityLoading,
+    isError: isCityError,
+    error: cityError,
+    fetchNextPage: fetchNextCityPage,
+    hasNextPage: hasNextCityPage,
+    isFetchingNextPage: isFethcingNextCityPage,
+  } = useGetState(currentCityPage);
+  useEffect(() => {
+    if (cityData) {
+      setCityQuery((prevOptions) => {
+        const newOptions = cityData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [cityData]);
+  const handleNextCityPage = () => {
+    if (hasNextCityPage) {
+      setCurrentCityPage((prevPage) => prevPage + 1);
+      fetchNextCityPage();
+    }
+  };
+  // =========================================================================
+  const [langQuery, setLangQuery] = useState([]);
+  const [currentLangPage, setCurrentLangPage] = useState(1);
+  const {
+    data: langData,
+    isLoading: isLangLoading,
+    isError: isLangError,
+    error: langError,
+    fetchNextPage: fetchNextLangPage,
+    hasNextPage: hasNextLangPage,
+    isFetchingNextPage: isFethcingNextLangPage,
+  } = useGetLanguage(currentLangPage);
+  useEffect(() => {
+    if (langData) {
+      setLangQuery((prevOptions) => {
+        const newOptions = langData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [langData]);
+  const handleNextLangPage = () => {
+    if (hasNextLangPage) {
+      setCurrentLangPage((prevPage) => prevPage + 1);
+      fetchNextLangPage();
+    }
+  };
   return (
     <Box className={styles.privateInfoContainer}>
       {/* =======================Private content======================= */}
@@ -90,13 +200,27 @@ export default function PrivateInfo() {
           </Box>
           <Box className={publicStyles.formContainer}>
             <Box className={publicStyles.singleRow}>
-              <StyledInputBase
-                type="text"
-                placeholder={t('form.city')}
-                minWidth="100px"
-                // {...register('employeeName')}
+              <CustomizedAutoComplete
+                minWidth="180px"
+                defaultValue={[]}
+                id="autostate"
+                name="city"
+                label={t('form.city')}
+                multiple
+                options={cityQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                // setOpen={() => setCompanyOpen(true)}
+                handleNextPage={handleNextCityPage}
+                fetchNextPage={fetchNextCityPage}
+                hasNextPage={hasNextCityPage}
+                isFetchingNextPage={isFethcingNextCityPage}
+                isLoading={isCityLoading}
+                isError={isCityError}
+                error={cityError}
+                //   errors={errors}
+                //   errors={errors}
               />
-              {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
@@ -105,8 +229,19 @@ export default function PrivateInfo() {
                 id="autostate"
                 name="state"
                 label={t('form.state')}
-                options={addresses}
                 multiple
+                options={stateQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                // setOpen={() => setCompanyOpen(true)}
+                handleNextPage={handleNextStatePage}
+                fetchNextPage={fetchNextStatePage}
+                hasNextPage={hasNextStatePage}
+                isFetchingNextPage={isFethcingNextStatePage}
+                isLoading={isStateLoading}
+                isError={isStateError}
+                error={stateError}
+                //   errors={errors}
                 //   errors={errors}
               />
             </Box>
@@ -190,8 +325,18 @@ export default function PrivateInfo() {
                 id="autolanguage"
                 name="language"
                 label={t('form.lang')}
-                options={addresses}
                 multiple
+                options={langQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                // setOpen={() => setCompanyOpen(true)}
+                handleNextPage={handleNextLangPage}
+                fetchNextPage={fetchNextLangPage}
+                hasNextPage={hasNextLangPage}
+                isFetchingNextPage={isFethcingNextLangPage}
+                isLoading={isLangLoading}
+                isError={isLangError}
+                error={langError}
                 //   errors={errors}
               />
             </Box>

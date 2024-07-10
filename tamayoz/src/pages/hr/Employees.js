@@ -34,6 +34,9 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import styled from 'styled-components';
 import NavbarContext from '../../context/NavbarContext';
+import { useQuery } from 'react-query';
+import AxiosInstance from '../../components/helpers/AxiosInstance';
+const instance = AxiosInstance();
 
 const cellStatusActive = {
   width: '70px',
@@ -376,6 +379,28 @@ export default function Employees() {
 
     return () => setAdditionalNavbarItems([]);
   }, [setAdditionalNavbarItems]);
+  // const { isLoading, data } = useQuery(
+  //   "employeesdatagrid",
+  //   async () => {
+  //     const res = await instance.post(
+  //       `/employees/GetAllData`,
+  //       {
+  //         fromDate: "2023-03-27T12:34:03.345Z",
+  //         toDate: "2023-03-27T12:34:03.345Z",
+  //         serial: 0,
+  //         pageParam: {
+  //           pageSize: 0,
+  //           pageNumber: 0,
+  //         },
+  //         language: "string",
+  //       }
+  //     );
+  //     return res.data.data;
+  //   },
+  //   {
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
   return (
     <div>
       {view === 'list' && (

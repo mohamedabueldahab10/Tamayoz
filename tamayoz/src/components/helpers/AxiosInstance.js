@@ -14,7 +14,7 @@ export default function AxiosInstance() {
       headers: {
         Authorization: `Bearer ${AccessToken}`,
         'Content-Type': 'application/json',
-        'Accept-Encoding': 'gzip, deflate, br',
+        // 'Accept-Encoding': 'gzip, deflate, br',
       },
     });
     instance.interceptors.response.use(
@@ -35,6 +35,7 @@ export default function AxiosInstance() {
             return result;
           };
         }
+        console.log('Axios ERR', error);
         if (error.response.status === 401) {
           once(function () {
             handleLogout();
