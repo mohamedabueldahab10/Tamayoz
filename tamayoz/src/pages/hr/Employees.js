@@ -16,6 +16,7 @@ import {
   MenuList,
   Divider,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
@@ -81,36 +82,27 @@ export default function Employees() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleActionClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleCloseAction = () => {
     setAnchorEl(null);
   };
+  const handleRowClick = (id) => {
+    console.log(id);
+    navigate(`/employees/${id}`);
+  };
+
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
-    { field: 'age', headerName: 'Age', type: 'number', width: 100 },
-    { field: 'email', headerName: 'Email', width: 300 },
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'name', headerName: 'Employee Name', width: 200 },
+    { field: 'phone', headerName: 'Phone Number', width: 200 },
     {
-      field: 'status',
-      headerName: 'Status',
+      field: 'jobName',
+      headerName: 'Job Position',
       width: 200,
-      renderCell: ({ row }) => {
-        return (
-          <strong>
-            {row.status === 'active' ? (
-              <Box sx={cellStatusActive}>Active</Box>
-            ) : row.status === 'pending' ? (
-              <Box sx={cellStatusPending}>Pending</Box>
-            ) : (
-              <Box>No Status</Box>
-            )}
-          </strong>
-        );
-      },
     },
+    { field: 'email', headerName: 'Email', width: 300 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -124,14 +116,14 @@ export default function Employees() {
               aria-controls={open ? 'basic-menu' : undefined}
               aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
-              onClick={handleClick}
+              onClick={handleActionClick}
             >
               <MoreVertIcon />
             </IconButton>
             <Menu
               anchorEl={anchorEl}
               open={open}
-              onClose={handleClose}
+              onClose={handleCloseAction}
               MenuListProps={{
                 'aria-labelledby': 'basic-button',
               }}
@@ -230,25 +222,34 @@ export default function Employees() {
     },
   ];
 
-  const [rows] = useState(() => {
-    const initialRows = [];
-    for (let i = 1; i <= 20; i++) {
-      let statusOptions = ['active', 'pending'];
-      let randomStatusIndex = Math.floor(Math.random() * statusOptions.length);
-      initialRows.push({
-        id: i,
-        firstName: `John ${i}`,
-        lastName: `Doe ${i}`,
-        age: Math.floor(Math.random() * 80) + 20,
-        email: `john${i}@example.com`,
-        status: `${statusOptions[randomStatusIndex]}`,
-      });
-    }
-    return initialRows;
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const fetchData = async ({ page, pageSize }) => {
+    const response = await instance.post(`/Employee/GetAllData`, {
+      params: {
+        page,
+        pageSize,
+      },
+    });
+    return response.data;
+  };
+  const {
+    isLoading,
+    data: employeeData,
+    error,
+  } = useQuery('employeesdatagrid', async () => fetchData({ page, pageSize }), {
+    keepPreviousData: true,
+    refetchOnWindowFocus: false,
   });
+  const rows = employeeData?.data || [];
+  const totalCount = employeeData?.totalCount || 0;
+  console.log('employeeData: ' + employeeData);
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
   const [pagination, setPagination] = useState({
     page: 0,
-    pageCount: Math.ceil(rows?.length / 10),
+    pageCount: 10,
     hasPrevPage: false,
     hasNextPage: true,
   });
@@ -276,10 +277,6 @@ export default function Employees() {
   useEffect(() => {
     localStorage.setItem('view', view);
   }, [view]);
-  const visibleRows = rows?.slice(
-    pagination.page * 10,
-    (pagination.page + 1) * 10
-  );
   const { t } = useTranslation('modules');
   const location = useLocation();
   useEffect(() => {
@@ -379,28 +376,6 @@ export default function Employees() {
 
     return () => setAdditionalNavbarItems([]);
   }, [setAdditionalNavbarItems]);
-  // const { isLoading, data } = useQuery(
-  //   "employeesdatagrid",
-  //   async () => {
-  //     const res = await instance.post(
-  //       `/employees/GetAllData`,
-  //       {
-  //         fromDate: "2023-03-27T12:34:03.345Z",
-  //         toDate: "2023-03-27T12:34:03.345Z",
-  //         serial: 0,
-  //         pageParam: {
-  //           pageSize: 0,
-  //           pageNumber: 0,
-  //         },
-  //         language: "string",
-  //       }
-  //     );
-  //     return res.data.data;
-  //   },
-  //   {
-  //     refetchOnWindowFocus: false,
-  //   }
-  // );
   return (
     <div>
       {view === 'list' && (
@@ -418,19 +393,29 @@ export default function Employees() {
                   fontSize: '16px',
                   fontWeight: 'bold',
                 },
+                cursor: 'pointer',
               }}
-              rows={visibleRows}
+              rows={rows}
               columns={columns}
-              pagination
+              page={page}
+              pageSize={pageSize}
+              rowCount={totalCount}
+              paginationMode="server"
+              loading={isLoading}
+              onRowClick={(params) => handleRowClick(params.id)}
               components={{
                 Pagination: () => (
                   <CustomPagination
-                    pagination={pagination}
-                    onPageChange={onPageChange}
+                    pagination={{
+                      page,
+                      pageCount: Math.ceil(totalCount / pageSize),
+                      hasPrevPage: page > 0,
+                      hasNextPage: page < Math.ceil(totalCount / pageSize) - 1,
+                    }}
+                    onPageChange={handlePageChange}
                   />
                 ),
               }}
-              pageSize={10}
               checkboxSelection
               disableRowSelectionOnClick
               getRowId={(rowData) => {
@@ -442,23 +427,38 @@ export default function Employees() {
       )}
       {view === 'kanban' && (
         <List
-          sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', gap: '10px' }}
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'start',
+            flexWrap: 'wrap',
+            gap: '10px',
+          }}
         >
-          {visibleRows?.map((row) => (
+          {rows?.map((row) => (
             <ListItem
               sx={{
                 width: '48%',
                 minWidth: '250px',
                 maxWidth: '600px',
                 border: '1px solid var(--secondary-color)',
+                cursor: 'pointer',
               }}
               key={row.id}
+              onClick={() => handleRowClick(row.id)}
+              o
             >
-              {columns.map((column) => (
+              {columns.slice(0, -1).map((column) => (
                 <ListItemText
                   key={column.field}
                   primary={column.headerName}
-                  secondary={row[column.field]}
+                  secondary={row[column.field] || '-'}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                  }}
                 />
               ))}
             </ListItem>

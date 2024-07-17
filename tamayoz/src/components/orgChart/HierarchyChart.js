@@ -97,15 +97,33 @@ export const initialData = {
           children: [
             {
               id: '21',
-              name: 'Child 11',
+              name: 'Child 21',
               job: 'Job 11',
               department: 'Dept 11',
               departmentColor: '#9b59b6',
               image: 'https://via.placeholder.com/150',
+              children: [
+                {
+                  id: '40',
+                  name: 'Child 40',
+                  job: 'Job 40',
+                  department: 'Dept 40',
+                  departmentColor: '#9b59b6',
+                  image: 'https://via.placeholder.com/150',
+                },
+                {
+                  id: '41',
+                  name: 'Child 41',
+                  job: 'Job 41',
+                  department: 'Dept 41',
+                  departmentColor: '#9b59b6',
+                  image: 'https://via.placeholder.com/150',
+                },
+              ],
             },
             {
               id: '32',
-              name: 'Child 12',
+              name: 'Child 32',
               job: 'Job 12',
               department: 'Dept 12',
               departmentColor: '#9b59b6',

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
 import StyledInputBase from '../../components/utilities/StyledInputBase';
 import ErrorText from '../../components/utilities/ErrorText';
+import { useFormContext } from 'react-hook-form';
 import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import StyledCheck from '../../components/utilities/StyledCheck';
 import CustomSingleDate from '../../components/utilities/CustomSingleDate';
@@ -171,6 +172,12 @@ export default function PrivateInfo() {
       fetchNextLangPage();
     }
   };
+  // =========================================================================
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box className={styles.privateInfoContainer}>
       {/* =======================Private content======================= */}
@@ -184,7 +191,7 @@ export default function PrivateInfo() {
                 type="text"
                 placeholder={t('form.street')}
                 minWidth="500px"
-                // {...register('employeeName')}
+                {...register('street')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -193,7 +200,7 @@ export default function PrivateInfo() {
                 type="text"
                 placeholder={t('form.street2')}
                 minWidth="500px"
-                // {...register('employeeName')}
+                {...register('street2')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -201,6 +208,7 @@ export default function PrivateInfo() {
           <Box className={publicStyles.formContainer}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 minWidth="180px"
                 defaultValue={[]}
                 id="autostate"
@@ -224,6 +232,7 @@ export default function PrivateInfo() {
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 minWidth="180px"
                 defaultValue={[]}
                 id="autostate"
@@ -250,7 +259,7 @@ export default function PrivateInfo() {
                 type="text"
                 placeholder={t('form.zip')}
                 minWidth="100px"
-                // {...register('employeeName')}
+                {...register('zip')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -258,6 +267,7 @@ export default function PrivateInfo() {
           <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 id="autocountry"
                 name="country"
@@ -281,7 +291,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.private_mail')}
-                // {...register('employeeName')}
+                {...register('privatemail')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -292,7 +302,7 @@ export default function PrivateInfo() {
                 minWidth="270px"
                 type="text"
                 placeholder={t('form.private_phone')}
-                // {...register('employeeName')}
+                {...register('privatephone')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -301,7 +311,7 @@ export default function PrivateInfo() {
                 minWidth="270px"
                 type="text"
                 placeholder={t('form.private_mobile')}
-                // {...register('employeeName')}
+                {...register('privatemobile')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -309,6 +319,7 @@ export default function PrivateInfo() {
           <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 id="autobankaccount"
                 name="bankaccount"
@@ -321,6 +332,7 @@ export default function PrivateInfo() {
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 id="autolanguage"
                 name="language"
@@ -344,7 +356,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.home_work_distance')}
-                // {...register('employeeName')}
+                {...register('workdistance')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -353,7 +365,7 @@ export default function PrivateInfo() {
                 minWidth="300px"
                 type="text"
                 placeholder={t('form.private_car_plate')}
-                // {...register('employeeName')}
+                {...register('privatecarplate')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -368,21 +380,22 @@ export default function PrivateInfo() {
           <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="automarital"
                 name="maritalStatus"
                 label={t('form.marital_status')}
                 options={addresses}
-                // multiple
+                multiple
                 //   errors={errors}
               />
             </Box>
             <Box className={publicStyles.singleRow}>
               <StyledInputBase
-                type="text"
+                type="number"
                 placeholder={t('form.dependences_no')}
-                // {...register('employeeName')}
+                {...register('dependenciesnumber')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -399,7 +412,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.contact_name')}
-                // {...register('employeeName')}
+                {...register('contactname')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -407,7 +420,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.contact_no')}
-                // {...register('employeeName')}
+                {...register('contactnumber')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -422,13 +435,14 @@ export default function PrivateInfo() {
           <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autocertificate"
                 name="certificateLevel"
                 label={t('form.certificate_level')}
                 options={addresses}
-                // multiple
+                multiple
                 //   errors={errors}
               />
             </Box>
@@ -436,7 +450,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.study_field')}
-                // {...register('employeeName')}
+                {...register('stydyfield')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -444,7 +458,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.school')}
-                // {...register('employeeName')}
+                {...register('school')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -461,7 +475,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.visa_no')}
-                // {...register('employeeName')}
+                {...register('visanumber')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -469,7 +483,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.work_permit_no')}
-                // {...register('employeeName')}
+                {...register('workpermitnumber')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -479,11 +493,11 @@ export default function PrivateInfo() {
                   display: 'flex',
                   justifyContent: 'start',
                   alignItems: 'center',
-                  gap: '10px',
+                  marginBlock: '10px',
                 }}
               >
                 <CustomSingleDate
-                  name="date"
+                  name="visaexpirationdate"
                   defaultValue={null}
                   label={t('form.visa_expiration_date')}
                   width="300px"
@@ -497,11 +511,11 @@ export default function PrivateInfo() {
                   display: 'flex',
                   justifyContent: 'start',
                   alignItems: 'center',
-                  gap: '10px',
+                  marginBlock: '10px',
                 }}
               >
                 <CustomSingleDate
-                  name="date"
+                  name="workpermitexpirationdate"
                   defaultValue={null}
                   label={t('form.work_permit_expiration_date')}
                   width="300px"
@@ -524,8 +538,8 @@ export default function PrivateInfo() {
               <Box>
                 <StyledInputBase
                   type="file"
-                  placeholder="Work Permit Expiration Date"
-                  //   {...register('nextAppraisalDate')}
+                  placeholder="Permit Expiration"
+                  {...register('workpermit')}
                 />
                 <Box>
                   {/* <ErrorText>{errors.nextAppraisalDate?.message}</ErrorText> */}
@@ -543,13 +557,15 @@ export default function PrivateInfo() {
           <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autonationality"
                 name="nationality"
                 label={t('form.nationality')}
                 options={addresses}
-                // multiple
+                multiple
+                //   errors={errors}
                 //   errors={errors}
               />
             </Box>
@@ -557,7 +573,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.id_no')}
-                // {...register('employeeName')}
+                {...register('idnumber')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -565,19 +581,20 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.ssn_no')}
-                // {...register('employeeName')}
+                {...register('ssnnumber')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autogender"
                 name="gender"
                 label={t('form.gender')}
                 options={addresses}
-                // multiple
+                multiple
                 //   errors={errors}
               />
             </Box>
@@ -588,11 +605,11 @@ export default function PrivateInfo() {
                   justifyContent: 'start',
                   alignItems: 'center',
                   gap: '10px',
-                  mb: '5px',
+                  marginBlock: '10px',
                 }}
               >
                 <CustomSingleDate
-                  name="date"
+                  name="birthdate"
                   defaultValue={null}
                   label={t('form.birth_date')}
                   width="300px"
@@ -604,7 +621,7 @@ export default function PrivateInfo() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.birth_place')}
-                // {...register('employeeName')}
+                {...register('birthplace')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -621,10 +638,7 @@ export default function PrivateInfo() {
                 <CustomizedLabel>{t('form.non_resident')}</CustomizedLabel>
               </Box>
               <Box>
-                <StyledCheck
-                  id="resident"
-                  //   {...register('nextAppraisalDate')}
-                />
+                <StyledCheck id="resident" {...register('nonresident')} />
                 <Box>
                   {/* <ErrorText>{errors.nextAppraisalDate?.message}</ErrorText> */}
                 </Box>

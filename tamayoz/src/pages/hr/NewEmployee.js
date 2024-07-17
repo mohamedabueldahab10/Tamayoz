@@ -145,68 +145,168 @@ export default function NewEmployee() {
       workMobile: '',
       workPhone: '',
       jobPositionName: '',
+      degree: 0,
       workMail: '',
       nextAppraisalDate: '',
-      tags: [],
-      department: [],
-      jobPosition: [],
-      manager: [],
-      company: [],
-      coach: [],
+      tags: 0,
+      department: 0,
+      jobPosition: 0,
+      manager: 0,
+      company: 0,
+      coach: 0,
+      // =========work info===========
+      workaddress: 0,
+      expense: 0,
+      timeoff: 0,
+      timesheet: 0,
+      attendance: 0,
+      monday: 0,
+      tuesday: 0,
+      wednesday: 0,
+      thursday: 0,
+      friday: 0,
+      saturday: 0,
+      sunday: 0,
+      workinghours: 0,
+      timezone: 0,
+      roles: 0,
+      defaultrole: 0,
+      // =========private info===========
+      street: '',
+      street2: '',
+      city: 0,
+      state: 0,
+      zip: '',
+      country: 0,
+      privatemail: '',
+      privatephone: '',
+      privatemobile: '',
+      bankaccount: 0,
+      language: 0,
+      workdistance: '',
+      privatecarplate: '',
+      maritalStatus: 0,
+      dependenciesnumber: 0,
+      contactname: '',
+      contactnumber: '',
+      certificateLevel: 0,
+      stydyfield: '',
+      school: '',
+      visanumber: '',
+      workpermitnumber: '',
+      visaexpirationdate: '',
+      workpermitexpirationdate: '',
+      workpermit: '',
+      nationality: 0,
+      idnumber: '',
+      ssnnumber: '',
+      gender: 0,
+      birthdate: '',
+      birthplace: '',
+      nonresident: false,
+      // =========hr settings===========
+      employeetype: 0,
+      relatedusers: 0,
+      pincode: '',
+      badgeid: '',
+      billingtimetarget: '',
+      hourlycost: '',
+      fleetmobilitycard: '',
     },
   });
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleFileChange = (file) => {
+    setSelectedImage(file);
+  };
+  console.log('File changed', selectedImage);
   async function handleFormSubmit(data) {
+    const jsonStringData = JSON.stringify(data, null, 2);
+    console.log('string Data: ' + jsonStringData);
+    console.log('relatedusers length: ' + data.relatedusers.length);
+    console.log('relatedusers length: ' + data.employeetype.length);
+    var employeeArray = [];
+    for (var i = 0; i < data.length; i++) {
+      employeeArray.push(data[i].name);
+    }
+    const logFormData = (formData) => {
+      for (let pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+    };
+    console.log('Submit Data:', employeeArray);
     const EmployeeData = {
       empMainData: {
-        firstname: 'hamada',
+        // ======main info==========
+        firstname: data.employeeName,
         middlename: '',
         lastname: '',
         code: '',
-        titleid: 0,
-        dateofbirth: '12-12-2022',
-        experienceYears: 1,
-        passportId: 0,
-        countryId: 0,
-        regionId: 0,
-        cityId: 0,
-        workMobile: '',
-        workPhone: '',
-        workEmail: '',
-        departmentId: 1,
-        jobPositionId: 1,
-        managerId: 1,
-        companyId: 1,
-        workingHoursId: 0,
-        timeoffMangerId: 0,
-        timesheetMangerId: 0,
-        attendanceMangerId: 0,
-        timezone: '',
-        privateAddress: '',
-        privateEmail: '',
-        privatePhone: '',
-        bankAccountId: 0,
-        langId: 0,
-        carPlate: '',
-        nationalityId: 0,
-        identificationNum: '',
-        gender: '',
-        numOfChildren: 1,
+        workMobile: data.workMobile,
+        workPhone: data.workPhone,
+        workEmail: data.workMail,
+        companyId: data.company.length > 0 ? data.company[0].id : 0,
+        departmentId: data.department.length > 0 ? data.department[0].id : 0,
+        managerId: data.manager.length > 0 ? data.manager[0].id : 0,
+        jobPositionId: data.jobPosition.length > 0 ? data.jobPosition[0].id : 0,
+        titleid: data.tags.length > 0 ? data.tags[0].id : 0,
+        // =======work Info ======
+        timeoffMangerId: data.timeoff.length > 0 ? data.timeoff[0].id : 0,
+        timesheetMangerId: data.timesheet.length > 0 ? data.timesheet[0].id : 0,
+        attendanceMangerId:
+          data.attendance.length > 0 ? data.attendance[0].id : 0,
+        workingHoursId:
+          data.workinghours.length > 0 ? data.workinghours[0].id : 0,
+        timezone: data.timezone.length > 0 ? data.timezone[0].id : 0,
+        // =======private info ======
+        // ===contact===
+        privateAddress: data.street,
+        countryId: data.country.length > 0 ? data.country[0].id : 0,
+        regionId: data.state.length > 0 ? data.state[0].id : 0,
+        cityId: data.city.length > 0 ? data.city[0].id : 0,
+        privateEmail: data.privatemail,
+        privatePhone: data.privatephone,
+        bankAccountId: data.bankaccount.length > 0 ? data.bankaccount[0].id : 0,
+        langId: data.language.length > 0 ? data.language[0].id : 0,
+        carPlate: data.privatecarplate,
+        // ===family===
+        numOfChildren: data.dependenciesnumber,
         spouseName: '',
         spouseBirthdate: '12-12-2022',
-        relatedUserId: 0,
-        employeeTypeId: 1,
+        // ==citizenship==
+        nationalityId: data.nationality.length > 0 ? data.nationality[0].id : 0,
+        identificationNum: data.idnumber,
+        gender: data.gender.length > 0 ? data.gender[0].id : 0,
+        dateofbirth: data.birthdate,
+        // =======hr setting ======
+        relatedUserId:
+          data.relatedusers.length > 0 ? data.relatedUsers[0].id : 0,
+        employeeTypeId:
+          data.employeetype.length > 0 ? data.employeeType[0].id : 1,
+
+        experienceYears: 0,
+        passportId: 0,
       },
       empEmergancy: [
         {
-          phone: '12121212',
-          name: 'mohamed',
-          degreeOfKinship: 'hasband',
-          residenceCardNum: 1,
+          phone: data.contactnumber,
+          name: data.contactname,
+          degreeOfKinship: '',
+          residenceCardNum: 0,
         },
       ],
     };
-    await axios
-      .post('http://10.10.8.223:8080/Employee/InsertData', EmployeeData, {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(EmployeeData));
+
+    if (selectedImage) {
+      formData.append('img', selectedImage);
+    }
+    console.log('payload: ' + formData);
+    logFormData(formData);
+
+    await instance
+      .post('/Employee/InsertData', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -220,7 +320,8 @@ export default function NewEmployee() {
       });
   }
   const [tabValue, setTabValue] = useState(0);
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
+    event.preventDefault();
     setTabValue(newValue);
   };
   const { setAdditionalNavbarItems } = useContext(NavbarContext);
@@ -251,7 +352,8 @@ export default function NewEmployee() {
 
     // Cleanup function to remove buttons when the component is unmounted
     return () => setAdditionalNavbarItems([]);
-  }, [setAdditionalNavbarItems]);
+  }, [methods, setAdditionalNavbarItems]);
+  console.log('================', tabValue);
   return (
     <Box className={styles.employeeContainer}>
       <FormProvider {...methods}>
@@ -259,13 +361,13 @@ export default function NewEmployee() {
           style={{ width: '100%' }}
           onSubmit={methods.handleSubmit(handleFormSubmit)}
         >
-          <EmployeeInfo />
+          <EmployeeInfo onFileChange={handleFileChange} />
         </form>
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
               value={tabValue}
-              onChange={handleChange}
+              onChange={handleTabChange}
               aria-label="basic tabs example"
               sx={{
                 width: 'fit-content',
@@ -294,20 +396,24 @@ export default function NewEmployee() {
               />
             </Tabs>
           </Box>
-          <CustomTabPanel value={tabValue} index={0}>
+          <CustomTabPanel value={tabValue} index={0} />
+          <CustomTabPanel value={tabValue} index={1} />
+          <CustomTabPanel value={tabValue} index={2} />
+          <CustomTabPanel value={tabValue} index={3} />
+          <div style={{ display: tabValue === 0 ? 'block' : 'none' }}>
             <Box className={styles.nameInfo}>
               <EmployeeResume />
             </Box>
-          </CustomTabPanel>
-          <CustomTabPanel value={tabValue} index={1}>
+          </div>
+          <div style={{ display: tabValue === 1 ? 'block' : 'none' }}>
             <WorkInformation />
-          </CustomTabPanel>
-          <CustomTabPanel value={tabValue} index={2}>
+          </div>
+          <div style={{ display: tabValue === 2 ? 'block' : 'none' }}>
             <PrivateInfo />
-          </CustomTabPanel>
-          <CustomTabPanel value={tabValue} index={3}>
+          </div>
+          <div style={{ display: tabValue === 3 ? 'block' : 'none' }}>
             <HrSettings />
-          </CustomTabPanel>
+          </div>
         </Box>
       </FormProvider>
     </Box>

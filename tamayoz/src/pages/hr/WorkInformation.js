@@ -7,6 +7,8 @@ import { Box, Divider } from '@mui/material';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
 import { initialData } from '../../components/orgChart/HierarchyChart';
 import CustomTreeView from '../../components/orgChart/CustomTreeView';
+import { useFormContext } from 'react-hook-form';
+
 const treeData = {
   id: 'root',
   name: 'محمد إبراهيم عبد المقصود الجزار',
@@ -41,6 +43,11 @@ const addresses = [
 ];
 export default function WorkInformation() {
   const { t } = useTranslation('modules');
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box className={styles.workInfoContainer}>
       <Box className={styles.formSide}>
@@ -51,10 +58,11 @@ export default function WorkInformation() {
           <Box className={publicStyles.nameInfo}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autoaddress"
-                name="workAddress"
+                name="workaddress"
                 label={t('form.address')}
                 options={addresses}
                 multiple
@@ -75,6 +83,7 @@ export default function WorkInformation() {
           <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autoexpense"
@@ -87,6 +96,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autotimeoff"
@@ -99,6 +109,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autotimesheet"
@@ -111,6 +122,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autoattendance"
@@ -134,6 +146,7 @@ export default function WorkInformation() {
           <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="automonday"
@@ -146,6 +159,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autotuesday"
@@ -158,6 +172,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autowednesday"
@@ -170,6 +185,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autothursday"
@@ -182,6 +198,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autofriday"
@@ -194,6 +211,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autosaturday"
@@ -206,6 +224,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autosunday"
@@ -225,6 +244,7 @@ export default function WorkInformation() {
           <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autoworkinghours"
@@ -237,6 +257,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autotimezone"
@@ -256,6 +277,7 @@ export default function WorkInformation() {
           <Box className={publicStyles.formColumn}>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autoroles"
@@ -268,6 +290,7 @@ export default function WorkInformation() {
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
+              control={control}
                 defaultValue={[]}
                 customwidth="100%"
                 id="autodefaultrole"

@@ -1,5 +1,4 @@
 import { useInfiniteQuery, useQuery } from 'react-query';
-import axios from 'axios';
 import AxiosInstance from '../components/helpers/AxiosInstance';
 const instance = AxiosInstance();
 // export const useGetJobPosition = (currentJobPage) => {
@@ -75,7 +74,7 @@ export const useGetDepartment = () => {
   return useInfiniteQuery(
     'department',
     async ({ pageParam = 1 }) => {
-      const { data } = await instance.post('/department/DropDownData', {
+      const { data } = await instance.post('/department/GetAllData', {
         pageSize: 10,
         pageNumber: pageParam,
       });

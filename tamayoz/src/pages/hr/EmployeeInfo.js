@@ -54,7 +54,7 @@ const currencies = [
   { label: 'Trainer', id: 2 },
   { label: 'Consultant', id: 3 },
 ];
-export default function EmployeeInfo() {
+export default function EmployeeInfo({ onFileChange }) {
   const [jobPositionQuery, setJobPositionQuery] = useState([]);
   const [currentJobPage, setCurrentJobPage] = useState(1);
   const {
@@ -182,6 +182,7 @@ export default function EmployeeInfo() {
   const {
     register,
     formState: { errors },
+    control,
   } = useFormContext();
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -189,6 +190,7 @@ export default function EmployeeInfo() {
     const file = event.target.files[0];
     setImageUrl(URL.createObjectURL(file));
     setSelectedImage(file);
+    onFileChange(file);
   };
 
   const handleDelete = () => {
@@ -211,6 +213,7 @@ export default function EmployeeInfo() {
           <ErrorText>{errors.employeeName?.message}</ErrorText>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               id="autoTags"
               name="tags"
@@ -307,6 +310,7 @@ export default function EmployeeInfo() {
           </Box>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               name="company"
               label={t('form.company')}
@@ -330,6 +334,7 @@ export default function EmployeeInfo() {
         <Box className={styles.formColumn}>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               name="department"
               label={t('form.department')}
@@ -351,6 +356,7 @@ export default function EmployeeInfo() {
           </Box>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               name="manager"
               label={t('form.manager')}
@@ -363,6 +369,7 @@ export default function EmployeeInfo() {
           </Box>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               name="jobPosition"
               label={t('form.job_position')}
@@ -384,6 +391,7 @@ export default function EmployeeInfo() {
           </Box>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               name="degree"
               label={t('form.degree')}
@@ -397,6 +405,7 @@ export default function EmployeeInfo() {
           </Box>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
+              control={control}
               defaultValue={[]}
               name="coach"
               label={t('form.coach')}
@@ -413,12 +422,12 @@ export default function EmployeeInfo() {
                 display: 'flex',
                 justifyContent: 'start',
                 alignItems: 'center',
-                gap: '10px',
+                marginBlock: '10px',
               }}
             >
               <CustomSingleDate
-                name="date"
-                defaultValue={null}
+                name="nextAppraisalDate"
+                defaultValue={''}
                 label={t('form.next_appraisal_date')}
                 width="300px"
                 height="40px"

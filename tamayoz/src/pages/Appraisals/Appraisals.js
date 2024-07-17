@@ -1,5 +1,10 @@
 import React from 'react';
+import OrgChart from '../../components/orgChart/HierarchyChart';
 
 export default function Appraisals() {
-  return <div></div>;
+  return (
+    <div>
+      <OrgChart />
+    </div>
+  );
 }

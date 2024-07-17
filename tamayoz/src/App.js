@@ -29,6 +29,7 @@ import TimeOff from './pages/TimeOff/TimeOff';
 import Employees from './pages/hr/Employees';
 import NewEmployee from './pages/hr/NewEmployee';
 import { NavbarProvider } from './context/NavbarContext';
+import EmployeeDetails from './pages/hr/EmployeeDetails';
 function App() {
   const { i18n } = useTranslation();
   const { language } = i18n;
@@ -81,6 +82,7 @@ function App() {
                 <Route path="/attendances" element={<Attendances />} />
                 <Route path="/time-off" element={<TimeOff />} />
                 <Route path="/employees/" element={<Employees />} />
+                <Route path="/employees/:id" element={<EmployeeDetails />} />
                 <Route
                   path="/employees/new_employee"
                   element={<NewEmployee />}

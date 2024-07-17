@@ -8,6 +8,7 @@ import StyledInputBase from '../../components/utilities/StyledInputBase';
 import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoComplete';
 import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import RelatedUsersModal from '../../components/relatedUsers/RelatedUsersModal';
+import { useFormContext } from 'react-hook-form';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -21,6 +22,11 @@ export default function HrSettings() {
   const handleCloseRelatedUser = () => {
     setOpenRelatedUser(false);
   };
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Box className={styles.privateInfoContainer}>
       {/* =======================Status======================= */}
@@ -31,10 +37,11 @@ export default function HrSettings() {
           <Box className={publicStyles.formColumn}>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 customwidth="100%"
-                id="autostate"
-                name="employeeType"
+                id="autoEmploymentType"
+                name="employeetype"
                 label={t('form.employee_type')}
                 options={addresses}
                 multiple
@@ -43,10 +50,11 @@ export default function HrSettings() {
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
+                control={control}
                 defaultValue={[]}
                 customwidth="100%"
-                id="autousers"
-                name="relatedUsers"
+                id="autoRelatedUsers"
+                name="relatedusers"
                 label={t('form.related_users')}
                 options={addresses}
                 multiple
@@ -69,7 +77,7 @@ export default function HrSettings() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.pin_code')}
-                // {...register('employeeName')}
+                {...register('pincode')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -77,7 +85,7 @@ export default function HrSettings() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.badge_id')}
-                // {...register('employeeName')}
+                {...register('badgeid')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
@@ -109,7 +117,7 @@ export default function HrSettings() {
                 <StyledInputBase
                   type="time"
                   placeholder="Billing Time Target"
-                  // {...register('employeeName')}
+                  {...register('billingtimetarget')}
                 />
                 {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
               </Box>
@@ -137,7 +145,7 @@ export default function HrSettings() {
                   }}
                   placeholder="00:00"
                   startAdornment={<span>$</span>}
-                  // {...register('employeeName')}
+                  {...register('hourlycost')}
                 />
               </Box>
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -146,7 +154,7 @@ export default function HrSettings() {
               <StyledInputBase
                 type="text"
                 placeholder={t('form.fleet_mobility_card')}
-                // {...register('employeeName')}
+                {...register('fleetmobilitycard')}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>

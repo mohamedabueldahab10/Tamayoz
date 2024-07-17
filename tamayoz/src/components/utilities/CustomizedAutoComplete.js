@@ -105,7 +105,7 @@ const Listbox = styled('ul')`
   max-height: 250px;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 2;
+  z-index: 3;
   color: #000;
   & li {
     padding: 5px 12px;
@@ -157,9 +157,10 @@ const CustomizedAutoComplete = ({
   isFetchingNextPage,
   isError,
   error,
+  control,
 }) => {
   const [inputValue, setInputValue] = useState('');
-  const { control, setValue } = useFormContext();
+  const { setValue } = useFormContext();
   const handleAutocompleteChange = (event, newValue) => {
     const valueToSet = newValue
       ? Array.isArray(newValue)
@@ -205,7 +206,7 @@ const CustomizedAutoComplete = ({
         >
           {value.map((option, index) => (
             <Tag
-              label={option.label}
+              label={option.name}
               key={`tag-${option.id}`}
               {...getTagProps({ index })}
             />
