@@ -10,7 +10,7 @@ import DegreeModule from '../../components/degree/DegreeModule';
 export default function Knowledge() {
   return (
     <div>
-      <DegreeModule />
+      <HierarchyChart />
     </div>
   );
 }

@@ -4,12 +4,10 @@ import i18next from 'i18next';
 export default function AxiosInstance() {
   const AuthedUser = JSON.parse(localStorage.getItem('AuthedUser'));
   const { language } = i18next;
-  const baseURL = 'http://168.119.12.58/';
+  const baseURL = 'https://api.crevisoft.org';
   let instance;
-  console.log('authedUser instance', AuthedUser);
   if (AuthedUser) {
     const AccessToken = AuthedUser?.token;
-    console.log('authedUser Acess Token', AccessToken);
     instance = axios.create({
       baseURL,
       headers: {

@@ -1,18 +1,7 @@
 import { useInfiniteQuery, useQuery } from 'react-query';
 import AxiosInstance from '../components/helpers/AxiosInstance';
 const instance = AxiosInstance();
-// export const useGetJobPosition = (currentJobPage) => {
-//   return useQuery(
-//     ['jobPosition', currentJobPage],
-//     async () => {
-//       const { data } = await instance.post('/JobPosition/JobDropdown', {
-//         pageSize: 10,
-//         pageNumber: currentJobPage,
-//       });
-//       return data;
-//     }
-//   );
-// };
+
 export const useGetJobPosition = () => {
   return useInfiniteQuery(
     'jobPosition',
@@ -32,6 +21,14 @@ export const useGetJobPosition = () => {
     }
   );
 };
+
+export function useGetJobById(id) {
+  return useQuery('skillType', async () => {
+    const { data } = await instance.get(`/JobPosition/GetById?id=${id}`);
+    return data;
+  });
+}
+
 export const useGetCompany = () => {
   return useInfiniteQuery(
     'company',

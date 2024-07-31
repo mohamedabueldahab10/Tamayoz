@@ -35,7 +35,6 @@ const MainMenu = () => {
     getAllUsers();
   }, []);
   const instance = AxiosInstance();
-  console.log('instance', instance);
   const getAllUsers = async () => {
     setLoading(true);
     await instance
@@ -45,7 +44,6 @@ const MainMenu = () => {
       })
       .then((res) => {
         setLoading(false);
-        console.log(res.data.data);
         setModules(res.data.data);
       })
       .catch((err) => {

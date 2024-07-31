@@ -68,7 +68,6 @@ const Login = () => {
       setLoading(false);
     }
   }
-  console.log('Error:-', LoginError?.error.message);
   useEffect(() => {
     if (LoginError?.error.message === 'Request failed with status code 400') {
       setSnack(true);

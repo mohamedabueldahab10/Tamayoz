@@ -139,16 +139,8 @@ export default function EmployeeResume() {
     setSkillsResult(data);
     setDisableSkills(true);
     setSkillsLoading(true);
-    //reset();
-    // axios
-    //   .post("https://vsoft.com-eg.net:4041/api/Branches/Add", data)
-    //   .then((res) => {
-    //     setSkillsLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setSnack(true);
-    //   });
   };
+  console.log(skillsResult);
   //   =======================================================================================================
   const [openResume, setOpenResume] = useState(false);
   const handleToggleResume = () => setOpenResume(!openResume);
@@ -580,7 +572,7 @@ export default function EmployeeResume() {
                     </Box>
                   </Box>
                   <Divider />
-                  <Box className={styles.resumeForm}>
+                  <Box className={styles.skillForm}>
                     <Box className={styles.singleRow}>
                       <FormLabel sx={{ mt: '10px' }}>
                         {t('resume.skill_type')}
@@ -612,46 +604,50 @@ export default function EmployeeResume() {
                         isError={isSkillError}
                         error={skillError}
                       />
-                      <CustomizedAutoComplete
-                        defaultValue={[]}
-                        id="autoSkillLevel"
-                        name="skillLevel"
-                        label={t('form.skill_level')}
-                        multiple
-                        errors={skillsErrors}
-                        options={skillLevelQuery}
-                        isOptionEqualToValue={(option, value) =>
-                          option.id === value.id
-                        }
-                        getOptionLabel={(option) => option.name}
-                        handleNextPage={handleNextSkillLevelPage}
-                        fetchNextPage={fetchNextSkillLevelPage}
-                        hasNextPage={hasNextSkillLevelPage}
-                        isFetchingNextPage={isFethcingNextSkillLevelPage}
-                        isLoading={isSkillLevelLoading}
-                        isError={isSkillLevelError}
-                        error={skillLevelError}
-                      />
-                      <Box
-                        sx={{
-                          width: '230px',
-                          display: 'flex',
-                          justifyContent: 'start',
-                          alignItems: 'center',
-                          gap: '10px',
-                        }}
-                      >
-                        <LinearProgress
-                          variant="determinate"
+                      <Box className={styles.skillForm}>
+                        <Box className={styles.singleRow}>
+                          <CustomizedAutoComplete
+                            defaultValue={[]}
+                            id="autoSkillLevel"
+                            name="skillLevel"
+                            label={t('form.skill_level')}
+                            multiple
+                            errors={skillsErrors}
+                            options={skillLevelQuery}
+                            isOptionEqualToValue={(option, value) =>
+                              option.id === value.id
+                            }
+                            getOptionLabel={(option) => option.name}
+                            handleNextPage={handleNextSkillLevelPage}
+                            fetchNextPage={fetchNextSkillLevelPage}
+                            hasNextPage={hasNextSkillLevelPage}
+                            isFetchingNextPage={isFethcingNextSkillLevelPage}
+                            isLoading={isSkillLevelLoading}
+                            isError={isSkillLevelError}
+                            error={skillLevelError}
+                          />
+                        </Box>
+                        <Box
                           sx={{
-                            width: '200px',
-                            height: '15px',
-                            color: 'var(--primary-color)',
-                            borderRadius: '2px',
+                            width: '230px',
+                            display: 'flex',
+                            justifyContent: 'start',
+                            alignItems: 'center',
+                            gap: '10px',
                           }}
-                          value={20}
-                        />
-                        <Typography> 20%</Typography>
+                        >
+                          <LinearProgress
+                            variant="determinate"
+                            sx={{
+                              width: '200px',
+                              height: '15px',
+                              color: 'var(--primary-color)',
+                              borderRadius: '2px',
+                            }}
+                            value={20}
+                          />
+                          <Typography> 20%</Typography>
+                        </Box>
                       </Box>
                     </Box>
                   </Box>

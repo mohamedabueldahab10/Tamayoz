@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import { useFormContext, Controller } from 'react-hook-form';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { format, parse } from 'date-fns';
 const CustomDatePickerWrapper = styled('div')(({ width, height }) => ({
   '& .MuiInputBase-root': {
     width: width || '300px',
@@ -37,14 +38,16 @@ const CustomTextField = styled(TextField)({
 const CustomSingleDate = forwardRef(
   ({ name, defaultValue, rules, width, height, label, ...props }, ref) => {
     const { control } = useFormContext();
-
+    const parseDate = (value) =>
+      value ? parse(value, 'MM/dd/yyyy', new Date()) : null;
+    const formatDate = (date) => (date ? format(date, 'MM/dd/yyyy') : '');
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Controller
           name={name}
           control={control}
-          defaultValue={defaultValue}
           rules={rules}
+          // defaultValue={parseDate(defaultValue)}
           render={({ field }) => (
             <CustomDatePickerWrapper width={width} height={height}>
               <DatePicker
@@ -52,14 +55,15 @@ const CustomSingleDate = forwardRef(
                 {...props}
                 ref={ref}
                 label={label}
-                renderInput={(params) => (
+                value={field.value ? parseDate(field.value) : null}
+                onChange={(date) => field.onChange(formatDate(date))}
+                TextField={(params) => (
                   <CustomTextField
                     {...params}
                     label={label}
                     placeholder={label}
                   />
                 )}
-                onChange={(date) => field.onChange(date)}
               />
             </CustomDatePickerWrapper>
           )}

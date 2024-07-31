@@ -6,7 +6,7 @@ export const handleUserLogin = createAsyncThunk(
   async (userObject) => {
     const { userName, Password } = userObject;
     const response = await axios.post(
-      'http://168.119.12.58/users/authenticate',
+      'https://api.crevisoft.org/users/authenticate',
       {
         userName,
         Password,
@@ -64,7 +64,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(handleUserLogin.fulfilled, (state, action) => {
-        console.log(action);
         state.isLoading = false;
         state.AuthedUser = action.payload;
         state.isLoggedIn = true;

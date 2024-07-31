@@ -416,7 +416,7 @@ export default function EmployeeInfo({ onFileChange }) {
               errors={errors}
             />
           </Box>
-          <Box className={styles.dateContainer}>
+          {/* <Box className={styles.dateContainer}>
             <Box
               sx={{
                 display: 'flex',
@@ -427,13 +427,13 @@ export default function EmployeeInfo({ onFileChange }) {
             >
               <CustomSingleDate
                 name="nextAppraisalDate"
-                defaultValue={''}
+                // defaultValue={Date()}
                 label={t('form.next_appraisal_date')}
                 width="300px"
                 height="40px"
               />
             </Box>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
       <CompanyModal open={companyOpen} handleClose={handleCloseCompany} />

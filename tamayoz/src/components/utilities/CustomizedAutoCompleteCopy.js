@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useAutocomplete } from '@mui/base/useAutocomplete';
 import CheckIcon from '@mui/icons-material/Check';
@@ -159,8 +159,14 @@ const CustomizedAutoComplete = ({
   error,
   control,
 }) => {
-  const [inputValue, setInputValue] = useState('');
   const { setValue } = useFormContext();
+  const [inputValue, setInputValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(defaultValue);
+  useEffect(() => {
+    // When defaultValue changes, update the local state
+    setSelectedValue(defaultValue);
+  }, [defaultValue]);
+
   const handleAutocompleteChange = (event, newValue) => {
     const valueToSet = newValue
       ? Array.isArray(newValue)
@@ -168,10 +174,13 @@ const CustomizedAutoComplete = ({
         : [newValue]
       : [];
     setValue(name, valueToSet, { shouldValidate: true });
+    setSelectedValue(valueToSet);
   };
+
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
   };
+
   const handleCreationOption = () => {
     setOpen(true);
   };
@@ -191,11 +200,13 @@ const CustomizedAutoComplete = ({
     multiple,
     options,
     getOptionLabel,
-    isOptionEqualToValue: (option, value) => option.id === value.id,
+    isOptionEqualToValue,
     onChange: handleAutocompleteChange,
     inputValue,
     onInputChange: handleInputChange,
+    value: selectedValue, // Use selectedValue to manage the selected options
   });
+
   return (
     <>
       <Box sx={{ minWidth }}>
@@ -204,7 +215,7 @@ const CustomizedAutoComplete = ({
           className={focused ? 'focused' : ''}
           minWidth={minWidth}
         >
-          {value.map((option, index) => (
+          {selectedValue.map((option, index) => (
             <Tag
               label={option.name}
               key={`tag-${option.id}`}
@@ -225,7 +236,7 @@ const CustomizedAutoComplete = ({
                   },
                 }}
                 {...field}
-                value={value}
+                value={inputValue}
                 inputProps={{ ...getInputProps(), placeholder: label }}
               />
             )}
@@ -269,7 +280,6 @@ const CustomizedAutoComplete = ({
                 : inputValue && (
                     <NoRecords>
                       <span>No records</span>
-                      {/* <AddIcon fontSize="small" /> */}
                     </NoRecords>
                   )}
             </Listbox>
@@ -299,6 +309,7 @@ CustomizedAutoComplete.propTypes = {
   isFetchingNextPage: PropTypes.bool,
   isError: PropTypes.bool,
   error: PropTypes.object,
+  control: PropTypes.object.isRequired,
 };
 
 CustomizedAutoComplete.defaultProps = {

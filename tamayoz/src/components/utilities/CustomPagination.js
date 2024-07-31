@@ -1,13 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowIcon } from '../icons';
 import styles from '../../assets/css/modules/layout/Dashboard.module.css';
 
-export default function CustomPagination({ pagination, onPageChange }) {
+export default function CustomPagination({
+  page,
+  pageCount,
+  hasPrevPage,
+  hasNextPage,
+  onPageChange,
+}) {
   const { i18n } = useTranslation();
   const { language } = i18n;
-  if (!pagination) return null;
+  const handlePrevPage = () => {
+    if (hasPrevPage) {
+      onPageChange(page - 1);
+    }
+  };
 
+  const handleNextPage = () => {
+    if (hasNextPage) {
+      onPageChange(page + 1);
+    }
+  };
+  console.log(
+    'page:' + page,
+    'pageCount:' + pageCount,
+    hasPrevPage,
+    hasNextPage,
+    onPageChange
+  );
+  useEffect(() => {
+    console.log('Current Page:', page);
+  }, [page]);
   return (
     <div
       style={{
@@ -22,36 +47,23 @@ export default function CustomPagination({ pagination, onPageChange }) {
           transform: language === 'en' ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
         className={styles.arrowContainer}
-        onClick={() => onPageChange(pagination.page - 1)}
+        onClick={handlePrevPage}
       >
-        <ArrowIcon
-          color="var(--secondary-color)"
-          disabled={!pagination.hasPrevPage}
-        />
+        <ArrowIcon color="var(--secondary-color)" disabled={!hasPrevPage} />
       </div>
-      {language === 'ar' ? (
-        <span>
-          {pagination.pageCount} - {pagination.page + 1}
-        </span>
-      ) : (
-        <span>
-          {pagination.page + 1} - {pagination.pageCount}
-        </span>
-      )}
+      <span>
+        {language === 'ar'
+          ? `${pageCount} - ${page}`
+          : `${page} - ${pageCount}`}
+      </span>
       <div
         style={{
           transform: language === 'en' ? 'rotateY(0deg)' : 'rotateY(180deg)',
         }}
         className={styles.arrowContainer}
-        onClick={() => {
-          console.log('clicked');
-          onPageChange(pagination.page + 1);
-        }}
+        onClick={handleNextPage}
       >
-        <ArrowIcon
-          color="var(--primary-color)"
-          disabled={!pagination.hasNextPage}
-        />
+        <ArrowIcon color="var(--primary-color)" disabled={!hasNextPage} />
       </div>
     </div>
   );

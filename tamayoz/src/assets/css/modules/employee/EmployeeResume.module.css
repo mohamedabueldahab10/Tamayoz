@@ -51,6 +51,15 @@
 }
 .resumeForm {
   display: flex;
+  justify-content: start;
+  align-items: start;
+  margin: 5px;
+  width: 100%;
+  flex-wrap: wrap;
+  column-gap: 15px;
+}
+.skillForm {
+  display: flex;
   justify-content: space-between;
   align-items: start;
   margin: 5px;

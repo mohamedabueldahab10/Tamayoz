@@ -10,17 +10,15 @@ import {
   ListItemText,
   IconButton,
   Menu,
-  MenuItem,
   ListItemButton,
   ListItemIcon,
-  MenuList,
   Divider,
   Typography,
-  CircularProgress,
+  Pagination,
 } from '@mui/material';
+import Loading from '../../components/Loading';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
-import CustomPagination from '../../components/utilities/CustomPagination';
 import SearchBar from '../../components/SearchBar';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
@@ -35,28 +33,9 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import styled from 'styled-components';
 import NavbarContext from '../../context/NavbarContext';
-import { useQuery } from 'react-query';
 import AxiosInstance from '../../components/helpers/AxiosInstance';
+import NotFound from '../../components/NotFound';
 const instance = AxiosInstance();
-
-const cellStatusActive = {
-  width: '70px',
-  borderRadius: '5px',
-  height: '40px',
-  display: 'grid',
-  placeItems: 'center',
-  color: 'var(--secondary-color)',
-  backgroundColor: 'var(--primary-color)',
-};
-const cellStatusPending = {
-  width: '70px',
-  borderRadius: '5px',
-  height: '40px',
-  display: 'grid',
-  placeItems: 'center',
-  color: 'var(--primary-color)',
-  backgroundColor: 'var(--secondary-color)',
-};
 const CustomListItemButton = styled(ListItemButton)({
   display: 'flex',
   justifyContent: 'start',
@@ -67,9 +46,9 @@ const CustomListItemButton = styled(ListItemButton)({
   height: '30px',
   color: 'var(--dark-color)',
   '&:hover': {
-    color: 'var(--primary-color)', // Change text color on hover
+    color: 'var(--primary-color)',
     '& svg': {
-      color: 'var(--primary-color)', // Change icon color on hover
+      color: 'var(--primary-color)',
     },
   },
 });
@@ -89,7 +68,6 @@ export default function Employees() {
     setAnchorEl(null);
   };
   const handleRowClick = (id) => {
-    console.log(id);
     navigate(`/employees/${id}`);
   };
 
@@ -222,52 +200,48 @@ export default function Employees() {
     },
   ];
 
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const fetchData = async ({ page, pageSize }) => {
-    const response = await instance.post(`/Employee/GetAllData`, {
-      params: {
-        page,
-        pageSize,
-      },
-    });
-    return response.data;
-  };
-  const {
-    isLoading,
-    data: employeeData,
-    error,
-  } = useQuery('employeesdatagrid', async () => fetchData({ page, pageSize }), {
-    keepPreviousData: true,
-    refetchOnWindowFocus: false,
-  });
-  const rows = employeeData?.data || [];
-  const totalCount = employeeData?.totalCount || 0;
-  console.log('employeeData: ' + employeeData);
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-  };
+  const [pageNumber, setPageNumber] = useState(1);
   const [pagination, setPagination] = useState({
-    page: 0,
-    pageCount: 10,
-    hasPrevPage: false,
-    hasNextPage: true,
+    page: pageNumber,
+    pageCount: 1,
   });
-  const onPageChange = (page) => {
-    if (page < 0) {
-      page = 0;
+  const [employeeData, setEmployeeData] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const fetchData = async (pageNumber) => {
+    setLoading(true);
+    try {
+      const response = await instance.post(`/Employee/GetAllData`, {
+        pageSize: 10,
+        pageNumber: pageNumber,
+      });
+      setEmployeeData(response.data);
+      setRows(response.data.data);
+      setTotalCount(response.data.totalCount);
+      setPagination({
+        page: pageNumber,
+        pageCount: Math.ceil(response.data.totalCount / 10),
+      });
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
-    page = Math.min(Math.max(page, 0), pagination.pageCount - 1);
-    const newPagination = {
-      ...pagination,
-      page,
-      hasPrevPage: page > 0,
-      hasNextPage: page < pagination.pageCount - 1,
-    };
-    setPagination(newPagination);
+  };
+
+  useEffect(() => {
+    fetchData(pageNumber);
+  }, [pageNumber]);
+
+  const handlePageChange = (event, newPage) => {
+    setPageNumber(newPage);
   };
   const [view, setView] = useState(
-    () => localStorage.getItem('view') || 'kanban'
+    () => localStorage.getItem('view') || 'list'
   );
 
   const handleViewChange = (newView) => {
@@ -329,14 +303,18 @@ export default function Employees() {
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              alignItems: 'end',
-              gap: '10px',
+              alignItems: 'center',
+              gap: '15px',
             }}
           >
             <Box>
-              <CustomPagination
-                pagination={pagination}
-                onPageChange={onPageChange}
+              <Pagination
+                count={pagination.pageCount}
+                page={pageNumber}
+                defaultPage={1}
+                siblingCount={0}
+                onChange={handlePageChange}
+                sx={{ mb: '5px' }}
               />
             </Box>
             <div>
@@ -375,10 +353,20 @@ export default function Employees() {
     ]);
 
     return () => setAdditionalNavbarItems([]);
-  }, [setAdditionalNavbarItems]);
+  }, [
+    navigate,
+    pageNumber,
+    pagination.pageCount,
+    setAdditionalNavbarItems,
+    view,
+  ]);
   return (
     <div>
-      {view === 'list' && (
+      {error ? (
+        <NotFound />
+      ) : loading ? (
+        <Loading />
+      ) : view === 'list' ? (
         <>
           <div style={{ height: 450, width: '100%' }}>
             <DataGrid
@@ -395,28 +383,18 @@ export default function Employees() {
                 },
                 cursor: 'pointer',
               }}
+              // rowsPerPageOptions={[10]}
+              // page={pageNumber - 1}
               rows={rows}
               columns={columns}
-              page={page}
-              pageSize={pageSize}
+              pageSize={10}
               rowCount={totalCount}
               paginationMode="server"
-              loading={isLoading}
+              loading={loading}
               onRowClick={(params) => handleRowClick(params.id)}
-              components={{
-                Pagination: () => (
-                  <CustomPagination
-                    pagination={{
-                      page,
-                      pageCount: Math.ceil(totalCount / pageSize),
-                      hasPrevPage: page > 0,
-                      hasNextPage: page < Math.ceil(totalCount / pageSize) - 1,
-                    }}
-                    onPageChange={handlePageChange}
-                  />
-                ),
-              }}
+              onPageChange={handlePageChange}
               checkboxSelection
+              autoHeight
               disableRowSelectionOnClick
               getRowId={(rowData) => {
                 return rowData.id;
@@ -424,8 +402,7 @@ export default function Employees() {
             />
           </div>
         </>
-      )}
-      {view === 'kanban' && (
+      ) : (
         <List
           sx={{
             width: '100%',
@@ -435,34 +412,34 @@ export default function Employees() {
             gap: '10px',
           }}
         >
-          {rows?.map((row) => (
-            <ListItem
-              sx={{
-                width: '48%',
-                minWidth: '250px',
-                maxWidth: '600px',
-                border: '1px solid var(--secondary-color)',
-                cursor: 'pointer',
-              }}
-              key={row.id}
-              onClick={() => handleRowClick(row.id)}
-              o
-            >
-              {columns.slice(0, -1).map((column) => (
-                <ListItemText
-                  key={column.field}
-                  primary={column.headerName}
-                  secondary={row[column.field] || '-'}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                  }}
-                />
-              ))}
-            </ListItem>
-          ))}
+          {rows &&
+            rows?.map((row) => (
+              <ListItem
+                sx={{
+                  width: '49.5%',
+                  minWidth: '250px',
+                  border: '1px solid var(--secondary-color)',
+                  cursor: 'pointer',
+                }}
+                key={row.id}
+                onClick={() => handleRowClick(row.id)}
+                o
+              >
+                {columns.slice(0, -1).map((column) => (
+                  <ListItemText
+                    key={column.field}
+                    primary={column.headerName}
+                    secondary={row[column.field] || '-'}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                    }}
+                  />
+                ))}
+              </ListItem>
+            ))}
         </List>
       )}
     </div>

@@ -447,18 +447,30 @@ export default function PrivateInfo() {
               />
             </Box>
             <Box className={publicStyles.singleRow}>
-              <StyledInputBase
-                type="text"
-                placeholder={t('form.study_field')}
-                {...register('stydyfield')}
+              <CustomizedAutoComplete
+                control={control}
+                defaultValue={[]}
+                customwidth="100%"
+                id="autostydyfield"
+                name="stydyfield"
+                label={t('form.study_field')}
+                options={addresses}
+                multiple
+                //   errors={errors}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
             <Box className={publicStyles.singleRow}>
-              <StyledInputBase
-                type="text"
-                placeholder={t('form.school')}
-                {...register('school')}
+              <CustomizedAutoComplete
+                control={control}
+                defaultValue={[]}
+                customwidth="100%"
+                id="autoschool"
+                name="school"
+                label={t('form.school')}
+                options={addresses}
+                multiple
+                //   errors={errors}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
             </Box>
