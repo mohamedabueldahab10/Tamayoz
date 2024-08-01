@@ -462,7 +462,7 @@ const Listbox = styled('ul')`
 const CustomizedAutoComplete = ({
   options,
   defaultValue,
-  multiple,
+  multiple = false,
   id,
   getOptionLabel,
   label,
@@ -483,13 +483,6 @@ const CustomizedAutoComplete = ({
 
   // Initialize state with empty array or empty string
   const [inputValue, setInputValue] = useState('');
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
-
-  useEffect(() => {
-    // When defaultValue changes, update the local state
-    setSelectedValue(defaultValue);
-  }, [defaultValue]);
-
   const handleAutocompleteChange = (event, newValue) => {
     const valueToSet = newValue
       ? Array.isArray(newValue)
@@ -497,7 +490,6 @@ const CustomizedAutoComplete = ({
         : [newValue]
       : [];
     setValue(name, valueToSet, { shouldValidate: true });
-    setSelectedValue(valueToSet);
   };
 
   const handleInputChange = (event, newInputValue) => {
@@ -519,19 +511,16 @@ const CustomizedAutoComplete = ({
     setAnchorEl,
   } = useAutocomplete({
     id,
-    defaultValue: selectedValue,
+    defaultValue,
     multiple,
     options,
-    getOptionLabel,
+    getOptionLabel: (option) => (option ? option.name || '' : ''),
     isOptionEqualToValue,
     onChange: handleAutocompleteChange,
     inputValue,
     onInputChange: handleInputChange,
-    value: selectedValue, // Use selectedValue to manage the selected options
   });
-  console.log('selectedValue', name + selectedValue);
-  console.log('inputValue', name + inputValue);
-
+  console.log(name, value);
   return (
     <>
       <Box sx={{ minWidth }}>
@@ -540,13 +529,27 @@ const CustomizedAutoComplete = ({
           className={focused ? 'focused' : ''}
           minWidth={minWidth}
         >
-          {selectedValue.map((option, index) => (
+          {multiple ? (
+            value.map((option, index) => (
+              <Tag
+                label={option.name}
+                key={`tag-${option.id}`}
+                {...getTagProps({ index })}
+              />
+            ))
+          ) : value.name ? (
             <Tag
-              label={option.name}
-              key={`tag-${option.id}`}
-              {...getTagProps({ index })}
+              label={value.name}
+              onDelete={() => setValue(name, null, { shouldValidate: true })}
             />
-          ))}
+          ) : (
+            value[0].name && (
+              <Tag
+                label={value[0].name}
+                onDelete={() => setValue(name, null, { shouldValidate: true })}
+              />
+            )
+          )}
           <Controller
             name={name}
             control={control}
@@ -561,7 +564,7 @@ const CustomizedAutoComplete = ({
                   },
                 }}
                 {...field}
-                value={inputValue}
+                value={value}
                 inputProps={{ ...getInputProps(), placeholder: label }}
               />
             )}
@@ -643,7 +646,7 @@ CustomizedAutoComplete.defaultProps = {
   multiple: false,
   id: 'customized-autocomplete',
   minWidth: '300px',
-  getOptionLabel: (option) => option.label,
+  getOptionLabel: (option) => (option ? option.label || '' : ''),
   label: '',
   name: '',
   errors: {},

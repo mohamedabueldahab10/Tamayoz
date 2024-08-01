@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import NewEmployee from './NewEmployee';
 import { useQuery } from 'react-query';
 import AxiosInstance from '../../components/helpers/AxiosInstance';
 import Loading from '../../components/Loading';
 import NotFound from '../../components/NotFound';
+import UpdateEmployee from './EditEmployee/UpdateEmployee';
 export default function EmployeeDetails() {
   const instance = AxiosInstance();
   const { id } = useParams();
@@ -25,7 +25,7 @@ export default function EmployeeDetails() {
       ) : error ? (
         <NotFound />
       ) : (
-        <NewEmployee initialData={initialData} />
+        <UpdateEmployee initialData={initialData} />
       )}
     </>
   );
