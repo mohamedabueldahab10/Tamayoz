@@ -84,160 +84,12 @@ export default function UpdateEmployee({ initialData }) {
     };
   }, [location.pathname]);
   const { t } = useTranslation('modules');
-  const schema = yup.object().shape({
-    // employeeName: yup.string().required(t('validation.employee_name')),
-    // tags: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.tags')),
-    //       id: yup.number().required(t('validation.tags')),
-    //     })
-    //   )
-    //   .min(1, t('validation.tags'))
-    //   .required(t('validation.tags')),
-    // workMobile: yup.string().required(t('validation.work_mobile')),
-    // department: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.department')),
-    //       id: yup.number().required(t('validation.department')),
-    //     })
-    //   )
-    //   .min(1, t('validation.department'))
-    //   .required(t('validation.department')),
-    // workPhone: yup.string().required(t('validation.work_phone')),
-    // jobPosition: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.job_position')),
-    //       id: yup.number().required(t('validation.job_position')),
-    //     })
-    //   )
-    //   .min(1, t('validation.job_position'))
-    //   .required(t('validation.job_position')),
-    // workMail: yup.string().required(t('validation.work_mail')),
-    // manager: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.manager')),
-    //       id: yup.number().required(t('validation.manager')),
-    //     })
-    //   )
-    //   .min(1, t('validation.manager'))
-    //   .required(t('validation.manager')),
-    // company: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.company')),
-    //       id: yup.number().required(t('validation.company')),
-    //     })
-    //   )
-    //   .min(1, t('validation.company'))
-    //   .required(t('validation.company')),
-    // coach: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.coach')),
-    //       id: yup.number().required(t('validation.coach')),
-    //     })
-    //   )
-    //   .min(1, t('validation.coach'))
-    //   .required(t('validation.coach')),
-    // degree: yup
-    //   .array()
-    //   .of(
-    //     yup.object().shape({
-    //       label: yup.string().required(t('validation.degree')),
-    //       id: yup.number().required(t('validation.degree')),
-    //     })
-    //   )
-    //   .min(1, t('validation.degree'))
-    //   .required(t('validation.degree')),
-    // date: yup.date().required(t('validation.date')),
-  });
+  const schema = yup.object().shape({});
 
   const methods = useForm({
     shouldUnregister: true,
     mode: 'onTouched',
     resolver: yupResolver(schema),
-    defaultValues: {
-      //   employeeName: initialData?.employeeData.firstname,
-      //   workMobile: initialData?.employeeData.workMobile,
-      //   workPhone: initialData?.employeeData.workPhone,
-      //   degree: [],
-      //   workMail: initialData?.employeeData.workEmail,
-      //   // nextAppraisalDate: format(parseISO('YYYY-MM-DD'), 'MM/dd/yyyy'),
-      //   tags: [],
-      //   department: initialData?.employeeData.department,
-      jobPosition: initialData?.employeeData.jobPosition,
-      //   manager: initialData?.employeeData.manager,
-      //   company: initialData?.employeeData.company,
-      //   coach: [],
-      //   // =========work info===========
-      //   workaddress: [],
-      //   expense: [],
-      //   timeoff: [],
-      //   timesheet: [],
-      //   attendance: [],
-      //   monday: [],
-      //   tuesday: [],
-      //   wednesday: [],
-      //   thursday: [],
-      //   friday: [],
-      //   saturday: [],
-      //   sunday: [],
-      //   workinghours: [],
-      //   timezone: [],
-      //   roles: [],
-      //   defaultrole: [],
-      //   // =========private info===========
-      //   street: initialData?.employeeData.privateAddress,
-      //   street2: '',
-      //   city: initialData?.employeeData.cities,
-      //   state: initialData?.employeeData.region,
-      //   zip: '',
-      //   country: initialData?.employeeData.country,
-      //   privatemail: initialData?.employeeData.privateEmail,
-      //   privatephone: initialData?.employeeData.privatePhone,
-      //   privatemobile: '',
-      //   bankaccount: [],
-      //   language: initialData?.employeeData.language,
-      //   workdistance: '',
-      //   privatecarplate: initialData?.employeeData.carPlate,
-      //   maritalStatus: [],
-      //   dependenciesnumber: initialData?.employeeData.numOfChildren,
-      //   contactname: initialData?.employeeData.emergencyContact.name,
-      //   contactnumber: initialData?.employeeData.emergencyContact.phone,
-      //   certificateLevel: [],
-      //   stydyfield: initialData?.employeeData.fieldOfStudy,
-      //   school: initialData?.employeeData.school,
-      //   visanumber: '',
-      //   workpermitnumber: '',
-      //   visaexpirationdate: '',
-      //   workpermitexpirationdate: '',
-      //   workpermit: '',
-      //   nationality: initialData?.employeeData.nationality,
-      //   idnumber: initialData?.employeeData.identificationNum,
-      //   ssnnumber: '',
-      //   gender: initialData?.employeeData.gender,
-      //   birthdate: initialData?.employeeData.dateOfBirth,
-      //   birthplace: initialData?.employeeData.placeOfBirth,
-      //   nonresident: false,
-      //   // =========hr settings===========
-      //   employeetype: initialData?.employeeData.employeeType,
-      //   relatedusers: initialData?.employeeData.relatedUser,
-      //   pincode: '',
-      //   badgeid: '',
-      //   billingtimetarget: '',
-      //   hourlycost: '',
-      //   fleetmobilitycard: '',
-    },
   });
   const { isDirty } = methods.formState;
   console.log('is any field Change' + isDirty);
@@ -258,7 +110,7 @@ export default function UpdateEmployee({ initialData }) {
       methods.setValue('company', initialData.employeeData.company);
       methods.setValue('department', initialData.department);
       methods.setValue('manager', initialData.manager);
-      //   methods.setValue('jobPosition', initialData.jobPosition);
+      methods.setValue('jobPosition', initialData.jobPosition);
       methods.setValue('degree', []);
       methods.setValue('coach', []);
       // =================Work Information =================
@@ -478,7 +330,10 @@ export default function UpdateEmployee({ initialData }) {
           style={{ width: '100%' }}
           onSubmit={methods.handleSubmit(handleFormSubmit)}
         >
-          <EmployeeInfo onFileChange={handleFileChange} />
+          <EmployeeInfo
+            initialData={initialData}
+            onFileChange={handleFileChange}
+          />
         </form>
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -519,17 +374,17 @@ export default function UpdateEmployee({ initialData }) {
           <CustomTabPanel value={tabValue} index={3} />
           <div style={{ display: tabValue === 0 ? 'block' : 'none' }}>
             <Box className={styles.nameInfo}>
-              <EmployeeResume />
+              <EmployeeResume initialData={initialData} />
             </Box>
           </div>
           <div style={{ display: tabValue === 1 ? 'block' : 'none' }}>
-            <WorkInformation />
+            <WorkInformation initialData={initialData} />
           </div>
           <div style={{ display: tabValue === 2 ? 'block' : 'none' }}>
-            <PrivateInfo />
+            <PrivateInfo initialData={initialData} />
           </div>
           <div style={{ display: tabValue === 3 ? 'block' : 'none' }}>
-            <HrSettings />
+            <HrSettings initialData={initialData} />
           </div>
         </Box>
       </FormProvider>

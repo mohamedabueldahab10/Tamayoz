@@ -24,7 +24,7 @@ const addresses = [
   { label: 'Programming', id: 4 },
   { label: 'Soft Skills', id: 5 },
 ];
-export default function PrivateInfo() {
+export default function PrivateInfo({ initialData }) {
   const [bankAccOpen, setBankAccOpen] = useState(false);
   const handleCloseBankAcc = () => setBankAccOpen(false);
 
@@ -210,11 +210,11 @@ export default function PrivateInfo() {
               <CustomizedAutoComplete
                 control={control}
                 minWidth="180px"
-                defaultValue={[]}
+                defaultValue={initialData?.employeeData?.cities}
                 id="autostate"
                 name="city"
                 label={t('form.city')}
-                multiple
+                multiple={false}
                 options={cityQuery}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 getOptionLabel={(option) => option.name}
@@ -234,11 +234,11 @@ export default function PrivateInfo() {
               <CustomizedAutoComplete
                 control={control}
                 minWidth="180px"
-                defaultValue={[]}
+                defaultValue={initialData?.employeeData?.region}
                 id="autostate"
                 name="state"
                 label={t('form.state')}
-                multiple
+                multiple={false}
                 options={stateQuery}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 getOptionLabel={(option) => option.name}
@@ -268,11 +268,11 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={initialData?.employeeData?.country}
                 id="autocountry"
                 name="country"
                 label={t('form.country')}
-                multiple
+                multipl={false}
                 options={countryQuery}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 getOptionLabel={(option) => option.name}
@@ -320,12 +320,12 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 id="autobankaccount"
                 name="bankaccount"
                 label={t('form.bank_account')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
                 setOpen={() => setBankAccOpen(true)}
               />
@@ -333,11 +333,11 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={initialData?.employeeData?.language}
                 id="autolanguage"
                 name="language"
                 label={t('form.lang')}
-                multiple
+                multiple={false}
                 options={langQuery}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
                 getOptionLabel={(option) => option.name}
@@ -381,13 +381,13 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="automarital"
                 name="maritalStatus"
                 label={t('form.marital_status')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -436,26 +436,26 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autocertificate"
                 name="certificateLevel"
                 label={t('form.certificate_level')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autostydyfield"
                 name="stydyfield"
                 label={t('form.study_field')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -463,13 +463,13 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoschool"
                 name="school"
                 label={t('form.school')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
               {/* <ErrorText>{errors.employeeName?.message}</ErrorText> */}
@@ -570,13 +570,13 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={initialData?.employeeData?.nationality}
                 customwidth="100%"
                 id="autonationality"
                 name="nationality"
                 label={t('form.nationality')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
                 //   errors={errors}
               />
@@ -600,13 +600,13 @@ export default function PrivateInfo() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autogender"
                 name="gender"
                 label={t('form.gender')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>

@@ -38,26 +38,26 @@ export default function HrSettings() {
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoEmploymentType"
                 name="employeetype"
                 label={t('form.employee_type')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={publicStyles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoRelatedUsers"
                 name="relatedusers"
                 label={t('form.related_users')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
                 setOpen={() => setOpenRelatedUser(true)}
               />

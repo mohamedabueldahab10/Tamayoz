@@ -5,7 +5,7 @@ import styles from '../../../assets/css/modules/employee/WorkInfo.module.css';
 import publicStyles from '../../../assets/css/modules/employee/NewEmployee.module.css';
 import { Box, Divider } from '@mui/material';
 import CustomizedAutoComplete from '../../../components/utilities/CustomizedAutoComplete';
-import { initialData } from '../../../components/orgChart/HierarchyChart';
+import { initialHierarchyData } from '../../../components/orgChart/HierarchyChart';
 import CustomTreeView from '../../../components/orgChart/CustomTreeView';
 import { useFormContext } from 'react-hook-form';
 
@@ -41,7 +41,7 @@ const addresses = [
   { label: 'Programming', id: 4 },
   { label: 'Soft Skills', id: 5 },
 ];
-export default function WorkInformation() {
+export default function WorkInformation({ initialData }) {
   const { t } = useTranslation('modules');
   const {
     register,
@@ -59,13 +59,13 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={initialData?.employeeData?.company}
                 customwidth="100%"
                 id="autoaddress"
                 name="workaddress"
                 label={t('form.address')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
               <Box className={styles.addressInfo}>
@@ -84,52 +84,52 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoexpense"
                 name="expense"
                 label={t('form.expense')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autotimeoff"
                 name="timeoff"
                 label={t('form.timeoff')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autotimesheet"
                 name="timesheet"
                 label={t('form.timesheet')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoattendance"
                 name="attendance"
                 label={t('form.attendance')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -147,91 +147,91 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="automonday"
                 name="monday"
                 label={t('form.monday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autotuesday"
                 name="tuesday"
                 label={t('form.tuesday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autowednesday"
                 name="wednesday"
                 label={t('form.wednesday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autothursday"
                 name="thursday"
                 label={t('form.thursday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autofriday"
                 name="friday"
                 label={t('form.friday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autosaturday"
                 name="saturday"
                 label={t('form.saturday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autosunday"
                 name="sunday"
                 label={t('form.sunday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -245,26 +245,26 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoworkinghours"
                 name="workinghours"
                 label={t('form.workinghours')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autotimezone"
                 name="timezone"
                 label={t('form.timezone')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -278,33 +278,33 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autoroles"
                 name="roles"
                 label={t('form.roles')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                defaultValue={{}}
                 customwidth="100%"
                 id="autodefaultrole"
                 name="defaultrole"
                 label={t('form.defaultrole')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
           </Box>
         </Box>
       </Box>
-      {initialData.lenght > 0 ? (
+      {initialHierarchyData.length > 0 ? (
         <Box className={styles.orgChart}>
           <TypographyHeader>{t('work_info.org_chart')}</TypographyHeader>
           <Divider sx={{ marginBottom: '10px' }} />

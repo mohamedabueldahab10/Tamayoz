@@ -16,6 +16,8 @@ import CompanyModal from '../../../components/company/CompanyModal';
 import JobPositionModal from '../../../components/jobPosition/JobPositionModal';
 import DegreeModal from '../../../components/degree/DegreeModal';
 import { useGetCompany, useGetJobPosition } from '../../../queries/HrQueries';
+import Loading from '../../../components/Loading';
+import AutoComplete from '../../../components/utilities/AutoComplete';
 const ImageContainer = styled(Box)`
   display: grid;
   place-items: center;
@@ -54,7 +56,9 @@ const currencies = [
   { label: 'Trainer', id: 2 },
   { label: 'Consultant', id: 3 },
 ];
-export default function EmployeeInfo({ onFileChange }) {
+export default function EmployeeInfo({ onFileChange, initialData }) {
+  console.log('initialData', initialData);
+  const [loading, setLoading] = useState(true);
   const [jobPositionQuery, setJobPositionQuery] = useState([]);
   const [currentJobPage, setCurrentJobPage] = useState(1);
   const {
@@ -199,224 +203,244 @@ export default function EmployeeInfo({ onFileChange }) {
       setImageUrl(null);
     }
   };
+  useEffect(() => {
+    setLoading(false);
+  }, [initialData]);
+
   return (
     <>
-      <Box className={styles.nameInfo}>
-        <Box sx={{ width: '70%' }}>
-          <StyledInputBase
-            maxwidth="600px"
-            sx={{ width: '100%', display: 'block' }}
-            type="text"
-            placeholder={t('form.employee_name')}
-            {...register('employeeName')}
-          />
-          <ErrorText>{errors.employeeName?.message}</ErrorText>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[]}
-              id="autoTags"
-              name="tags"
-              label={t('form.tags')}
-              options={currencies}
-              multiple
-              errors={errors}
-            />
-          </Box>
-        </Box>
-        <Box sx={{ width: 'fit-content' }}>
-          <div>
-            {!selectedImage ? (
-              <>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  style={{ display: 'none' }}
-                  id="image-upload-input"
-                  // {...register('employeeImage')}
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Box className={styles.nameInfo}>
+            <Box sx={{ width: '70%' }}>
+              <StyledInputBase
+                maxwidth="600px"
+                sx={{ width: '100%', display: 'block' }}
+                type="text"
+                placeholder={t('form.employee_name')}
+                {...register('employeeName')}
+              />
+              <ErrorText>{errors.employeeName?.message}</ErrorText>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={initialData.employeeData.tags}
+                  id="autoTags"
+                  name="tags"
+                  label={t('form.tags')}
+                  options={currencies}
+                  multiple={true}
+                  errors={errors}
                 />
-                <label htmlFor="image-upload-input">
-                  <ImageContainer>
-                    <AddAPhotoIcon
-                      sx={{ fontSize: '80px', color: 'var(--primary-color)' }}
+              </Box>
+            </Box>
+            <Box sx={{ width: 'fit-content' }}>
+              <div>
+                {!selectedImage ? (
+                  <>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      style={{ display: 'none' }}
+                      id="image-upload-input"
+                      // {...register('employeeImage')}
                     />
-                  </ImageContainer>
-                </label>
-              </>
-            ) : (
-              <>
-                <ImageContainer>
-                  <img
-                    src={imageUrl}
-                    alt="Selected"
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '95px',
-                    }}
-                  />
-                  <Box onClick={handleDelete} sx={deleteImage}>
-                    <Tooltip title="Delete">
-                      <DeleteForeverIcon
-                        sx={{ fontSize: '25px', color: 'var(--primary-color)' }}
+                    <label htmlFor="image-upload-input">
+                      <ImageContainer>
+                        <AddAPhotoIcon
+                          sx={{
+                            fontSize: '80px',
+                            color: 'var(--primary-color)',
+                          }}
+                        />
+                      </ImageContainer>
+                    </label>
+                  </>
+                ) : (
+                  <>
+                    <ImageContainer>
+                      <img
+                        src={imageUrl}
+                        alt="Selected"
+                        style={{
+                          maxWidth: '100%',
+                          maxHeight: '95px',
+                        }}
                       />
-                    </Tooltip>
-                  </Box>
-                </ImageContainer>
-              </>
-            )}
-          </div>
-        </Box>
-      </Box>
-      <Box className={styles.formContainer}>
-        <Box className={styles.formColumn}>
-          <Box className={styles.singleRow}>
-            <Box>
-              <StyledInputBase
-                type="text"
-                placeholder={t('form.work_mobile')}
-                {...register('workMobile')}
-                variant="flex"
-              />
-            </Box>
-            <Box>
-              <ErrorText>{errors.workMobile?.message}</ErrorText>
+                      <Box onClick={handleDelete} sx={deleteImage}>
+                        <Tooltip title="Delete">
+                          <DeleteForeverIcon
+                            sx={{
+                              fontSize: '25px',
+                              color: 'var(--primary-color)',
+                            }}
+                          />
+                        </Tooltip>
+                      </Box>
+                    </ImageContainer>
+                  </>
+                )}
+              </div>
             </Box>
           </Box>
-          <Box className={styles.singleRow}>
-            <Box>
-              <StyledInputBase
-                type="text"
-                placeholder={t('form.work_phone')}
-                {...register('workPhone')}
-                variant="flex"
-              />
+          <Box className={styles.formContainer}>
+            <Box className={styles.formColumn}>
+              <Box className={styles.singleRow}>
+                <Box>
+                  <StyledInputBase
+                    type="text"
+                    placeholder={t('form.work_mobile')}
+                    {...register('workMobile')}
+                    variant="flex"
+                  />
+                </Box>
+                <Box>
+                  <ErrorText>{errors.workMobile?.message}</ErrorText>
+                </Box>
+              </Box>
+              <Box className={styles.singleRow}>
+                <Box>
+                  <StyledInputBase
+                    type="text"
+                    placeholder={t('form.work_phone')}
+                    {...register('workPhone')}
+                    variant="flex"
+                  />
+                </Box>
+                <Box>
+                  <ErrorText>{errors.workPhone?.message}</ErrorText>
+                </Box>
+              </Box>
+              <Box className={styles.singleRow}>
+                <Box>
+                  <StyledInputBase
+                    type="text"
+                    placeholder={t('form.work_mail')}
+                    {...register('workMail')}
+                  />
+                </Box>
+                <Box>
+                  <ErrorText>{errors.workMail?.message}</ErrorText>
+                </Box>
+              </Box>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={initialData?.employeeData?.company}
+                  name="company"
+                  label={t('form.company')}
+                  options={companyQuery}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(option) => option.name}
+                  id="autoCompany"
+                  multiple={false}
+                  errors={errors}
+                  setOpen={() => setCompanyOpen(true)}
+                  handleNextPage={handleNextCompanyPage}
+                  fetchNextPage={fetchNextCompanyPage}
+                  hasNextPage={hasNextCompanyPage}
+                  isFetchingNextPage={isFethcingNextCompanyPage}
+                  isLoading={isCompanyLoading}
+                  isError={isCompanyError}
+                  error={companyError}
+                />
+              </Box>
             </Box>
-            <Box>
-              <ErrorText>{errors.workPhone?.message}</ErrorText>
-            </Box>
-          </Box>
-          <Box className={styles.singleRow}>
-            <Box>
-              <StyledInputBase
-                type="text"
-                placeholder={t('form.work_mail')}
-                {...register('workMail')}
-              />
-            </Box>
-            <Box>
-              <ErrorText>{errors.workMail?.message}</ErrorText>
-            </Box>
-          </Box>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[]}
-              name="company"
-              label={t('form.company')}
-              options={companyQuery}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              getOptionLabel={(option) => option.name}
-              id="autoCompany"
-              multiple
-              errors={errors}
-              setOpen={() => setCompanyOpen(true)}
-              handleNextPage={handleNextCompanyPage}
-              fetchNextPage={fetchNextCompanyPage}
-              hasNextPage={hasNextCompanyPage}
-              isFetchingNextPage={isFethcingNextCompanyPage}
-              isLoading={isCompanyLoading}
-              isError={isCompanyError}
-              error={companyError}
-            />
-          </Box>
-        </Box>
-        <Box className={styles.formColumn}>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[]}
-              name="department"
-              label={t('form.department')}
-              id="autoDepartment"
-              multiple
-              errors={errors}
-              setOpen={() => setDepartmentOpen(true)}
-              options={departmentQuery}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              getOptionLabel={(option) => option.name}
-              handleNextPage={handleNextDepartmentPage}
-              fetchNextPage={fetchNextDepartmentPage}
-              hasNextPage={hasNextDepartmentPage}
-              isFetchingNextPage={isFethcingNextDepartmentPage}
-              isLoading={isDepartmentLoading}
-              isError={isDepartmentError}
-              error={departmentError}
-            />
-          </Box>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[]}
-              name="manager"
-              label={t('form.manager')}
-              options={currencies}
-              getOptionLabel={(option) => option.label}
-              id="autoManager"
-              multiple
-              errors={errors}
-            />
-          </Box>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[{ id: 1, name: 'Developer' }]}
-              name="jobPosition"
-              label={t('form.job_position')}
-              options={jobPositionQuery}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              getOptionLabel={(option) => option.name}
-              id="autoJobPosition"
-              // multiple="false"
-              errors={errors}
-              setOpen={() => setOpenJobPosition(true)}
-              handleNextPage={handleNextJobPage}
-              fetchNextPage={fetchNextJobPage}
-              hasNextPage={hasNextJobPage}
-              isFetchingNextPage={isFethcingNextJobPage}
-              isLoading={isJobPositionLoading}
-              isError={isJobPositionError}
-              error={jobPostionError}
-            />
-          </Box>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[]}
-              name="degree"
-              label={t('form.degree')}
-              options={currencies}
-              getOptionLabel={(option) => option.label}
-              id="autoDegree"
-              multiple
-              errors={errors}
-              setOpen={() => setDegreeOpen(true)}
-            />
-          </Box>
-          <Box className={styles.singleRow}>
-            <CustomizedAutoComplete
-              control={control}
-              defaultValue={[]}
-              name="coach"
-              label={t('form.coach')}
-              options={currencies}
-              getOptionLabel={(option) => option.label}
-              id="autoCoach"
-              multiple
-              errors={errors}
-            />
-          </Box>
-          {/* <Box className={styles.dateContainer}>
+            <Box className={styles.formColumn}>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={initialData?.employeeData?.department}
+                  name="department"
+                  label={t('form.department')}
+                  id="autoDepartment"
+                  multiple={false}
+                  errors={errors}
+                  setOpen={() => setDepartmentOpen(true)}
+                  options={departmentQuery}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(option) => option.name}
+                  handleNextPage={handleNextDepartmentPage}
+                  fetchNextPage={fetchNextDepartmentPage}
+                  hasNextPage={hasNextDepartmentPage}
+                  isFetchingNextPage={isFethcingNextDepartmentPage}
+                  isLoading={isDepartmentLoading}
+                  isError={isDepartmentError}
+                  error={departmentError}
+                />
+              </Box>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={initialData?.employeeData?.manager}
+                  name="manager"
+                  label={t('form.manager')}
+                  options={currencies}
+                  getOptionLabel={(option) => option.label}
+                  id="autoManager"
+                  multiple={false}
+                  errors={errors}
+                />
+              </Box>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={initialData?.employeeData?.jobPosition}
+                  name="jobPosition"
+                  label={t('form.job_position')}
+                  options={jobPositionQuery}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(option) => option.name}
+                  id="autoJobPosition"
+                  multiple={false}
+                  errors={errors}
+                  setOpen={() => setOpenJobPosition(true)}
+                  handleNextPage={handleNextJobPage}
+                  fetchNextPage={fetchNextJobPage}
+                  hasNextPage={hasNextJobPage}
+                  isFetchingNextPage={isFethcingNextJobPage}
+                  isLoading={isJobPositionLoading}
+                  isError={isJobPositionError}
+                  error={jobPostionError}
+                />
+              </Box>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={{}}
+                  name="degree"
+                  label={t('form.degree')}
+                  options={currencies}
+                  getOptionLabel={(option) => option.label}
+                  id="autoDegree"
+                  multiple={false}
+                  errors={errors}
+                  setOpen={() => setDegreeOpen(true)}
+                />
+              </Box>
+              <Box className={styles.singleRow}>
+                <CustomizedAutoComplete
+                  control={control}
+                  defaultValue={[]}
+                  name="coach"
+                  label={t('form.coach')}
+                  options={currencies}
+                  getOptionLabel={(option) => option.label}
+                  id="autoCoach"
+                  multiple={false}
+                  errors={errors}
+                />
+              </Box>
+              {/* <Box className={styles.dateContainer}>
             <Box
               sx={{
                 display: 'flex',
@@ -434,18 +458,20 @@ export default function EmployeeInfo({ onFileChange }) {
               />
             </Box>
           </Box> */}
-        </Box>
-      </Box>
-      <CompanyModal open={companyOpen} handleClose={handleCloseCompany} />
-      <DepartmentModal
-        open={departmentOpen}
-        handleClose={handleCloseDepartment}
-      />
-      <JobPositionModal
-        open={openJobPosition}
-        handleClose={handleCloseJobPosition}
-      />
-      <DegreeModal open={degreeOpen} handleClose={handleCloseDegree} />
+            </Box>
+          </Box>
+          <CompanyModal open={companyOpen} handleClose={handleCloseCompany} />
+          <DepartmentModal
+            open={departmentOpen}
+            handleClose={handleCloseDepartment}
+          />
+          <JobPositionModal
+            open={openJobPosition}
+            handleClose={handleCloseJobPosition}
+          />
+          <DegreeModal open={degreeOpen} handleClose={handleCloseDegree} />
+        </>
+      )}
     </>
   );
 }

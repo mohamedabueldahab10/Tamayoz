@@ -126,6 +126,7 @@ export default function EmployeeResume() {
     handleSubmit: handleSubmitSkills,
     reset: resetSkills,
     formState: { errors: skillsErrors },
+    control: skillControl,
   } = skillsMethods;
   const handleSkills = (data) => {
     skillsSchema
@@ -356,6 +357,7 @@ export default function EmployeeResume() {
                   <Box className={styles.resumeForm}>
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
+                        control={resumeControl}
                         defaultValue={[]}
                         id="autoEmployee"
                         name="employee"
@@ -404,7 +406,8 @@ export default function EmployeeResume() {
                     </Box>
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
-                        defaultValue={[]}
+                        defaultValue={{}}
+                        control={resumeControl}
                         name="resumeType"
                         label={t('form.type')}
                         id="autoType"
@@ -426,7 +429,8 @@ export default function EmployeeResume() {
                     </Box>
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
-                        defaultValue={[]}
+                        defaultValue={{}}
+                        control={resumeControl}
                         name="displayType"
                         label={t('form.display_type')}
                         options={skills}
@@ -585,7 +589,8 @@ export default function EmployeeResume() {
                     </Box>
                     <Box className={styles.singleColumn}>
                       <CustomizedAutoComplete
-                        defaultValue={[]}
+                        defaultValue={{}}
+                        control={skillControl}
                         name="skill"
                         label={t('form.skill')}
                         id="autoSkills"
@@ -607,7 +612,8 @@ export default function EmployeeResume() {
                       <Box className={styles.skillForm}>
                         <Box className={styles.singleRow}>
                           <CustomizedAutoComplete
-                            defaultValue={[]}
+                            defaultValue={{}}
+                            control={skillControl}
                             id="autoSkillLevel"
                             name="skillLevel"
                             label={t('form.skill_level')}

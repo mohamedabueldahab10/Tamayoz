@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import './chart.css';
 import { CardActions, CardContent, Tooltip, Typography } from '@mui/material';
 
-export const initialData = {
+export const initialHierarchyData = {
   id: '1',
   name: 'Mitchell Admin',
   job: 'Chief Executive Officer',
@@ -136,7 +136,9 @@ export const initialData = {
   ],
 };
 const OrgChart = () => {
-  const [expandedNodes, setExpandedNodes] = useState(new Set([initialData.id]));
+  const [expandedNodes, setExpandedNodes] = useState(
+    new Set([initialHierarchyData.id])
+  );
 
   const OrgNode = ({ node, isRoot }) => {
     // const isVisible = isRoot || expandedNodeId === node.id;
@@ -260,7 +262,7 @@ const OrgChart = () => {
   return (
     <div className="chart-container">
       <h1>Organizational Chart</h1>
-      <OrgNode node={initialData} isRoot={true} />
+      <OrgNode node={initialHierarchyData} isRoot={true} />
     </div>
   );
 };
