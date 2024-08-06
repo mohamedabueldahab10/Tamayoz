@@ -1,5 +1,5 @@
 import { Box, Divider } from '@mui/material';
-import React, { useState, useTransition } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import styles from '../../assets/css/modules/employee/PrivateInfo.module.css';
 import publicStyles from '../../assets/css/modules/employee/NewEmployee.module.css';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
@@ -9,6 +9,7 @@ import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoCom
 import CustomizedLabel from '../../components/utilities/CustomizedLabel';
 import RelatedUsersModal from '../../components/relatedUsers/RelatedUsersModal';
 import { useFormContext } from 'react-hook-form';
+import { useGetEmployeeType } from '../../queries/HrQueries';
 const addresses = [
   { label: 'IT', id: 1 },
   { label: 'Languages', id: 2 },
@@ -21,6 +22,42 @@ export default function HrSettings() {
   const [openRelatedUser, setOpenRelatedUser] = useState(false);
   const handleCloseRelatedUser = () => {
     setOpenRelatedUser(false);
+  };
+  // =========================================================================
+  const [empTypeQuery, setEmpTypeQuery] = useState([]);
+  const [currentEmpTypePage, setCurrentEmpTypePage] = useState(1);
+  const {
+    data: empTypeData,
+    isLoading: isEmpTypeLoading,
+    isError: isEmpTypeError,
+    error: empTypeError,
+    fetchNextPage: fetchNextEmpTypePage,
+    hasNextPage: hasNextEmpTypePage,
+    isFetchingNextPage: isFethcingNextEmpTypePage,
+  } = useGetEmployeeType(currentEmpTypePage);
+  useEffect(() => {
+    if (empTypeData) {
+      setEmpTypeQuery((prevOptions) => {
+        const newOptions = empTypeData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [empTypeData]);
+  const handleNextEmpTypePage = () => {
+    if (hasNextEmpTypePage) {
+      setCurrentEmpTypePage((prevPage) => prevPage + 1);
+      fetchNextEmpTypePage();
+    }
   };
   const {
     register,
@@ -43,9 +80,19 @@ export default function HrSettings() {
                 id="autoEmploymentType"
                 name="employeetype"
                 label={t('form.employee_type')}
-                options={addresses}
-                multiple
-                //   errors={errors}
+                multiple={false}
+                options={empTypeQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                errors={errors}
+                // setOpen={() => setCompanyOpen(true)}
+                handleNextPage={handleNextEmpTypePage}
+                fetchNextPage={fetchNextEmpTypePage}
+                hasNextPage={hasNextEmpTypePage}
+                isFetchingNextPage={isFethcingNextEmpTypePage}
+                isLoading={isEmpTypeLoading}
+                isError={isEmpTypeError}
+                error={empTypeError}
               />
             </Box>
             <Box className={publicStyles.singleRow}>

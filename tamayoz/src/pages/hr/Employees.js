@@ -43,8 +43,9 @@ const CustomListItemButton = styled(ListItemButton)({
   '& .css-cveggr-MuiListItemIcon-root': {
     minWidth: '40px',
   },
-  height: '30px',
   color: 'var(--dark-color)',
+  border: 'none',
+  height: '30px',
   '&:hover': {
     color: 'var(--primary-color)',
     '& svg': {
@@ -53,8 +54,8 @@ const CustomListItemButton = styled(ListItemButton)({
   },
 });
 const CustomTypography = styled(Typography)({
-  fontSize: '14px',
-  fontWeight: '600',
+  fontSize: '12px',
+  fontWeight: '800',
   cursor: 'pointer',
 });
 export default function Employees() {
@@ -62,6 +63,7 @@ export default function Employees() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleActionClick = (event) => {
+    event.stopPropagation(); //to prevent the RowClick in this column only
     setAnchorEl(event.currentTarget);
   };
   const handleCloseAction = () => {
@@ -113,7 +115,7 @@ export default function Employees() {
             >
               <List
                 sx={{
-                  width: '130px',
+                  width: '150px',
                   maxHeight: '250px',
                   border: '1.5px solid #555',
                   borderRadius: '5px',
@@ -128,10 +130,10 @@ export default function Employees() {
                 }}
                 onClick={() => setAnchorEl(false)}
               >
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
                     <PlayCircleFilledWhiteIcon
-                      sx={{ color: 'var(--dark-color)' }}
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
                     />
                   </ListItemIcon>
                   <ListItemText>
@@ -139,54 +141,66 @@ export default function Employees() {
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
-                    <SendIcon sx={{ color: 'var(--dark-color)' }} />
+                    <SendIcon
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
+                    />
                   </ListItemIcon>
                   <ListItemText>
                     <CustomTypography>{t('employees.send')}</CustomTypography>
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
-                    <LoopIcon sx={{ color: 'var(--dark-color)' }} />
+                    <LoopIcon
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
+                    />
                   </ListItemIcon>
                   <ListItemText>
                     <CustomTypography>{t('employees.resend')}</CustomTypography>
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
-                    <PauseCircleIcon sx={{ color: 'var(--dark-color)' }} />
+                    <PauseCircleIcon
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
+                    />
                   </ListItemIcon>
                   <ListItemText>
                     <CustomTypography>{t('employees.stop')}</CustomTypography>
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
-                    <CancelIcon sx={{ color: 'var(--dark-color)' }} />
+                    <CancelIcon
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
+                    />
                   </ListItemIcon>
                   <ListItemText>
                     <CustomTypography>{t('employees.close')}</CustomTypography>
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
-                    <BorderColorIcon sx={{ color: 'var(--dark-color)' }} />
+                    <BorderColorIcon
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
+                    />
                   </ListItemIcon>
                   <ListItemText>
                     <CustomTypography>{t('employees.edit')}</CustomTypography>
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton sx={{ height: '30px' }}>
+                <CustomListItemButton>
                   <ListItemIcon>
-                    <DeleteForeverIcon sx={{ color: 'var(--dark-color)' }} />
+                    <DeleteForeverIcon
+                      sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
+                    />
                   </ListItemIcon>
                   <ListItemText>
                     <CustomTypography>{t('employees.delete')}</CustomTypography>

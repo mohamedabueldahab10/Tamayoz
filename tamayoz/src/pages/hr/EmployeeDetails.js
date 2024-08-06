@@ -25,7 +25,7 @@ export default function EmployeeDetails() {
       ) : error ? (
         <NotFound />
       ) : (
-        <UpdateEmployee initialData={initialData} />
+        <UpdateEmployee empId={id} initialData={initialData} />
       )}
     </>
   );

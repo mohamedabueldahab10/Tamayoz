@@ -181,6 +181,25 @@ export const useGetResumeType = () => {
     }
   );
 };
+export const useGetEmployeeType = () => {
+  return useInfiniteQuery(
+    'employeetype',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/EmployeeType/GetAllData', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
 export function useGetSkillType() {
   return useQuery('skillType', async () => {
     const { data } = await instance.post('/skillType/GetAllData', {

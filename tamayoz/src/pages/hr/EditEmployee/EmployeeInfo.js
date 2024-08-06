@@ -206,7 +206,7 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
   useEffect(() => {
     setLoading(false);
   }, [initialData]);
-
+  const empData = initialData?.employeeData;
   return (
     <>
       {loading ? (
@@ -224,9 +224,10 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               />
               <ErrorText>{errors.employeeName?.message}</ErrorText>
               <Box className={styles.singleRow}>
+                {/* ==== the only field accept an Array ==== */}
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={initialData.employeeData.tags}
+                  defaultValue={empData?.tags[0].id === 0 ? [] : empData.tags}
                   id="autoTags"
                   name="tags"
                   label={t('form.tags')}
@@ -329,7 +330,9 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               <Box className={styles.singleRow}>
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={initialData?.employeeData?.company}
+                  defaultValue={
+                    empData?.company.id === 0 ? null : empData?.company
+                  }
                   name="company"
                   label={t('form.company')}
                   options={companyQuery}
@@ -355,7 +358,9 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               <Box className={styles.singleRow}>
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={initialData?.employeeData?.department}
+                  defaultValue={
+                    empData?.department.id === 0 ? null : empData?.department
+                  }
                   name="department"
                   label={t('form.department')}
                   id="autoDepartment"
@@ -379,7 +384,9 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               <Box className={styles.singleRow}>
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={initialData?.employeeData?.manager}
+                  defaultValue={
+                    empData?.manager.id === 0 ? null : empData.manager
+                  }
                   name="manager"
                   label={t('form.manager')}
                   options={currencies}
@@ -392,7 +399,9 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               <Box className={styles.singleRow}>
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={initialData?.employeeData?.jobPosition}
+                  defaultValue={
+                    empData?.jobPosition.id === 0 ? null : empData?.jobPosition
+                  }
                   name="jobPosition"
                   label={t('form.job_position')}
                   options={jobPositionQuery}
@@ -416,7 +425,9 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               <Box className={styles.singleRow}>
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={{}}
+                  defaultValue={
+                    empData.degree?.id === 0 ? null : empData.degree
+                  }
                   name="degree"
                   label={t('form.degree')}
                   options={currencies}
@@ -430,7 +441,7 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
               <Box className={styles.singleRow}>
                 <CustomizedAutoComplete
                   control={control}
-                  defaultValue={[]}
+                  defaultValue={empData.coach?.id === 0 ? null : empData.coach}
                   name="coach"
                   label={t('form.coach')}
                   options={currencies}

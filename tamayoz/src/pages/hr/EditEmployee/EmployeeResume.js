@@ -406,7 +406,7 @@ export default function EmployeeResume() {
                     </Box>
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
-                        defaultValue={{}}
+                        defaultValue={[]}
                         control={resumeControl}
                         name="resumeType"
                         label={t('form.type')}
@@ -429,7 +429,7 @@ export default function EmployeeResume() {
                     </Box>
                     <Box className={styles.singleRow}>
                       <CustomizedAutoComplete
-                        defaultValue={{}}
+                        defaultValue={[]}
                         control={resumeControl}
                         name="displayType"
                         label={t('form.display_type')}
@@ -589,7 +589,7 @@ export default function EmployeeResume() {
                     </Box>
                     <Box className={styles.singleColumn}>
                       <CustomizedAutoComplete
-                        defaultValue={{}}
+                        defaultValue={[]}
                         control={skillControl}
                         name="skill"
                         label={t('form.skill')}
@@ -612,7 +612,7 @@ export default function EmployeeResume() {
                       <Box className={styles.skillForm}>
                         <Box className={styles.singleRow}>
                           <CustomizedAutoComplete
-                            defaultValue={{}}
+                            defaultValue={[]}
                             control={skillControl}
                             id="autoSkillLevel"
                             name="skillLevel"

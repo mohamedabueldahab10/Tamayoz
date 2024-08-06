@@ -57,7 +57,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-export default function UpdateEmployee({ initialData }) {
+export default function UpdateEmployee({ initialData, empId }) {
   const [snackSuccess, setSnackSuccess] = useState(false);
   const handleCloseSuccess = (branch) => {
     if (branch === 'clickaway') {
@@ -107,35 +107,15 @@ export default function UpdateEmployee({ initialData }) {
       methods.setValue('workMobile', initialData.employeeData.workMobile);
       methods.setValue('workPhone', initialData.employeeData.workPhone);
       methods.setValue('workMail', initialData.employeeData.workEmail);
-      methods.setValue('company', initialData.employeeData.company);
-      methods.setValue('department', initialData.department);
-      methods.setValue('manager', initialData.manager);
-      methods.setValue('jobPosition', initialData.jobPosition);
-      methods.setValue('degree', []);
-      methods.setValue('coach', []);
       // =================Work Information =================
-      methods.setValue('expense', []);
-      methods.setValue('timeoff', []);
-      methods.setValue('timesheet', []);
-      methods.setValue('attendance', []);
-      methods.setValue('workinghours', []);
-      methods.setValue('timezone', []);
-      methods.setValue('roles', []);
-      methods.setValue('defaultrole', []);
       // =================Private Information =================
       methods.setValue('street', initialData.employeeData.privateAddress);
-      methods.setValue('city', initialData.employeeData.cities);
-      methods.setValue('state', initialData.employeeData.region);
       methods.setValue('zip', '');
-      methods.setValue('country', initialData.employeeData.country);
       methods.setValue('privatemail', initialData.employeeData.privateEmail);
       methods.setValue('privatephone', initialData.employeeData.privatePhone);
       methods.setValue('privatemobile', '');
-      methods.setValue('bankaccount', []);
-      methods.setValue('language', initialData.employeeData.language);
       methods.setValue('workdistance', '');
       methods.setValue('privatecarplate', initialData.employeeData.carPlate);
-      methods.setValue('maritalstatus', initialData.employeeData.maritalStatus);
       methods.setValue(
         'dependenciesnumber',
         initialData.employeeData.numOfChildren
@@ -148,24 +128,16 @@ export default function UpdateEmployee({ initialData }) {
         'contactnumber',
         initialData.employeeData.emergencyContact.phone
       );
-      methods.setValue('certificateLevel', []);
-      methods.setValue('stydyfield', initialData.employeeData.fieldOfStudy);
-      methods.setValue('school', initialData.employeeData.school);
       methods.setValue('visanumber', '');
       methods.setValue('workpermitnumber', '');
       methods.setValue('visaexpirationdate', '');
       methods.setValue('workpermitexpirationdate', '');
-      methods.setValue('workpermit', []);
-      methods.setValue('nationality', initialData.employeeData.nationality);
       methods.setValue('idnumber', '');
       methods.setValue('ssnnumber', '');
-      methods.setValue('gender', initialData.employeeData.gender);
       methods.setValue('birthdate', '');
       methods.setValue('birthplace', initialData.employeeData.placeOfBirth);
       methods.setValue('nonresident', true);
       // =================HR Information =================
-      methods.setValue('employeetype', initialData.employeeData.employeeType);
-      methods.setValue('relatedusers', initialData.employeeData.relatedUser);
       methods.setValue('pincode', '');
       methods.setValue('badgeid', '');
       methods.setValue('billingtimetarget', '');
@@ -182,8 +154,6 @@ export default function UpdateEmployee({ initialData }) {
   async function handleFormSubmit(data) {
     const jsonStringData = JSON.stringify(data, null, 2);
     console.log('string Data: ' + jsonStringData);
-    console.log('relatedusers length: ' + data.relatedusers.length);
-    console.log('relatedusers length: ' + data.employeetype.length);
     var employeeArray = [];
     for (var i = 0; i < data.length; i++) {
       employeeArray.push(data[i].name);
@@ -197,6 +167,7 @@ export default function UpdateEmployee({ initialData }) {
     const EmployeeData = {
       empMainData: {
         // ======main info==========
+        id: empId,
         firstname: data.employeeName,
         middlename: '',
         lastname: '',
@@ -204,45 +175,40 @@ export default function UpdateEmployee({ initialData }) {
         workMobile: data.workMobile,
         workPhone: data.workPhone,
         workEmail: data.workMail,
-        companyId: data.company.length > 0 ? data.company[0].id : 0,
-        departmentId: data.department.length > 0 ? data.department[0].id : 0,
-        managerId: data.manager.length > 0 ? data.manager[0].id : 0,
-        jobPositionId: data.jobPosition.length > 0 ? data.jobPosition[0].id : 0,
-        titleid: data.tags.length > 0 ? data.tags[0].id : 0,
+        companyId: data.company ? data.company.id : 0,
+        departmentId: data.department ? data.department.id : 0,
+        managerId: data.manager ? data.manager.id : 0,
+        jobPositionId: data.jobPosition ? data.jobPosition.id : 0,
+        titleid: data.tags ? data.tags.id : 0,
         // =======work Info ======
-        timeoffMangerId: data.timeoff.length > 0 ? data.timeoff[0].id : 0,
-        timesheetMangerId: data.timesheet.length > 0 ? data.timesheet[0].id : 0,
-        attendanceMangerId:
-          data.attendance.length > 0 ? data.attendance[0].id : 0,
-        workingHoursId:
-          data.workinghours.length > 0 ? data.workinghours[0].id : 0,
-        timezone: data.timezone.length > 0 ? data.timezone[0].id : 0,
+        timeoffMangerId: data.timeoff ? data.timeoff.id : 0,
+        timesheetMangerId: data.timesheet ? data.timesheet.id : 0,
+        attendanceMangerId: data.attendance ? data.attendance.id : 0,
+        workingHoursId: data.workinghours ? data.workinghours.id : 0,
+        timezone: data.timezone ? data.timezone.id : 0,
         // =======private info ======
         // ===contact===
         privateAddress: data.street,
-        countryId: data.country.length > 0 ? data.country[0].id : 0,
-        regionId: data.state.length > 0 ? data.state[0].id : 0,
-        cityId: data.city.length > 0 ? data.city[0].id : 0,
+        countryId: data.country ? data.company.id : 0,
+        regionId: data.state ? data.state.id : 0,
+        cityId: data.city ? data.city.id : 0,
         privateEmail: data.privatemail,
         privatePhone: data.privatephone,
-        bankAccountId: data.bankaccount.length > 0 ? data.bankaccount[0].id : 0,
-        langId: data.language.length > 0 ? data.language[0].id : 0,
+        bankAccountId: data.bankaccount ? data.bankaccount.id : 0,
+        langId: data.language ? data.language.id : 0,
         carPlate: data.privatecarplate,
         // ===family===
-        numOfChildren: data.dependenciesnumber,
+        numOfChildren: data.dependenciesnumber ? data.dependenciesnumber : 0,
         spouseName: '',
-        spouseBirthdate: '12-12-2022',
+        spouseBirthdate: '',
         // ==citizenship==
-        nationalityId: data.nationality.length > 0 ? data.nationality[0].id : 0,
+        nationalityId: data.nationality ? data.nationality.id : 0,
         identificationNum: data.idnumber,
-        gender: data.gender.length > 0 ? data.gender[0].id : 0,
+        gender: data.gender ? data.gender.id : 0,
         dateofbirth: data.birthdate,
         // =======hr setting ======
-        relatedUserId:
-          data.relatedusers.length > 0 ? data.relatedUsers[0].id : 0,
-        employeeTypeId:
-          data.employeetype.length > 0 ? data.employeeType[0].id : 1,
-
+        relatedUserId: data.relatedUsers ? data.relatedUsers.id : 0,
+        employeeTypeId: data.employeeType ? data.employeeType.id : 1,
         experienceYears: 0,
         passportId: 0,
       },
@@ -264,7 +230,7 @@ export default function UpdateEmployee({ initialData }) {
     logFormData(formData);
 
     await instance
-      .post('/Employee/InsertData', formData, {
+      .put('/Employee/UpdateData', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -272,8 +238,7 @@ export default function UpdateEmployee({ initialData }) {
       .then((res) => {
         console.log('Employee Response: ' + res);
         setSnackSuccess(true);
-        methods.reset();
-        // queryClient.invalidateQueries("employeesdatagrid");
+        queryClient.invalidateQueries('employeesdatagrid');
       })
       .catch((error) => {
         setSnackError(true);
@@ -408,7 +373,7 @@ export default function UpdateEmployee({ initialData }) {
             }
             sx={{ mb: 2 }}
           >
-            Employee added successfully!
+            Employee Updated successfully!
           </Alert>
         </Snackbar>
       </Stack>

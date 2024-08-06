@@ -211,9 +211,6 @@ const CustomizedAutoComplete = ({
     inputValue,
     onInputChange: handleInputChange,
   });
-  console.log('Value:------' + name, value);
-  // console.log('Input Value:----' + name, inputValue);
-  // console.log('Default Value:--' + name, defaultValue);
 
   return (
     <>
@@ -224,18 +221,15 @@ const CustomizedAutoComplete = ({
           minWidth={minWidth}
         >
           {multiple ? (
-            value.map((option, index) => {
-              console.log(option);
-              return (
-                <Tag
-                  label={option.name}
-                  key={`tag-${option.id}`}
-                  color={option.color}
-                  {...getTagProps({ index })}
-                  onDelete={() => handleDelete(index)}
-                />
-              );
-            })
+            value.map((option, index) => (
+              <Tag
+                label={option.name}
+                key={`tag-${option.id}`}
+                color={option.color}
+                {...getTagProps({ index })}
+                onDelete={() => handleDelete(index)}
+              />
+            ))
           ) : value ? (
             <Tag
               label={value.name ? value.name : ''}
