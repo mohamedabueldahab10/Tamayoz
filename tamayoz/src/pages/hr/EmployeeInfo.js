@@ -15,7 +15,11 @@ import CustomSingleDate from '../../components/utilities/CustomSingleDate';
 import CompanyModal from '../../components/company/CompanyModal';
 import JobPositionModal from '../../components/jobPosition/JobPositionModal';
 import DegreeModal from '../../components/degree/DegreeModal';
-import { useGetCompany, useGetJobPosition } from '../../queries/HrQueries';
+import {
+  useGetCompany,
+  useGetDepartment,
+  useGetJobPosition,
+} from '../../queries/HrQueries';
 const ImageContainer = styled(Box)`
   display: grid;
   place-items: center;
@@ -137,7 +141,7 @@ export default function EmployeeInfo({ onFileChange }) {
     fetchNextPage: fetchNextDepartmentPage,
     hasNextPage: hasNextDepartmentPage,
     isFetchingNextPage: isFethcingNextDepartmentPage,
-  } = useGetCompany(currentDepartmentPage);
+  } = useGetDepartment(currentDepartmentPage);
   useEffect(() => {
     if (DepartmentData) {
       setDepartmentQuery((prevOptions) => {
@@ -219,7 +223,7 @@ export default function EmployeeInfo({ onFileChange }) {
               name="tags"
               label={t('form.tags')}
               options={currencies}
-              multiple
+              multiple={true}
               errors={errors}
             />
           </Box>
@@ -311,14 +315,14 @@ export default function EmployeeInfo({ onFileChange }) {
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
               control={control}
-              defaultValue={[]}
+              // defaultValue={[]}
               name="company"
               label={t('form.company')}
               options={companyQuery}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(option) => option.name}
               id="autoCompany"
-              multiple
+              multiple={false}
               errors={errors}
               setOpen={() => setCompanyOpen(true)}
               handleNextPage={handleNextCompanyPage}
@@ -335,11 +339,11 @@ export default function EmployeeInfo({ onFileChange }) {
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
               control={control}
-              defaultValue={[]}
+              // defaultValue={[]}
               name="department"
               label={t('form.department')}
               id="autoDepartment"
-              multiple
+              multiple={false}
               errors={errors}
               setOpen={() => setDepartmentOpen(true)}
               options={departmentQuery}
@@ -357,27 +361,27 @@ export default function EmployeeInfo({ onFileChange }) {
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
               control={control}
-              defaultValue={[]}
+              // defaultValue={[]}
               name="manager"
               label={t('form.manager')}
               options={currencies}
               getOptionLabel={(option) => option.label}
               id="autoManager"
-              multiple
+              multiple={false}
               errors={errors}
             />
           </Box>
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
               control={control}
-              defaultValue={[]}
+              // defaultValue={[]}
               name="jobPosition"
               label={t('form.job_position')}
               options={jobPositionQuery}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(option) => option.name}
               id="autoJobPosition"
-              multiple
+              multiple={false}
               errors={errors}
               setOpen={() => setOpenJobPosition(true)}
               handleNextPage={handleNextJobPage}
@@ -392,13 +396,13 @@ export default function EmployeeInfo({ onFileChange }) {
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
               control={control}
-              defaultValue={[]}
+              // defaultValue={[]}
               name="degree"
               label={t('form.degree')}
               options={currencies}
               getOptionLabel={(option) => option.label}
               id="autoDegree"
-              multiple
+              multiple={false}
               errors={errors}
               setOpen={() => setDegreeOpen(true)}
             />
@@ -406,13 +410,13 @@ export default function EmployeeInfo({ onFileChange }) {
           <Box className={styles.singleRow}>
             <CustomizedAutoComplete
               control={control}
-              defaultValue={[]}
+              // defaultValue={}
               name="coach"
               label={t('form.coach')}
               options={currencies}
               getOptionLabel={(option) => option.label}
               id="autoCoach"
-              multiple
+              multiple={false}
               errors={errors}
             />
           </Box>

@@ -10,6 +10,8 @@ import CustomTreeView from '../../../components/orgChart/CustomTreeView';
 import { useFormContext } from 'react-hook-form';
 import Loading from '../../../components/Loading';
 import styled from 'styled-components';
+import { useGetCompany } from '../../../queries/HrQueries';
+import CompanyModal from '../../../components/company/CompanyModal';
 const NoRecords = styled('p')`
   color: var(--primary-color);
   font-weight: 500;
@@ -49,9 +51,49 @@ const addresses = [
 ];
 export default function WorkInformation({ initialData }) {
   const { t } = useTranslation('modules');
+  // ===============================================================================
+  const [companyQuery, setcompanyQuery] = useState([]);
+  const [currentCompanyPage, setCurrentCompanyPage] = useState(1);
+  const {
+    data: companyData,
+    isLoading: isCompanyLoading,
+    isError: isCompanyError,
+    error: companyError,
+    fetchNextPage: fetchNextCompanyPage,
+    hasNextPage: hasNextCompanyPage,
+    isFetchingNextPage: isFethcingNextCompanyPage,
+  } = useGetCompany(currentCompanyPage);
+  useEffect(() => {
+    if (companyData) {
+      setcompanyQuery((prevOptions) => {
+        const newOptions = companyData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [companyData]);
+  const handleNextCompanyPage = () => {
+    if (hasNextCompanyPage) {
+      setCurrentCompanyPage((prevPage) => prevPage + 1);
+      fetchNextCompanyPage();
+    }
+  };
+  const [companyOpen, setCompanyOpen] = useState(false);
+  const handleCloseCompany = () => {
+    setCompanyOpen(false);
+  };
+  // ===============================================================================
   const [loading, setLoading] = useState(true);
   const {
-    register,
     control,
     formState: { errors },
   } = useFormContext();
@@ -82,9 +124,17 @@ export default function WorkInformation({ initialData }) {
                     id="autoaddress"
                     name="workaddress"
                     label={t('form.address')}
-                    options={addresses}
+                    options={companyQuery}
                     multiple={false}
-                    //   errors={errors}
+                    errors={errors}
+                    setOpen={() => setCompanyOpen(true)}
+                    handleNextPage={handleNextCompanyPage}
+                    fetchNextPage={fetchNextCompanyPage}
+                    hasNextPage={hasNextCompanyPage}
+                    isFetchingNextPage={isFethcingNextCompanyPage}
+                    isLoading={isCompanyLoading}
+                    isError={isCompanyError}
+                    error={companyError}
                   />
                   <Box className={styles.addressInfo}>
                     {!empData?.company.address ? (
@@ -379,6 +429,7 @@ export default function WorkInformation({ initialData }) {
           )}
         </Box>
       )}
+      <CompanyModal open={companyOpen} handleClose={handleCloseCompany} />
     </>
   );
 }

@@ -179,9 +179,14 @@ const CustomizedAutoComplete = ({
     setOpen(true);
   };
   const handleDelete = (index) => {
-    const newValue = [...value];
-    newValue.splice(index, 1);
-    setValue(name, newValue, { shouldValidate: true });
+    console.log('delete selected=================', index);
+    if (multiple) {
+      const newValue = [...value];
+      newValue.splice(index, 1);
+      setValue(name, newValue, { shouldValidate: true });
+    } else {
+      setValue(name, null, { shouldValidate: true });
+    }
   };
   const {
     getInputProps,
@@ -339,7 +344,7 @@ CustomizedAutoComplete.defaultProps = {
   multiple: false,
   id: 'customized-autocomplete',
   minWidth: '300px',
-  getOptionLabel: (option) => (option ? option.name || 'No data' : 'No data'),
+  // getOptionLabel: (option) => (option ? option.name || 'No data' : 'No data'),
   label: '',
   name: '',
   errors: {},

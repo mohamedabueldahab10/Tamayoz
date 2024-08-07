@@ -15,7 +15,11 @@ import CustomSingleDate from '../../../components/utilities/CustomSingleDate';
 import CompanyModal from '../../../components/company/CompanyModal';
 import JobPositionModal from '../../../components/jobPosition/JobPositionModal';
 import DegreeModal from '../../../components/degree/DegreeModal';
-import { useGetCompany, useGetJobPosition } from '../../../queries/HrQueries';
+import {
+  useGetCompany,
+  useGetDepartment,
+  useGetJobPosition,
+} from '../../../queries/HrQueries';
 import Loading from '../../../components/Loading';
 import AutoComplete from '../../../components/utilities/AutoComplete';
 const ImageContainer = styled(Box)`
@@ -57,7 +61,6 @@ const currencies = [
   { label: 'Consultant', id: 3 },
 ];
 export default function EmployeeInfo({ onFileChange, initialData }) {
-  console.log('initialData', initialData);
   const [loading, setLoading] = useState(true);
   const [jobPositionQuery, setJobPositionQuery] = useState([]);
   const [currentJobPage, setCurrentJobPage] = useState(1);
@@ -141,7 +144,7 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
     fetchNextPage: fetchNextDepartmentPage,
     hasNextPage: hasNextDepartmentPage,
     isFetchingNextPage: isFethcingNextDepartmentPage,
-  } = useGetCompany(currentDepartmentPage);
+  } = useGetDepartment(currentDepartmentPage);
   useEffect(() => {
     if (DepartmentData) {
       setDepartmentQuery((prevOptions) => {

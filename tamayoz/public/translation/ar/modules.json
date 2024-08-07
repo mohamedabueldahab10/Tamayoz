@@ -229,6 +229,12 @@
       "bank_mail": "البريد الإلكتروني للبنك"
     }
   },
+  "delete": {
+    "are_you_sure": "هل أنت متأكد من الحذف",
+    "confirm_delete": "تأكيد الحذف",
+    "undo_delete": "إلغاء",
+    "error": "خطأ غير متوقع"
+  },
   "validation": {
     "employee_name": "برجاء إدخال اسم الموظف",
     "job_position_name": "برجاء إدخال المسمى الوظيفي",

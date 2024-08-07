@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
 import { useTranslation } from 'react-i18next';
 import styles from '../../assets/css/modules/employee/WorkInfo.module.css';
@@ -8,7 +8,14 @@ import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoCom
 import { initialHierarchyData } from '../../components/orgChart/HierarchyChart';
 import CustomTreeView from '../../components/orgChart/CustomTreeView';
 import { useFormContext } from 'react-hook-form';
-
+import { useGetCompany } from '../../queries/HrQueries';
+import CompanyModal from '../../components/company/CompanyModal';
+import styled from 'styled-components';
+const NoRecords = styled('p')`
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 16px;
+`;
 const treeData = {
   id: 'root',
   name: 'محمد إبراهيم عبد المقصود الجزار',
@@ -43,11 +50,55 @@ const addresses = [
 ];
 export default function WorkInformation() {
   const { t } = useTranslation('modules');
+  // ===============================================================================
+  const [companyQuery, setcompanyQuery] = useState([]);
+  const [currentCompanyPage, setCurrentCompanyPage] = useState(1);
   const {
-    register,
+    data: companyData,
+    isLoading: isCompanyLoading,
+    isError: isCompanyError,
+    error: companyError,
+    fetchNextPage: fetchNextCompanyPage,
+    hasNextPage: hasNextCompanyPage,
+    isFetchingNextPage: isFethcingNextCompanyPage,
+  } = useGetCompany(currentCompanyPage);
+  useEffect(() => {
+    if (companyData) {
+      setcompanyQuery((prevOptions) => {
+        const newOptions = companyData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [companyData]);
+  const handleNextCompanyPage = () => {
+    if (hasNextCompanyPage) {
+      setCurrentCompanyPage((prevPage) => prevPage + 1);
+      fetchNextCompanyPage();
+    }
+  };
+  const [companyOpen, setCompanyOpen] = useState(false);
+  const handleCloseCompany = () => {
+    setCompanyOpen(false);
+  };
+  // ===============================================================================
+  const {
     control,
     formState: { errors },
+    watch,
   } = useFormContext();
+  const watchWorkAddress = watch('workaddress');
+  console.log(watchWorkAddress);
+  const addressParts = watchWorkAddress?.address?.split(',');
   return (
     <Box className={styles.workInfoContainer}>
       <Box className={styles.formSide}>
@@ -59,19 +110,31 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autoaddress"
                 name="workaddress"
                 label={t('form.address')}
-                options={addresses}
-                multiple
-                //   errors={errors}
+                options={companyQuery}
+                multiple={false}
+                errors={errors}
+                setOpen={() => setCompanyOpen(true)}
+                handleNextPage={handleNextCompanyPage}
+                fetchNextPage={fetchNextCompanyPage}
+                hasNextPage={hasNextCompanyPage}
+                isFetchingNextPage={isFethcingNextCompanyPage}
+                isLoading={isCompanyLoading}
+                isError={isCompanyError}
+                error={companyError}
               />
               <Box className={styles.addressInfo}>
-                <Box>250 Executive Park Blvd, Suite 3400</Box>
-                <Box>San Francisco CA 94134</Box>
-                <Box>United States</Box>
+                {!watchWorkAddress?.length > 0 ? (
+                  <NoRecords>No Address Provided</NoRecords>
+                ) : (
+                  addressParts.map((part, index) => (
+                    <NoRecords key={index}>{part}</NoRecords>
+                  ))
+                )}
               </Box>
             </Box>
           </Box>
@@ -84,52 +147,52 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autoexpense"
                 name="expense"
                 label={t('form.expense')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autotimeoff"
                 name="timeoff"
                 label={t('form.timeoff')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autotimesheet"
                 name="timesheet"
                 label={t('form.timesheet')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autoattendance"
                 name="attendance"
                 label={t('form.attendance')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -147,91 +210,91 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="automonday"
                 name="monday"
                 label={t('form.monday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autotuesday"
                 name="tuesday"
                 label={t('form.tuesday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autowednesday"
                 name="wednesday"
                 label={t('form.wednesday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autothursday"
                 name="thursday"
                 label={t('form.thursday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autofriday"
                 name="friday"
                 label={t('form.friday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autosaturday"
                 name="saturday"
                 label={t('form.saturday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autosunday"
                 name="sunday"
                 label={t('form.sunday')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -245,26 +308,26 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autoworkinghours"
                 name="workinghours"
                 label={t('form.workinghours')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autotimezone"
                 name="timezone"
                 label={t('form.timezone')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -278,26 +341,26 @@ export default function WorkInformation() {
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autoroles"
                 name="roles"
                 label={t('form.roles')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
             <Box className={styles.singleRow}>
               <CustomizedAutoComplete
                 control={control}
-                defaultValue={[]}
+                // defaultValue={[]}
                 customwidth="100%"
                 id="autodefaultrole"
                 name="defaultrole"
                 label={t('form.defaultrole')}
                 options={addresses}
-                multiple
+                multiple={false}
                 //   errors={errors}
               />
             </Box>
@@ -319,6 +382,7 @@ export default function WorkInformation() {
           <CustomTreeView data={treeData} />
         </Box>
       )}
+      <CompanyModal open={companyOpen} handleClose={handleCloseCompany} />
     </Box>
   );
 }

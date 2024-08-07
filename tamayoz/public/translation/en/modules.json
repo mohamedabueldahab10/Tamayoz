@@ -230,6 +230,12 @@
       "bank_mail": "Bank Email"
     }
   },
+  "delete": {
+    "are_you_sure": "Are you sure you want to delete",
+    "confirm_delete": "Delete",
+    "undo_delete": "Cancel",
+    "error": "Unexpected error occurred"
+  },
   "validation": {
     "employee_name": "Please Enter Employee Name",
     "job_position_name": "Please Enter Job Position",

@@ -14,7 +14,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import BackupIcon from '@mui/icons-material/Backup';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EmployeeResume from './EmployeeResume';
 import EmployeeInfo from './EmployeeInfo';
 import styles from '../../assets/css/modules/employee/NewEmployee.module.css';
@@ -24,9 +24,7 @@ import HrSettings from './HrSettings';
 import NavbarContext from '../../context/NavbarContext';
 import TypographyHeader from '../../components/utilities/TypographyHeader';
 import AxiosInstance from '../../components/helpers/AxiosInstance';
-import { useQueryClient } from 'react-query';
 import CloseIcon from '@mui/icons-material/Close';
-import { useGetJobById } from '../../queries/HrQueries';
 
 const tabStyle = {
   color: 'var(--dark-color)',
@@ -58,6 +56,7 @@ function a11yProps(index) {
   };
 }
 export default function NewEmployee({ initialData }) {
+  const navigate = useNavigate();
   const [snackSuccess, setSnackSuccess] = useState(false);
   const handleCloseSuccess = (branch) => {
     if (branch === 'clickaway') {
@@ -74,9 +73,7 @@ export default function NewEmployee({ initialData }) {
     setSnackError(false);
   };
   const instance = AxiosInstance();
-  const queryClient = useQueryClient();
   const location = useLocation();
-  const currentPath = location.pathname;
   useEffect(() => {
     localStorage.setItem('currentPage', location.pathname);
     return () => {
@@ -164,8 +161,6 @@ export default function NewEmployee({ initialData }) {
     },
   });
 
-
-
   const [selectedImage, setSelectedImage] = useState(null);
   const handleFileChange = (file) => {
     setSelectedImage(file);
@@ -196,44 +191,40 @@ export default function NewEmployee({ initialData }) {
         workMobile: data.workMobile,
         workPhone: data.workPhone,
         workEmail: data.workMail,
-        companyId: data.company.length > 0 ? data.company[0].id : 0,
-        departmentId: data.department.length > 0 ? data.department[0].id : 0,
-        managerId: data.manager.length > 0 ? data.manager[0].id : 0,
-        jobPositionId: data.jobPosition.length > 0 ? data.jobPosition[0].id : 0,
-        titleid: data.tags.length > 0 ? data.tags[0].id : 0,
+        companyId: data.company.id ? data.company.id : 0,
+        departmentId: data.department.id ? data.department.id : 0,
+        managerId: data.manager.id ? data.manager.id : 0,
+        jobPositionId: data.jobPosition.id ? data.jobPosition.id : 0,
+        titleid: data.tags.id ? data.tags.id : 0,
         // =======work Info ======
-        timeoffMangerId: data.timeoff.length > 0 ? data.timeoff[0].id : 0,
-        timesheetMangerId: data.timesheet.length > 0 ? data.timesheet[0].id : 0,
-        attendanceMangerId:
-          data.attendance.length > 0 ? data.attendance[0].id : 0,
-        workingHoursId:
-          data.workinghours.length > 0 ? data.workinghours[0].id : 0,
-        timezone: data.timezone.length > 0 ? data.timezone[0].id : 0,
+        timeoffMangerId: data.timeoff.id ? data.timeoff.id : 0,
+        timesheetMangerId: data.timesheet.id ? data.timesheet.id : 0,
+        attendanceMangerId: data.attendance.id ? data.attendance.id : 0,
+        workingHoursId: data.workinghours.id ? data.workinghours.id : 0,
+        timezone: data.timezone.id ? data.timezone.id : 0,
         // =======private info ======
         // ===contact===
         privateAddress: data.street,
-        countryId: data.country.length > 0 ? data.country[0].id : 0,
-        regionId: data.state.length > 0 ? data.state[0].id : 0,
-        cityId: data.city.length > 0 ? data.city[0].id : 0,
+        countryId: data.country.id ? data.country.id : 0,
+        regionId: data.state.id ? data.state.id : 0,
+        cityId: data.city.id ? data.city.id : 0,
         privateEmail: data.privatemail,
         privatePhone: data.privatephone,
-        bankAccountId: data.bankaccount.length > 0 ? data.bankaccount[0].id : 0,
-        langId: data.language.length > 0 ? data.language[0].id : 0,
+        bankAccountId: data.bankaccount.id ? data.bankaccount.id : 0,
+        langId: data.language.id ? data.language.id : 0,
         carPlate: data.privatecarplate,
         // ===family===
         numOfChildren: data.dependenciesnumber,
         spouseName: '',
         spouseBirthdate: '12-12-2022',
         // ==citizenship==
-        nationalityId: data.nationality.length > 0 ? data.nationality[0].id : 0,
+        nationalityId: data.nationality.id ? data.nationality.id : 0,
         identificationNum: data.idnumber,
-        gender: data.gender.length > 0 ? data.gender[0].id : 0,
+        gender: data.gender.id ? data.gender.id : 0,
         dateofbirth: data.birthdate,
         // =======hr setting ======
-        relatedUserId:
-          data.relatedusers.length > 0 ? data.relatedUsers[0].id : 0,
-        employeeTypeId:
-          data.employeetype.length > 0 ? data.employeeType[0].id : 1,
+        relatedUserId: data.relatedusers.id ? data.relatedUsers.id : 0,
+        employeeTypeId: data.employeetype.id ? data.employeetype.id : 1,
 
         experienceYears: 0,
         passportId: 0,
@@ -262,10 +253,14 @@ export default function NewEmployee({ initialData }) {
         },
       })
       .then((res) => {
-        console.log('Employee Response: ' + res);
         setSnackSuccess(true);
         methods.reset();
-        // queryClient.invalidateQueries("employeesdatagrid");
+        if (res.data.code === 1) {
+          navigate(`/employees/${res.data.data}`);
+        } else {
+          setSnackError(true);
+          setErrorMessage('Unexpected error occurred');
+        }
       })
       .catch((error) => {
         setSnackError(true);

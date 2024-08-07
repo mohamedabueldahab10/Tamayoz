@@ -92,16 +92,10 @@ export default function UpdateEmployee({ initialData, empId }) {
     resolver: yupResolver(schema),
   });
   const { isDirty } = methods.formState;
-  console.log('is any field Change' + isDirty);
   const [employeeName, setEmployeeName] = useState(null);
   useEffect(() => {
     if (initialData) {
       setEmployeeName(initialData.employeeData.firstname);
-      console.log(initialData);
-      // methods.setValue(initialData);
-      console.log(
-        'FirstName initial Data ' + initialData.employeeData.firstName
-      );
       // =================main Information =================
       methods.setValue('employeeName', initialData.employeeData.firstname);
       methods.setValue('workMobile', initialData.employeeData.workMobile);
@@ -150,7 +144,6 @@ export default function UpdateEmployee({ initialData, empId }) {
   const handleFileChange = (file) => {
     setSelectedImage(file);
   };
-  console.log('selectedImage==========>', selectedImage);
   async function handleFormSubmit(data) {
     const jsonStringData = JSON.stringify(data, null, 2);
     console.log('string Data: ' + jsonStringData);

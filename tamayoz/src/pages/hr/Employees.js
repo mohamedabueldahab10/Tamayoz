@@ -35,6 +35,7 @@ import styled from 'styled-components';
 import NavbarContext from '../../context/NavbarContext';
 import AxiosInstance from '../../components/helpers/AxiosInstance';
 import NotFound from '../../components/NotFound';
+import DeleteModal from '../../components/employeeActions/DeleteModal';
 const instance = AxiosInstance();
 const CustomListItemButton = styled(ListItemButton)({
   display: 'flex',
@@ -60,7 +61,9 @@ const CustomTypography = styled(Typography)({
 });
 export default function Employees() {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [currentRow, setCurrentRow] = useState({});
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const open = Boolean(anchorEl);
   const handleActionClick = (event) => {
     event.stopPropagation(); //to prevent the RowClick in this column only
@@ -96,7 +99,12 @@ export default function Employees() {
               aria-controls={open ? 'basic-menu' : undefined}
               aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
-              onClick={handleActionClick}
+              onClick={(event) => {
+                event.stopPropagation(); //to prevent the RowClick in this column only
+                setAnchorEl(event.currentTarget);
+                setCurrentRow(row);
+                console.log(row);
+              }}
             >
               <MoreVertIcon />
             </IconButton>
@@ -196,7 +204,13 @@ export default function Employees() {
                   </ListItemText>
                 </CustomListItemButton>
                 <Divider />
-                <CustomListItemButton>
+                <CustomListItemButton
+                  onClick={() => {
+                    console.log(row);
+                    setOpenDeleteModal(true);
+                    // setCurrentRow(row);
+                  }}
+                >
                   <ListItemIcon>
                     <DeleteForeverIcon
                       sx={{ color: 'var(--dark-color)', fontSize: '18px' }}
@@ -456,6 +470,12 @@ export default function Employees() {
             ))}
         </List>
       )}
+      <DeleteModal
+        openDeleteModal={openDeleteModal}
+        setOpenDeleteModal={setOpenDeleteModal}
+        currentRow={currentRow}
+        fetchData={fetchData}
+      />
     </div>
   );
 }
