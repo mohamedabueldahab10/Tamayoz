@@ -86,6 +86,25 @@ export const useGetDepartment = () => {
     }
   );
 };
+export const useGetEmployeeData = () => {
+  return useInfiniteQuery(
+    'department',
+    async ({ pageParam = 1 }) => {
+      const { data } = await instance.post('/Employee/GetDropDown', {
+        pageSize: 10,
+        pageNumber: pageParam,
+      });
+      return {
+        data: data.data,
+        nextPage: data.nextPage,
+        totalCount: data.totalCount,
+      };
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+    }
+  );
+};
 export const useGetSkill = () => {
   return useInfiniteQuery(
     'skills',

@@ -8,7 +8,7 @@ import CustomizedAutoComplete from '../../components/utilities/CustomizedAutoCom
 import { initialHierarchyData } from '../../components/orgChart/HierarchyChart';
 import CustomTreeView from '../../components/orgChart/CustomTreeView';
 import { useFormContext } from 'react-hook-form';
-import { useGetCompany } from '../../queries/HrQueries';
+import { useGetCompany, useGetEmployeeData } from '../../queries/HrQueries';
 import CompanyModal from '../../components/company/CompanyModal';
 import styled from 'styled-components';
 const NoRecords = styled('p')`
@@ -91,6 +91,150 @@ export default function WorkInformation() {
     setCompanyOpen(false);
   };
   // ===============================================================================
+  const [managerQuery, setManagerQuery] = useState([]);
+  const [currentManagerPage, setCurrentManagerPage] = useState(1);
+  const {
+    data: managerData,
+    isLoading: isManagerLoading,
+    isError: isManagerError,
+    error: managerError,
+    fetchNextPage: fetchNextManagerPage,
+    hasNextPage: hasNextManagerPage,
+    isFetchingNextPage: isFethcingNextManagerPage,
+  } = useGetEmployeeData(currentManagerPage);
+  useEffect(() => {
+    if (managerData) {
+      setManagerQuery((prevOptions) => {
+        const newOptions = managerData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [managerData]);
+  const handleNextManagerPage = () => {
+    if (hasNextManagerPage) {
+      setCurrentManagerPage((prevPage) => prevPage + 1);
+      fetchNextManagerPage();
+    }
+  };
+  // ===============================================================================
+  const [timeoffQuery, setTimeoffQuery] = useState([]);
+  const [currentTimeoffPage, setCurrentTimeoffPage] = useState(1);
+  const {
+    data: timeoffData,
+    isLoading: isTimeoffLoading,
+    isError: isTimeoffError,
+    error: timeoffError,
+    fetchNextPage: fetchNextTimeoffPage,
+    hasNextPage: hasNextTimeoffPage,
+    isFetchingNextPage: isFethcingNextTimeoffPage,
+  } = useGetEmployeeData(currentTimeoffPage);
+  useEffect(() => {
+    if (timeoffData) {
+      setTimeoffQuery((prevOptions) => {
+        const newOptions = timeoffData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [timeoffData]);
+  const handleNextTimeoffPage = () => {
+    if (hasNextTimeoffPage) {
+      setCurrentTimeoffPage((prevPage) => prevPage + 1);
+      fetchNextTimeoffPage();
+    }
+  };
+  // ===============================================================================
+  const [timesheetQuery, setTimesheetQuery] = useState([]);
+  const [currentTimesheetPage, setCurrentTimesheetPage] = useState(1);
+  const {
+    data: timesheetData,
+    isLoading: isTimesheetLoading,
+    isError: isTimesheetError,
+    error: timesheetError,
+    fetchNextPage: fetchNextTimesheetPage,
+    hasNextPage: hasNextTimesheetPage,
+    isFetchingNextPage: isFethcingNextTimesheetPage,
+  } = useGetEmployeeData(currentTimesheetPage);
+  useEffect(() => {
+    if (timesheetData) {
+      setTimesheetQuery((prevOptions) => {
+        const newOptions = timesheetData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [timesheetData]);
+  const handleNextTimesheetPage = () => {
+    if (hasNextTimesheetPage) {
+      setCurrentTimesheetPage((prevPage) => prevPage + 1);
+      fetchNextTimesheetPage();
+    }
+  };
+  // ===============================================================================
+  const [attendenceQuery, setAttendenceQuery] = useState([]);
+  const [currentAttendencePage, setCurrentAttendencePage] = useState(1);
+  const {
+    data: attendenceData,
+    isLoading: isAttendenceLoading,
+    isError: isAttendenceError,
+    error: attendenceError,
+    fetchNextPage: fetchNextAttendencePage,
+    hasNextPage: hasNextAttendencePage,
+    isFetchingNextPage: isFethcingNextAttendencePage,
+  } = useGetEmployeeData(currentAttendencePage);
+  useEffect(() => {
+    if (attendenceData) {
+      setAttendenceQuery((prevOptions) => {
+        const newOptions = attendenceData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [attendenceData]);
+  const handleNextAttendencePage = () => {
+    if (hasNextAttendencePage) {
+      setCurrentAttendencePage((prevPage) => prevPage + 1);
+      fetchNextAttendencePage();
+    }
+  };
+  // ===============================================================================
   const {
     control,
     formState: { errors },
@@ -165,9 +309,18 @@ export default function WorkInformation() {
                 id="autotimeoff"
                 name="timeoff"
                 label={t('form.timeoff')}
-                options={addresses}
                 multiple={false}
                 //   errors={errors}
+                options={timeoffQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                handleNextPage={handleNextTimeoffPage}
+                fetchNextPage={fetchNextTimeoffPage}
+                hasNextPage={hasNextTimeoffPage}
+                isFetchingNextPage={isFethcingNextTimeoffPage}
+                isLoading={isTimeoffLoading}
+                isError={isTimeoffError}
+                error={timeoffError}
               />
             </Box>
             <Box className={styles.singleRow}>
@@ -178,9 +331,18 @@ export default function WorkInformation() {
                 id="autotimesheet"
                 name="timesheet"
                 label={t('form.timesheet')}
-                options={addresses}
                 multiple={false}
                 //   errors={errors}
+                options={timesheetQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                handleNextPage={handleNextTimesheetPage}
+                fetchNextPage={fetchNextTimesheetPage}
+                hasNextPage={hasNextTimesheetPage}
+                isFetchingNextPage={isFethcingNextTimesheetPage}
+                isLoading={isTimesheetLoading}
+                isError={isTimesheetError}
+                error={timesheetError}
               />
             </Box>
             <Box className={styles.singleRow}>
@@ -191,9 +353,18 @@ export default function WorkInformation() {
                 id="autoattendance"
                 name="attendance"
                 label={t('form.attendance')}
-                options={addresses}
                 multiple={false}
                 //   errors={errors}
+                options={attendenceQuery}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                getOptionLabel={(option) => option.name}
+                handleNextPage={handleNextAttendencePage}
+                fetchNextPage={fetchNextAttendencePage}
+                hasNextPage={hasNextAttendencePage}
+                isFetchingNextPage={isFethcingNextAttendencePage}
+                isLoading={isAttendenceLoading}
+                isError={isAttendenceError}
+                error={attendenceError}
               />
             </Box>
           </Box>

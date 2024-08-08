@@ -18,6 +18,7 @@ import DegreeModal from '../../../components/degree/DegreeModal';
 import {
   useGetCompany,
   useGetDepartment,
+  useGetEmployeeData,
   useGetJobPosition,
 } from '../../../queries/HrQueries';
 import Loading from '../../../components/Loading';
@@ -169,6 +170,43 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
       fetchNextDepartmentPage();
     }
   };
+  // ===============================================================================
+  const [managerQuery, setManagerQuery] = useState([]);
+  const [currentManagerPage, setCurrentManagerPage] = useState(1);
+  const {
+    data: managerData,
+    isLoading: isManagerLoading,
+    isError: isManagerError,
+    error: managerError,
+    fetchNextPage: fetchNextManagerPage,
+    hasNextPage: hasNextManagerPage,
+    isFetchingNextPage: isFethcingNextManagerPage,
+  } = useGetEmployeeData(currentManagerPage);
+  useEffect(() => {
+    if (managerData) {
+      setManagerQuery((prevOptions) => {
+        const newOptions = managerData.pages
+          .flatMap((page) => page.data)
+          .filter((option) => option !== null);
+        const optionsSet = new Set([
+          ...prevOptions.map((option) => option.id),
+          ...newOptions.map((option) => option.id),
+        ]);
+        return [...optionsSet].map(
+          (id) =>
+            newOptions.find((option) => option.id === id) ||
+            prevOptions.find((option) => option.id === id)
+        );
+      });
+    }
+  }, [managerData]);
+  const handleNextManagerPage = () => {
+    if (hasNextManagerPage) {
+      setCurrentManagerPage((prevPage) => prevPage + 1);
+      fetchNextManagerPage();
+    }
+  };
+  // ===============================================================================
   const [departmentOpen, setDepartmentOpen] = useState(false);
   const handleCloseDepartment = () => {
     setDepartmentOpen(false);
@@ -392,11 +430,21 @@ export default function EmployeeInfo({ onFileChange, initialData }) {
                   }
                   name="manager"
                   label={t('form.manager')}
-                  options={currencies}
-                  getOptionLabel={(option) => option.label}
                   id="autoManager"
                   multiple={false}
                   errors={errors}
+                  options={managerQuery}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id === value.id
+                  }
+                  getOptionLabel={(option) => option.name}
+                  handleNextPage={handleNextManagerPage}
+                  fetchNextPage={fetchNextManagerPage}
+                  hasNextPage={hasNextManagerPage}
+                  isFetchingNextPage={isFethcingNextManagerPage}
+                  isLoading={isManagerLoading}
+                  isError={isManagerError}
+                  error={managerError}
                 />
               </Box>
               <Box className={styles.singleRow}>

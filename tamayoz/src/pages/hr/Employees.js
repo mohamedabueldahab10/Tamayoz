@@ -36,6 +36,8 @@ import NavbarContext from '../../context/NavbarContext';
 import AxiosInstance from '../../components/helpers/AxiosInstance';
 import NotFound from '../../components/NotFound';
 import DeleteModal from '../../components/employeeActions/DeleteModal';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 const instance = AxiosInstance();
 const CustomListItemButton = styled(ListItemButton)({
   display: 'flex',
@@ -233,37 +235,83 @@ export default function Employees() {
     page: pageNumber,
     pageCount: 1,
   });
-  const [employeeData, setEmployeeData] = useState([]);
+  // const [employeeData, setEmployeeData] = useState([]);
   const [rows, setRows] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const fetchData = async (pageNumber) => {
-    setLoading(true);
-    try {
-      const response = await instance.post(`/Employee/GetAllData`, {
-        pageSize: 10,
-        pageNumber: pageNumber,
-      });
-      setEmployeeData(response.data);
-      setRows(response.data.data);
-      setTotalCount(response.data.totalCount);
-      setPagination({
-        page: pageNumber,
-        pageCount: Math.ceil(response.data.totalCount / 10),
-      });
-      setLoading(false);
-    } catch (error) {
-      setError(error);
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  const AuthedUser = JSON.parse(localStorage.getItem('AuthedUser'));
+  const AccessToken = AuthedUser?.token;
+  console.log(AccessToken);
+  const headers = {
+    'Content-Type': 'application/json',
   };
 
+  if (AccessToken) {
+    headers['Authorization'] = `Bearer ${AccessToken}`;
+  }
+  const {
+    isLoading,
+    data: employeeAllData,
+    refetch,
+    error,
+    isFetching,
+  } = useQuery(
+    'employeesdatagrid',
+    async () => {
+      // setLoading(true);
+      const res = await instance.post(
+        `https://api.crevisoft.org/Employee/GetAllData`,
+        {
+          pageSize: 10,
+          pageNumber: pageNumber,
+        },
+        { headers }
+      );
+      return res;
+    },
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!AccessToken,
+    }
+  );
+  console.log('isFetching', isFetching);
+  console.log('Employ', employeeAllData);
   useEffect(() => {
-    fetchData(pageNumber);
+    setRows(employeeAllData?.data?.data);
+    setTotalCount(employeeAllData?.data?.totalCount);
+    setPagination({
+      page: pageNumber,
+      pageCount: Math.ceil(employeeAllData?.data?.totalCount / 10),
+    });
+    // setLoading(false);
+  }, [employeeAllData]);
+
+  useEffect(() => {
+    refetch(pageNumber);
   }, [pageNumber]);
+  // const fetchData = async (pageNumber) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await instance.post(`/Employee/GetAllData`, {
+  //       pageSize: 10,
+  //       pageNumber: pageNumber,
+  //     });
+  //     setEmployeeData(response.data);
+  //     setRows(response.data.data);
+  //     setTotalCount(response.data.totalCount);
+  //     setPagination({
+  //       page: pageNumber,
+  //       pageCount: Math.ceil(response.data.totalCount / 10),
+  //     });
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setError(error);
+  //     console.error('Error fetching data:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handlePageChange = (event, newPage) => {
     setPageNumber(newPage);
@@ -392,9 +440,9 @@ export default function Employees() {
     <div>
       {error ? (
         <NotFound />
-      ) : loading ? (
+      ) : isLoading ? (
         <Loading />
-      ) : view === 'list' ? (
+      ) : view === 'list' && rows?.length > 0 ? (
         <>
           <div style={{ height: 450, width: '100%' }}>
             <DataGrid
@@ -418,7 +466,7 @@ export default function Employees() {
               pageSize={10}
               rowCount={totalCount}
               paginationMode="server"
-              loading={loading}
+              loading={isLoading}
               onRowClick={(params) => handleRowClick(params.id)}
               onPageChange={handlePageChange}
               checkboxSelection
@@ -440,7 +488,7 @@ export default function Employees() {
             gap: '10px',
           }}
         >
-          {rows &&
+          {rows?.length > 0 &&
             rows?.map((row) => (
               <ListItem
                 sx={{
@@ -474,7 +522,7 @@ export default function Employees() {
         openDeleteModal={openDeleteModal}
         setOpenDeleteModal={setOpenDeleteModal}
         currentRow={currentRow}
-        fetchData={fetchData}
+        fetchData={refetch}
       />
     </div>
   );
